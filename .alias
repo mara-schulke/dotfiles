@@ -1,0 +1,39 @@
+#!bin/bash
+
+alias sudo='sudo ';
+
+# cd
+alias ..='cd ..';
+
+# ranger
+alias ranger='ranger';
+alias ranger --cd='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"';
+
+# ls
+alias ll='ls -l';
+alias ll='ls -la';
+
+# git 
+alias gst='git status';
+alias ga='git add';
+alias gc='git commit';
+alias gb='git branch';
+alias gpsh='git push';
+alias gpll='git push';
+
+alias gfap='git fetch --all --prune';
+
+# git flow
+alias gfli='git flow init';
+
+alias gflfst='git flow feature start';
+alias gflffn='git flow feature finish';
+alias gflfp='git flow feature publish';
+
+alias gflrst='git flow release start';
+alias gflrfn='git flow release finish';
+alias gflrp='git flow release publish';
+
+# shutdown
+alias sd='sudo shutdown -h now';
+alias rs='sudo shutdown -r now';
