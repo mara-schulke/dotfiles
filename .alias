@@ -1,4 +1,4 @@
-#!bin/bash
+#!bin/zsh
 
 alias sudo='sudo ';
 
@@ -13,7 +13,7 @@ alias ranger --cd='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rang
 alias ll='ls -l';
 alias ll='ls -la';
 
-# git 
+# git
 alias gst='git status';
 alias ga='git add';
 alias gc='git commit';
