@@ -8,19 +8,24 @@ export PATH="$GOPATH/bin:$PATH"
 export GPG_TTY=$(tty)
 export ZSH="$PWD/zsh/oh-my-zsh"
 
+# shell config
 ZSH_THEME="robbyrussell"
-
 CASE_SENSITIVE="true"
 DISABLE_AUTO_TITLE="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 DISABLE_MAGIC_FUNCTIONS=true
 
+# misc
+NVM_AUTO_USE=true
+NVM_LAZY_LOAD=true
+
 plugins=(
-  git
-  git-flow
-  jira
-  npm
-  osx
+	git
+	git-flow
+	zsh-nvm
+	jira
+	npm
+	osx
 )
 
 source $ZSH/oh-my-zsh.sh
