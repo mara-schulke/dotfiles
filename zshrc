@@ -16,6 +16,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 DISABLE_MAGIC_FUNCTIONS=true
 
 # misc
+NVM_DIR="$PWD/dependencies/nvm"
 NVM_AUTO_USE=true
 NVM_LAZY_LOAD=true
 

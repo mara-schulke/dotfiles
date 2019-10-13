@@ -13,6 +13,11 @@ setup_dotfiles() {
 		exit 1
 	}
 
+	git clone https://github.com/nvm-sh/nvm.git "$DOTFILES/dependencies/nvm" || {
+		error "git clone of nvm failed"
+		exit 1
+	}
+
 	git clone https://github.com/lukechilds/zsh-nvm "$DOTFILES/zsh/oh-my-zsh/custom/plugins/zsh-nvm" || {
 		error "git clone of zsh-nvm failed"
 		exit 1
