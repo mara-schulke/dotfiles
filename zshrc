@@ -15,7 +15,7 @@ DISABLE_AUTO_TITLE="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 DISABLE_MAGIC_FUNCTIONS=true
 
-# misc
+# nvm config
 NVM_DIR="$PWD/dependencies/nvm"
 NVM_AUTO_USE=true
 NVM_LAZY_LOAD=true
@@ -33,4 +33,8 @@ source $ZSH/oh-my-zsh.sh
 source ./scripts/nvm.sh
 
 setopt PROMPT_SUBST
-PROMPT='%~/ {$(current_branch)} :: λ'
+PROMPT='%~/ {$(current_branch)} :: λ' ## use only current dir instead of whole path
+
+# misc
+alias static-ranger="ranger"
+alias ranger="ranger --choosedir=$PWD/tmp/.rangerdir; LASTDIR=`cat $PWD/tmp/.rangerdir`; cd '$LASTDIR'"
