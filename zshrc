@@ -1,9 +1,12 @@
+#!/bin/sh
+
 export GOPATH=$(go env GOPATH)
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$PATH:$GOPATH/bin"
-export GPG_TTY=$(tty)
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export ZSH="$HOME/dotfiles/zsh/oh-my-zsh"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
+
+export GPG_TTY=$(tty)
+export ZSH="$PWD/zsh/oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
@@ -21,9 +24,7 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-source ~/.alias
+source ./scripts/nvm.sh
 
 setopt PROMPT_SUBST
 PROMPT='%~/ {$(current_branch)} :: λ'
-
-zsh ./scripts/nvm.sh
