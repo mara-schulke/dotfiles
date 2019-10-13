@@ -22,8 +22,6 @@ setup_dotfiles() {
 		error "git clone of zsh-nvm failed"
 		exit 1
 	}
-
-	echo
 }
 
 main() {
