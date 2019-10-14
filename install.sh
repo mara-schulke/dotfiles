@@ -46,13 +46,13 @@ install() {
 
 init() {
 	echo "DOTFILES=$DOTFILES" | cat - "$DOTFILES/zshrc" > "$DOTFILES/tmp/zshrc"
-	echo "debug: created tmp file"
 	mv "$DOTFILES/tmp/zshrc" "$DOTFILES/zshrc" 
-	echo "debug: moved /tmp/zshrc into /zshrc"
 	echo "-> made the DOTFILES variable available for your shell"
+
 
 	echo "source $DOTFILES/zshrc" >> ~/.zshrc
 	echo "-> load $DOTFILES/zshrc in ~/.zshrc"
+
 	# echo "-> bind aliases"
 	# echo "-> setup oh-my-zsh"
 	# echo "-> setup nvm"
