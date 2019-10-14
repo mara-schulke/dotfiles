@@ -4,7 +4,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 
 export GPG_TTY=$(tty)
-export ZSH="$PWD/zsh/oh-my-zsh"
+export ZSH="$DOTFILES/zsh/oh-my-zsh"
 
 # shell config
 ZSH_THEME="robbyrussell"
@@ -14,7 +14,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 DISABLE_MAGIC_FUNCTIONS=true
 
 # nvm config
-NVM_DIR="$PWD/dependencies/nvm"
+NVM_DIR="$DOTFILES/dependencies/nvm"
 NVM_AUTO_USE=true
 NVM_LAZY_LOAD=true
 
@@ -34,4 +34,4 @@ PROMPT='$(basename pwd) -> $(current_branch || echo "none") λ ' # use only cur
 
 # misc
 alias static-ranger="ranger"
-alias ranger="ranger --choosedir=$PWD/tmp/.rangerdir; LASTDIR=`cat $PWD/tmp/.rangerdir`; cd '$LASTDIR'"
+alias ranger="ranger --choosedir=$DOTFILES/tmp/.rangerdir; LASTDIR=`cat $DOTFILES/tmp/.rangerdir`; cd '$LASTDIR'"
