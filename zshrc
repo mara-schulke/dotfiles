@@ -1,5 +1,3 @@
-echo "installed into $DOTFILES"
-
 export GOPATH=$(go env GOPATH)
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.cargo/bin:$PATH"
