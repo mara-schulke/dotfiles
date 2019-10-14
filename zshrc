@@ -33,7 +33,7 @@ source $ZSH/oh-my-zsh.sh
 source ./scripts/nvm.sh
 
 setopt PROMPT_SUBST
-PROMPT='%~/ {$(current_branch)} :: λ' ## use only current dir instead of whole path
+PROMPT='$(basename pwd) -> $(current_branch || "none") λ' # use only current dir instead of whole path
 
 # misc
 alias static-ranger="ranger"
