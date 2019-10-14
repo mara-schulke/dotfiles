@@ -23,7 +23,6 @@ NVM_LAZY_LOAD=true
 plugins=(
 	git
 	git-flow
-	zsh-nvm
 	jira
 	npm
 	nvm
@@ -31,6 +30,7 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+source $DOTFILES/dependencies/zsh-nvm/zsh-nvm.plugin.zsh
 
 setopt PROMPT_SUBST
 PROMPT='$(basename pwd) -> $(current_branch || echo "none") λ ' # use only current dir instead of whole path
