@@ -31,7 +31,7 @@ source $ZSH/oh-my-zsh.sh
 source $DOTFILES/dependencies/zsh-nvm/zsh-nvm.plugin.zsh
 
 setopt PROMPT_SUBST
-PROMPT='$(basename "$PWD")({$(current_branch)}) λ ' # use only current dir instead of whole path
+PROMPT='$(basename "$PWD")($(current_branch)) λ ' # use only current dir instead of whole path
 
 # misc
 alias static-ranger="ranger"
