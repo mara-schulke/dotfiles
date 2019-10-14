@@ -42,6 +42,8 @@ install() {
 }
 
 init() {
+	echo "DOTFILES=$DOTFILES" | cat - ~/.zshrc > "$DOTFILES/tmp/zshrc" && "$DOTFILES/tmp/zshrc" ~/.zshrc
+
 	echo "source $DOTFILES/zshrc" >> ~/.zshrc
 	echo "-> load $DOTFILES/zshrc in ~/.zshrc"
 	# echo "-> bind aliases"
