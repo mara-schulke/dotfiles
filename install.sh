@@ -23,16 +23,19 @@ install() {
 		exit 1
 	}
 
+	echo "cloning oh-my-zsh in $DOTFILES/zsh/oh-my-zsh"
 	git clone https://github.com/robbyrussell/oh-my-zsh.git "$DOTFILES/zsh/oh-my-zsh" &> /dev/null || {
 		echo "git clone of oh-my-zsh failed"
 		exit 1
 	}
 
+	echo "cloning nvm in $DOTFILES/dependencies/nvm"
 	git clone https://github.com/nvm-sh/nvm.git "$DOTFILES/dependencies/nvm" &> /dev/null || {
 		echo "git clone of nvm failed"
 		exit 1
 	}
 
+	echo "cloning zsh-nvm in $DOTFILES/zsh/oh-my-zsh/custom/plugins/zsh-nvm"
 	git clone https://github.com/lukechilds/zsh-nvm "$DOTFILES/zsh/oh-my-zsh/custom/plugins/zsh-nvm" &> /dev/null || {
 		echo "git clone of zsh-nvm failed"
 		exit 1

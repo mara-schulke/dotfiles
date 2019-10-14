@@ -26,6 +26,7 @@ plugins=(
 	zsh-nvm
 	jira
 	npm
+	nvm
 	osx
 )
 
