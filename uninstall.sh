@@ -8,6 +8,6 @@ main() {
 	echo "-> removing $DOTFILES"
 	rm -rf "$DOTFILES"
 	echo "-> removing references to dotfiles"
-	sed -i -e "s/source $DOTFILES/zshrc//g" ~/.zshrc
+	sed -i -e "s/source $DOTFILES/zshrc/g" ~/.zshrc
 }
 main
