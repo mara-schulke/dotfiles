@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "dotfiles = $DOTFILES"
+echo "DOTFILES == $DOTFILES"
 
 DOTFILES_VERSION="$(cat $DOTFILES/version)"
 
