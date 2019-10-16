@@ -67,12 +67,12 @@ init() {
 }
 
 usage() {
-	echo "$TITLE"
 	echo "installed $REPO $VERSION for $USER :)"
 }
 
 main() {
 	clear
+	echo "$TITLE"
 
 	install
 	init
