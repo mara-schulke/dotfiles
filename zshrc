@@ -4,7 +4,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 
 export GPG_TTY=$(tty)
-export ZSH="$DOTFILES/zsh/oh-my-zsh"
+export ZSH="$DOTFILES/dependencies/oh-my-zsh"
 
 # shell config
 ZSH_THEME="robbyrussell"
