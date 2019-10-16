@@ -58,7 +58,7 @@ init() {
 	echo "-> made the DOTFILES variable available for your shell"
 
 	# append the import of this dotfiles
-	echo "source $DOTFILES/zshrc" >>~/.zshrc
+	echo "source \"$DOTFILES/zshrc\"" >>~/.zshrc
 	echo "-> load $DOTFILES/zshrc in ~/.zshrc"
 
 	chmod +x "$DOTFILES/uninstall"
