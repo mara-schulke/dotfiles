@@ -1,11 +1,9 @@
 #!/bin/sh
 
-dotfiles-version() {
-	cat "$DOTFILES/version"
-}
+DOTFILES_VERSION=cat "$DOTFILES/version"
 
 main() {
-	echo "uninstalling dotfiles $(dotfiles-version)"
+	echo "uninstalling dotfiles $DOTFILES_VERSION"
 
 	echo "-> removing $DOTFILES"
 	rm -rf "$DOTFILES"

@@ -35,7 +35,7 @@ install() {
 		exit 1
 	}
 
-	echo "cloning zsh-nvm"
+	echo "-> cloning zsh-nvm"
 	git clone https://github.com/lukechilds/zsh-nvm.git "$DOTFILES/dependencies/zsh-nvm" &>/dev/null || {
 		echo "git clone of zsh-nvm failed"
 		exit 1
