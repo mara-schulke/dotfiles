@@ -49,8 +49,6 @@ init() {
 	echo "DOTFILES=$DOTFILES \n" | cat - "$DOTFILES/zshrc" >"$DOTFILES/tmp/zshrc"
 	# replace the zshrc with the temp file
 	mv "$DOTFILES/tmp/zshrc" "$DOTFILES/zshrc"
-	# remove the temp file
-	rm "$DOTFILES/tmp/zshrc"
 
 	echo "-> made the DOTFILES variable available for your shell"
 
