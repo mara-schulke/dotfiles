@@ -1,12 +1,7 @@
 #!/bin/sh
 
-dotfiles-version() {
-	cat "$DOTFILES/version"
-}
-
-dotfiles-latest-version() {
-	curl -fsSL https://raw.githubusercontent.com/schulke-214/dotfiles/master/version
-}
+DOTFILES_VERSION=cat "$DOTFILES/version"
+DOTFILES_LATEST_VERSION=curl -fsSL https://raw.githubusercontent.com/schulke-214/dotfiles/master/version
 
 dotfiles-clear-directories() {
 	rm -rf "$DOTFILES/dependencies"
@@ -17,7 +12,7 @@ dotfiles-clear-directories() {
 
 main() {
 	echo "updating dotfiles"
-	echo "$(dotfiles-version) -> $(dotfiles-next-version)"
+	echo "$DOTFILES_VERSION -> $DOTFILES_LATEST_VERSION"
 	echo
 
 	echo "-> clearing dependencies and temp files"
