@@ -16,7 +16,7 @@ DISABLE_MAGIC_FUNCTIONS=true
 # nvm config
 NVM_DIR="$DOTFILES/dependencies/nvm"
 NVM_AUTO_USE=true
-NVM_LAZY_LOAD=true
+# NVM_LAZY_LOAD=true
 
 plugins=(
 	git

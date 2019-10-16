@@ -15,8 +15,6 @@ TITLE="
 
 "
 
-source "$DOTFILES/scripts/update.sh"
-
 install() {
 	echo "cloning $REPO into $DOTFILES"
 
