@@ -1,7 +1,7 @@
 #!/bin/sh
 
-DOTFILES_VERSION=cat "$DOTFILES/version"
-DOTFILES_LATEST_VERSION=curl -fsSL https://raw.githubusercontent.com/schulke-214/dotfiles/master/version
+DOTFILES_VERSION="$(cat '$DOTFILES/version')"
+DOTFILES_LATEST_VERSION="$(curl -fsSL https://raw.githubusercontent.com/schulke-214/dotfiles/master/version)"
 
 dotfiles-clear-directories() {
 	rm -rf "$DOTFILES/dependencies"
