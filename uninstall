@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "dotfiles = $DOTFILES"
+
 DOTFILES_VERSION="$(cat $DOTFILES/version)"
 
 main() {

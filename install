@@ -64,6 +64,8 @@ init() {
 	chmod +x "$DOTFILES/uninstall"
 	chmod +x "$DOTFILES/update"
 	echo "-> set the executable bits on $DOTFILES/uninstall and $DOTFILES/update"
+
+	echo
 }
 
 usage() {
