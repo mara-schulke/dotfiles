@@ -60,6 +60,10 @@ init() {
 	# append the import of this dotfiles
 	echo "source $DOTFILES/zshrc" >>~/.zshrc
 	echo "-> load $DOTFILES/zshrc in ~/.zshrc"
+
+	chmod +x "$DOTFILES/uninstall.sh"
+	chmod +x "$DOTFILES/update.sh"
+	echo "-> set the executable bits on $DOTFILES/uninstall and $DOTFILES/update"
 }
 
 usage() {
