@@ -17,6 +17,10 @@ TITLE="
 "
 
 install() {
+	if [ -d "$DOTFILES" ]; then
+		echo "failed to clone $REPO into $DOTFILES since its not empty"
+	fi
+
 	echo "cloning $REPO $VERSION into $DOTFILES"
 
 	git clone --depth=1 --branch "$BRANCH" "$REMOTE" "$DOTFILES" &>/dev/null || {
@@ -60,7 +64,7 @@ init() {
 
 usage() {
 	echo "$TITLE"
-	echo "installed $REPO for $USER :)"
+	echo "installed $REPO $VERSION for $USER :)"
 }
 
 main() {
