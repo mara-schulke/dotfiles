@@ -2,7 +2,8 @@
 
 ## Installation
 
-**Warning:** If you want to give these dotfiles a try, you should first fork this repository, review the code, and remove things you don’t want or need. Don’t blindly use my settings unless you know what that entails. Use at your own risk!
+**Warning:**
+Even tho these dotfiles are installed in a dedicated directory and are easy to uninstall if you dont like them, you should first fork this repository, review the code, and remove things you don’t want or need. Don’t blindly use my settings unless you know what that entails. Use at your own risk!
 
 ```bash
 sh -c "$(curl -fsSL dotfiles.maximilianschulke.com)"
@@ -15,7 +16,7 @@ This will compare your local environment with the remote, clone changes, update 
 
 ### Uninstalling
 
-Simply run `$DOTFILES/uninstall` - this simply runs `rm -rf $DOTFILES` and removes references setup by the `install` script.
+Simply run `$DOTFILES/uninstall` - this runs `rm -rf $DOTFILES` and removes references setup by the `install` script.
 
 #### Uninstalling Manually
 
