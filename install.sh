@@ -4,6 +4,7 @@ DOTFILES=${DOTFILES:-~/dotfiles}
 REPO=${REPO:-schulke-214/dotfiles}
 REMOTE=${REMOTE:-git@github.com:${REPO}.git}
 BRANCH=${BRANCH:-master}
+VERSION="$(curl -fsSL https://raw.githubusercontent.com/schulke-214/dotfiles/master/version)"
 USER="$(whoami)"
 
 TITLE="
@@ -16,7 +17,7 @@ TITLE="
 "
 
 install() {
-	echo "cloning $REPO into $DOTFILES"
+	echo "cloning $REPO $VERSION into $DOTFILES"
 
 	git clone --depth=1 --branch "$BRANCH" "$REMOTE" "$DOTFILES" &>/dev/null || {
 		echo "git clone of $REPO failed"
