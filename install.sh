@@ -15,28 +15,30 @@ TITLE="
 
 "
 
-install() {
-	echo "cloning into $DOTFILES"
+source "$DOTFILES/scripts/update.sh"
 
-	git clone --depth=1 --branch "$BRANCH" "$REMOTE" "$DOTFILES" &> /dev/null || {
+install() {
+	echo "cloning $REPO into $DOTFILES"
+
+	git clone --depth=1 --branch "$BRANCH" "$REMOTE" "$DOTFILES" &>/dev/null || {
 		echo "git clone of $REPO failed"
 		exit 1
 	}
 
-	echo "cloning oh-my-zsh in $DOTFILES/zsh/oh-my-zsh"
-	git clone https://github.com/robbyrussell/oh-my-zsh.git "$DOTFILES/zsh/oh-my-zsh" &> /dev/null || {
+	echo "-> cloning oh-my-zsh"
+	git clone https://github.com/robbyrussell/oh-my-zsh.git "$DOTFILES/dependencies/oh-my-zsh" &>/dev/null || {
 		echo "git clone of oh-my-zsh failed"
 		exit 1
 	}
 
-	echo "cloning nvm in $DOTFILES/dependencies/nvm"
-	git clone https://github.com/nvm-sh/nvm.git "$DOTFILES/dependencies/nvm" &> /dev/null || {
+	echo "-> cloning nvm"
+	git clone https://github.com/nvm-sh/nvm.git "$DOTFILES/dependencies/nvm" &>/dev/null || {
 		echo "git clone of nvm failed"
 		exit 1
 	}
 
-	echo "cloning zsh-nvm in $DOTFILES/zsh/dependencies/zsh-nvm"
-	git clone https://github.com/lukechilds/zsh-nvm "$DOTFILES/dependencies/zsh-nvm" &> /dev/null || {
+	echo "cloning zsh-nvm"
+	git clone https://github.com/lukechilds/zsh-nvm.git "$DOTFILES/dependencies/zsh-nvm" &>/dev/null || {
 		echo "git clone of zsh-nvm failed"
 		exit 1
 	}
@@ -45,18 +47,18 @@ install() {
 }
 
 init() {
-	echo "DOTFILES=$DOTFILES" | cat - "$DOTFILES/zshrc" > "$DOTFILES/tmp/zshrc"
-	mv "$DOTFILES/tmp/zshrc" "$DOTFILES/zshrc" 
+	# prepend the dotfiles variable to a temp file
+	echo "DOTFILES=$DOTFILES \n" | cat - "$DOTFILES/zshrc" >"$DOTFILES/tmp/zshrc"
+	# replace the zshrc with the temp file
+	mv "$DOTFILES/tmp/zshrc" "$DOTFILES/zshrc"
+	# remove the temp file
+	rm "$DOTFILES/tmp/zshrc"
+
 	echo "-> made the DOTFILES variable available for your shell"
 
-
-	echo "source $DOTFILES/zshrc" >> ~/.zshrc
+	# append the import of this dotfiles
+	echo "source $DOTFILES/zshrc" >>~/.zshrc
 	echo "-> load $DOTFILES/zshrc in ~/.zshrc"
-
-	# echo "-> bind aliases"
-	# echo "-> setup oh-my-zsh"
-	# echo "-> setup nvm"
-	# echo "-> load skhd config"
 }
 
 usage() {
@@ -65,9 +67,10 @@ usage() {
 }
 
 main() {
+	clear
+
 	install
 	init
-
 	usage
 }
 
