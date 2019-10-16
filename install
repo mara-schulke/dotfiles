@@ -61,8 +61,8 @@ init() {
 	echo "source $DOTFILES/zshrc" >>~/.zshrc
 	echo "-> load $DOTFILES/zshrc in ~/.zshrc"
 
-	chmod +x "$DOTFILES/uninstall.sh"
-	chmod +x "$DOTFILES/update.sh"
+	chmod +x "$DOTFILES/uninstall"
+	chmod +x "$DOTFILES/update"
 	echo "-> set the executable bits on $DOTFILES/uninstall and $DOTFILES/update"
 }
 
