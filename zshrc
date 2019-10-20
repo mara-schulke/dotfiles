@@ -2,6 +2,7 @@ export GOPATH=$(go env GOPATH)
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
+export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 
 export GPG_TTY=$(tty)
 export ZSH="$DOTFILES/dependencies/oh-my-zsh"
