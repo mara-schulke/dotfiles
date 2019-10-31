@@ -9,6 +9,12 @@ Even tho these dotfiles are installed in a dedicated directory and are easy to u
 sh -c "$(curl -fsSL dotfiles.maximilianschulke.com)"
 ```
 
+If you want to install these dotfiles into another dir than `~/dotfiles` you should provide the target directory in the `DOTFILES` variable like this:
+
+```bash
+sh -c "DOTFILES=~/your-custom-dotfiles-folder $(curl -fsSL dotfiles.maximilianschulke.com)"
+```
+
 ### Updates
 
 To update you local dotfiles installation simply run `$DOTFILES/update`.
@@ -16,11 +22,7 @@ This will compare your local environment with the remote, clone changes, update 
 
 ### Uninstalling
 
-Simply run `$DOTFILES/uninstall` - this runs `rm -rf $DOTFILES` and removes references setup by the `install` script.
-
-#### Uninstalling Manually
-
-To remove these dotfiles manually all you need to do is to run a `rm -rf $DOTFILES`, open your `.zshrc` and remove the `source <your-dotfiles-path>/zshrc` statement.
+To remove these dotfiles all you need to do is to run a `rm -rf $DOTFILES`, open your `.zshrc` and remove the `source <your-dotfiles-path>/zshrc` statement. If you refer in any other config files to `$DOTFILES` you have to remove these references aswell.
 
 ## Usage
 
@@ -29,7 +31,3 @@ To remove these dotfiles manually all you need to do is to run a `rm -rf $DOTFIL
 | Identifier | Description                                              | Default      |
 | :--------- | :------------------------------------------------------- | :----------- |
 | `DOTFILES` | This is the directory where this repo gets installed in. | `~/dotfiles` |
-
-### Functions
-
-tbd
