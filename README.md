@@ -6,13 +6,13 @@
 Even tho these dotfiles are installed in a dedicated directory and are easy to uninstall if you dont like them, you should first fork this repository, review the code, and remove things you don’t want or need. Don’t blindly use my settings unless you know what that entails. Use at your own risk!
 
 ```bash
-sh -c "$(curl -fsSL dotfiles.maximilianschulke.com)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/schulke-214/dotfiles/master/install)"
 ```
 
 If you want to install these dotfiles into another dir than `~/dotfiles` you should provide the target directory in the `DOTFILES` variable like this:
 
 ```bash
-sh -c "DOTFILES=~/your-custom-dotfiles-folder $(curl -fsSL dotfiles.maximilianschulke.com)"
+sh -c "DOTFILES=~/your-custom-dotfiles-folder $(curl -fsSL https://raw.githubusercontent.com/schulke-214/dotfiles/master/install)"
 ```
 
 ### Updates
