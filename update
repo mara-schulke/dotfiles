@@ -3,10 +3,10 @@
 DOTFILES_VERSION="$(cat $DOTFILES/version)"
 DOTFILES_LATEST_VERSION="$(curl -fsSL https://raw.githubusercontent.com/schulke-214/dotfiles/master/version)"
 
-dotfiles-clear-directories() {
-	rm -rf "$DOTFILES/dependencies"
-	rm -rf "$DOTFILES/tmp"
-}
+# dotfiles-clear-directories() {
+#	rm -rf "$DOTFILES/dependencies"
+#	rm -rf "$DOTFILES/tmp"
+# }
 
 # update functions
 
@@ -16,9 +16,13 @@ main() {
 	echo
 
 	echo "-> clearing dependencies and temp files"
-	dotfiles-clear-directories
+	# dotfiles-clear-directories
 	echo "-> downloading dotfiles $(dotfiles-latest-version)"
-	git -C "$DOTFILES" pull --force
+    cd $DOTFILES
+    git stash
+    git pull --force
+    git stash pop
+    cd -
 	echo "-> installing dependencies"
 }
 
