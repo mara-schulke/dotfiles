@@ -33,6 +33,16 @@ source $DOTFILES/dependencies/zsh-nvm/zsh-nvm.plugin.zsh
 # source $DOTFILES/dependencies/powerlevel10k/powerlevel10k.zsh-theme
 
 setopt PROMPT_SUBST
+current-branch-formatted() {
+    local BRANCH="$(current_branch)"
+    local LEN=${#BRANCH}
+
+    if [ $LEN -gt 0 ]; then
+        echo " $BRANCH "
+    else
+        echo " "
+    fi
+}
 PROMPT='$(basename "$PWD") $(current_branch) λ ' # use only current dir instead of whole path
 
 # misc
