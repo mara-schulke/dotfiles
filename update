@@ -25,10 +25,25 @@ main() {
 	echo "-> clearing dependencies and temp files"
 	# dotfiles-clear-directories
 	echo "-> downloading dotfiles $DOTFILES_LATEST_VERSION"
+
+    local UPDATING_FAILED="updating failed.. consider reinstalling, or open an issue on github!"
+
     cd $DOTFILES
-    git stash
-    git pull --force
-    git stash pop
+    git stash &>/dev/null || {
+        echo $UPDATING_FAILED
+        exit 1
+    }
+
+    git pull --force &>/dev/null || {
+        echo $UPDATING_FAILED
+        exit 1
+    }
+
+    git stash pop &>/dev/null || {
+        echo $UPDATING_FAILED
+        exit 1
+    }
+
     cd -
 	echo "-> installing dependencies"
 }
