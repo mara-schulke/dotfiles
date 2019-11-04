@@ -7,33 +7,13 @@ export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PA
 export GPG_TTY=$(tty)
 export ZSH="$DOTFILES/dependencies/oh-my-zsh"
 
-# shell config
-ZSH_THEME="robbyrussell"
-CASE_SENSITIVE="true"
-DISABLE_AUTO_TITLE="true"
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-DISABLE_MAGIC_FUNCTIONS=true
+# load plugin configuration
+source $DOTFILES/config/zsh/plugins
 
-# nvm config
-NVM_DIR="$DOTFILES/dependencies/nvm"
-NVM_AUTO_USE=true
-# NVM_LAZY_LOAD=true
-
-plugins=(
-	git
-	git-flow
-	jira
-	npm
-	nvm
-	osx
-)
-
-source $ZSH/oh-my-zsh.sh
+# load dependencies
+source $DOTFILES/dependencies/oh-my-zsh/oh-my-zsh.sh
 source $DOTFILES/dependencies/zsh-nvm/zsh-nvm.plugin.zsh
+
+# load configuration
 source $DOTFILES/config/zsh/prompt
-
-
-# misc
-alias lock="pmset displaysleepnow"
-#alias static-ranger="ranger"
-# alias ranger="ranger --choosedir=$DOTFILES/tmp/.rangerdir; LASTDIR=$(cat $DOTFILES/tmp/.rangerdir); cd '$LASTDIR'"
+source $DOTFILES/config/zsh/aliases

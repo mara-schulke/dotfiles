@@ -1,0 +1,19 @@
+# nvm config
+NVM_DIR="$DOTFILES/dependencies/nvm"
+NVM_AUTO_USE=true
+# NVM_LAZY_LOAD=true
+
+ZSH_THEME="robbyrussell"
+CASE_SENSITIVE="true"
+DISABLE_AUTO_TITLE="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_MAGIC_FUNCTIONS=true
+
+plugins=(
+	git
+	git-flow
+	jira
+	npm
+	nvm
+	osx
+)
