@@ -30,11 +30,10 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 source $DOTFILES/dependencies/zsh-nvm/zsh-nvm.plugin.zsh
-# source $DOTFILES/dependencies/powerlevel10k/powerlevel10k.zsh-theme
+source $DOTFILES/config/zsh/prompt
 
-setopt PROMPT_SUBST
-PROMPT='$(basename "$PWD") $(current_branch) λ ' # use only current dir instead of whole path
 
 # misc
-alias static-ranger="ranger"
-alias ranger="ranger --choosedir=$DOTFILES/tmp/.rangerdir; LASTDIR=$(cat $DOTFILES/tmp/.rangerdir); cd '$LASTDIR'"
+alias lock="pmset displaysleepnow"
+#alias static-ranger="ranger"
+# alias ranger="ranger --choosedir=$DOTFILES/tmp/.rangerdir; LASTDIR=$(cat $DOTFILES/tmp/.rangerdir); cd '$LASTDIR'"
