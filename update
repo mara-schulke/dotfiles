@@ -12,16 +12,14 @@ DOTFILES_LATEST_VERSION="$(curl -fsSL https://raw.githubusercontent.com/schulke-
 # update functions
 
 main() {
-	echo "updating dotfiles"
+	echo "updating dotfiles $DOTFILES_VERSION -> $DOTFILES_LATEST_VERSION"
 
     if [ $DOTFILES_VERSION == $DOTFILES_LATEST_VERSION ]; then
         echo "-> already up to date"
         return 0
     fi
 
-    echo "$DOTFILES_VERSION -> $DOTFILES_LATEST_VERSION"
 	echo
-
 	echo "-> clearing dependencies and temp files"
 	# dotfiles-clear-directories
 	echo "-> downloading dotfiles $DOTFILES_LATEST_VERSION"
@@ -44,8 +42,12 @@ main() {
         exit 1
     }
 
-    cd -
+    cd - &>/dev/null
 	echo "-> installing dependencies"
+
+    echo
+
+    echo "dotfiles $DOTFILES_LATEST_VERSION are now installed."
 }
 
 main
