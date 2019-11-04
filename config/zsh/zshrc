@@ -34,5 +34,6 @@ source $DOTFILES/config/zsh/prompt
 
 
 # misc
-alias static-ranger="ranger"
+alias lock="pmset displaysleepnow"
+#alias static-ranger="ranger"
 # alias ranger="ranger --choosedir=$DOTFILES/tmp/.rangerdir; LASTDIR=$(cat $DOTFILES/tmp/.rangerdir); cd '$LASTDIR'"
