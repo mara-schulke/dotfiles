@@ -18,7 +18,7 @@ main() {
 
 	echo "-> clearing dependencies and temp files"
 	# dotfiles-clear-directories
-	echo "-> downloading dotfiles $(dotfiles-latest-version)"
+	echo "-> downloading dotfiles $DOTFILES_LATEST_VERSION"
     cd $DOTFILES
     git stash
     git pull --force
