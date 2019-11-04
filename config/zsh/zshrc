@@ -33,7 +33,7 @@ source $DOTFILES/dependencies/zsh-nvm/zsh-nvm.plugin.zsh
 # source $DOTFILES/dependencies/powerlevel10k/powerlevel10k.zsh-theme
 
 setopt PROMPT_SUBST
-current-branch-formatted() {
+formatted-current-branch() {
     local BRANCH="$(current_branch)"
     local LEN=${#BRANCH}
 
@@ -43,7 +43,7 @@ current-branch-formatted() {
         echo " "
     fi
 }
-PROMPT='$(basename "$PWD")$(current_branch)λ ' # use only current dir instead of whole path
+PROMPT='$(basename "$PWD")$(formatted-current-branch)λ ' # use only current dir instead of whole path
 
 # misc
 alias static-ranger="ranger"
