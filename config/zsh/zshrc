@@ -43,7 +43,7 @@ current-branch-formatted() {
         echo " "
     fi
 }
-PROMPT='$(basename "$PWD") $(current_branch) λ ' # use only current dir instead of whole path
+PROMPT='$(basename "$PWD")$(current_branch)λ ' # use only current dir instead of whole path
 
 # misc
 alias static-ranger="ranger"
