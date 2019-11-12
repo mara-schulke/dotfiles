@@ -18,3 +18,6 @@ source $DOTFILES/dependencies/zsh-nvm/zsh-nvm.plugin.zsh
 # load configuration
 source $DOTFILES/config/zsh/prompt
 source $DOTFILES/config/zsh/aliases
+
+clear
+neofetch
