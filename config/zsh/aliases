@@ -1,2 +1,0 @@
-alias lock="pmset displaysleepnow"
-# alias ranger="ranger --choosedir=$DOTFILES/tmp/.rangerdir; LASTDIR=$(cat $DOTFILES/tmp/.rangerdir); cd '$LASTDIR'"
