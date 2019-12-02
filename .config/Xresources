@@ -1,41 +1,41 @@
 !urxvt color scheme:
 
 ! special
-*.foreground:   #ffffff
-*.background:   #16171a
-*.cursorColor:  #ffffff
+*.foreground:   #c5c5c8
+*.background:   #090909
+*.cursorColor:  #c5c5c8
 
 ! black
-*.color0:       #000000
-*.color8:       #2f3239
+*.color0:       #1a1b1d
+*.color8:       #202122
 
 ! red
-*.color1:       #fc6a5d
-*.color9:       #ff816f
+*.color1:       #a03e3e
+*.color9:       #cc6666
 
 ! green
-*.color2:       #91d462
-*.color10:      #8ad1c3
+*.color2:       #8c9440
+*.color10:      #b5bd68
 
 ! yellow
-*.color3:       #fd8f3f
-*.color11:      #ffc799
+*.color3:       #de935f
+*.color11:      #f0c674
 
 ! blue
-*.color4:       #3c93fd
-*.color12:      #b3d7ff
+*.color4:       #5f819d
+*.color12:      #81a2be
 
 ! magenta
-*.color5:       #a79df8
-*.color13:      #b9bbf8
+*.color5:       #85678f
+*.color13:      #b294bb
 
 ! cyan
-*.color6:       #84f0eb
-*.color14:      #b3f1ff
+*.color6:       #5e8d87
+*.color14:      #8abeb7
 
 ! white
-*.color7:       #c2c3c5
-*.color15:      #dfdfe0
+*.color7:       #707880
+*.color15:      #c5c8c6
 
 !urxvt fonts: 
 
