@@ -2,7 +2,7 @@
 
 ! special
 *.foreground:   #c5c5c8
-*.background:   #090909
+*.background:   #0c0b0b
 *.cursorColor:  #c5c5c8
 
 ! black
@@ -22,20 +22,21 @@
 *.color11:      #f0c674
 
 ! blue
-*.color4:       #5f819d
-*.color12:      #81a2be
+*.color4:       #5e8bb0
+*.color12:      #85aed0
 
 ! magenta
 *.color5:       #85678f
 *.color13:      #b294bb
 
 ! cyan
-*.color6:       #5e8d87
-*.color14:      #8abeb7
+*.color6:       #569fb3
+*.color14:      #79b8df
 
 ! white
 *.color7:       #707880
-*.color15:      #c5c8c6
+*.color15:      #dbdfdd
+
 
 !urxvt fonts: 
 
