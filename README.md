@@ -1,3 +1,3 @@
 # Dotfiles
 
-![screenshot](./assets/screenshot.jpg)
+![screenshot](https://static.maximilianschulke.com/arch/screenshots/home.jpg)
