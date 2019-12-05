@@ -15,11 +15,10 @@ source $HOME/.zsh/plugins
 
 # load dependencies
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
-# source $HOME/.zsh/dependencies/zsh-nvm/zsh-nvm.plugin.zsh
+source $HOME/.zsh-nvm/zsh-nvm.plugin.zsh
 
 # load configuration
 source $HOME/.zsh/prompt
 source $HOME/.zsh/aliases
 
 clear
-neofetch
