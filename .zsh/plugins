@@ -1,5 +1,4 @@
 # nvm config
-NVM_DIR="~/dependencies/nvm"
 NVM_AUTO_USE=true
 # NVM_LAZY_LOAD=true
 
@@ -15,5 +14,6 @@ plugins=(
 	jira
 	npm
 	nvm
+	zsh-nvm
 	osx
 )
