@@ -49,6 +49,7 @@ gaps outer 10
 
 # start a terminal
 bindsym $mod+Return exec alacritty
+bindsym $mod+Print exec scrot
 
 # kill focused window
 bindsym $mod+q kill
