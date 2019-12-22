@@ -22,4 +22,3 @@ source $HOME/.zsh/prompt
 source $HOME/.zsh/aliases
 
 clear
-neofetch

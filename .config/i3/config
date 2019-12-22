@@ -188,6 +188,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 new_window 1pixel
+mouse_warping none
 
 bar {
     colors {
@@ -203,13 +204,10 @@ bar {
         binding_mode       $background  $background  $foreground
     }
 
-    position top
     status_command i3status
     strip_workspace_numbers yes
     separator_symbol "::"
 }
 
 exec_always --no-startup-id feh --bg-scale $HOME/Dropbox/personal/desktop-backgrounds/ios-13.jpg
-exec firefox
-exec slack
-exec spotify
+exec --no-startup-id i3-msg workspace $ws1
