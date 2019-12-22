@@ -15,7 +15,6 @@ source $HOME/.zsh/plugins
 
 # load dependencies
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
-source $HOME/.zsh-nvm/zsh-nvm.plugin.zsh
 
 # load configuration
 source $HOME/.zsh/prompt
