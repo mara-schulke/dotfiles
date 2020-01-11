@@ -12,7 +12,6 @@ plugins=(
 	git
 	git-flow
 	jira
-	npm
 	nvm
 	zsh-nvm
 	osx
