@@ -6,10 +6,6 @@ export PATH="$GOPATH/bin:$PATH"
 export GPG_TTY=$(tty)
 export ZSH="$HOME/.oh-my-zsh"
 
-if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-	exec startx
-fi
-
 # load plugin configuration
 source $HOME/.zsh/plugins
 
