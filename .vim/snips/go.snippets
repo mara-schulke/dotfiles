@@ -1,0 +1,37 @@
+snippet fhttp "Http handler" b
+func $1 (w http.ResponseWriter, r *http.Request) $2 {
+	$3
+}
+$0
+endsnippet
+
+snippet iferr "Generic error handling" b
+if err != nil {
+	$1
+}
+$0
+endsnippet
+
+snippet imp "Multiline import" b
+import (
+	"$1"
+)
+$0
+endsnippet
+
+snippet errl "Error with log.Fatal()" b
+if err != nil {
+	log.Fatal(err)
+}
+$0
+endsnippet
+
+snippet pl "fmt.Println" b
+fmt.Println($1)
+$0
+endsnippet
+
+snippet pf "fmt.Printf" b
+fmt.Printf("$1", $2)
+$0
+endsnippet

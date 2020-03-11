@@ -1,0 +1,62 @@
+snippet cb "Insert Code Block" b
+{% highlight $1 %}
+$2
+{% endhighlight %}
+$0
+endsnippet
+
+snippet lnk "Markdown Link"
+[$1]($2)$0
+endsnippet
+
+snippet hc "HTML Comment" b
+<!--
+$1
+-->
+$0
+endsnippet
+
+snippet jfm "Jekyll Front-Matter" b
+---
+title: $1
+excerpt: $2
+permalink: /$3/
+teaser: $4
+image_dir: $5
+tags: [ $6 ]
+tutorial: $7
+---
+$0
+endsnippet
+
+snippet img "Image" b
+{% include image.html
+	name="$1"
+	alt="$2"
+	maxw="$3"
+%}
+$0
+endsnippet
+
+snippet alert "Include alert" b
+{% include alert.html
+title="$1"
+content="$2"
+%}
+endsnippet
+
+snippet gif "Include Gif" b
+{% include gif.html
+	mp4="$1"
+	webm="$2"
+	poster="$3"
+%}
+endsnippet
+
+snippet b "Bold"
+**$1**$0
+endsnippet
+
+snippet i "Italics"
+__$1__$0
+endsnippet
