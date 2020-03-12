@@ -1,2 +1,12 @@
 alias lock="i3lock"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+
+# django
+alias djangorun="python ./src/manage.py runserver 0.0.0.0:8000"
+alias djangoinstall="pip install -r ./resources/requirements.txt"
+
+# moccu
+alias pack="npx webpack"
+
+# util
+alias moccu-pack-and-run="concurrently \"pack\" \"djangorun\""
