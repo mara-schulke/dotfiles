@@ -1,11 +1,11 @@
 export GOPATH=$(go env GOPATH)
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
-export PATH=$PATH:/usr/local/mysql/bin
+export PATH="$PATH:/usr/local/mysql/bin"
 
 export GPG_TTY=$(tty)
 export ZSH="$HOME/.oh-my-zsh"
