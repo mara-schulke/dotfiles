@@ -1,12 +1,40 @@
 alias lock="i3lock"
+
+# dotfiles
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+alias dfs="dotfiles status"
+alias dfa="dotfiles add" 
+alias dfc="dotfiles commit"
+alias dff="dotfiles fetch"
+alias dfp="dotfiles push"
 
 # django
-alias djangorun="python ./src/manage.py runserver 0.0.0.0:8000"
+alias django="python ./src/manage.py"
+alias djangorun="django runserver 0.0.0.0:8000"
 alias djangoinstall="pip install -r ./resources/requirements.txt"
 
 # moccu
-alias pack="npx webpack"
+# add-node-modules-to-path() {
+#    if [ ! -f "$PWD/package.json" ]; then
+#        echo "This is not a node project!" >&2
+#        exit 1
+#    fi
 
-# util
-alias moccu-pack-and-run="concurrently \"pack\" \"djangorun\""
+#    export PRE_NODE_MODULES_BIN_PATH="$PATH"
+#    export PATH="$PWD/node_modules/.bin:$PATH"
+#}
+
+#remove-node-modules-from-path() {
+#    if [ ! -f "$PWD/package.json" ]; then
+#        echo "This is not a node project!" >&2
+#        exit 1
+#    fi
+
+#    if [ ! -v SOME_VARIABLE ]; then
+#        echo "No path backup to revert to!" >&2
+#        exit 1
+#    fi
+
+#    export PATH="$OLD_PATH"
+#    unset PRE_NODE_MODULES_BIN_PATH
+#}
