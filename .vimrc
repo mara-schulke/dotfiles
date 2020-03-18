@@ -15,6 +15,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " ux
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'majutsushi/tagbar'
 Plugin 'ervandew/supertab'
 Plugin 'wesQ3/vim-windowswap'
@@ -33,6 +34,7 @@ Plugin 'tpope/vim-speeddating'
 
 " generic code support
 " Plugin 'jakedouglas/exuberant-ctags'
+Plugin 'preservim/nerdcommenter'
 Plugin 'honza/vim-snippets'
 Plugin 'Townk/vim-autoclose'
 Plugin 'tomtom/tcomment_vim'
@@ -118,6 +120,12 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 
+" nerdcommenter
+let g:NERDSpaceDelims = 1                   " Add spaces after comment delimiters by default
+let g:NERDCompactSexyComs = 1               " Use compact syntax for prettified multi-line comments
+let g:NERDCommentEmptyLines = 1             " Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDTrimTrailingWhitespace = 1        " Enable trimming of trailing whitespace when uncommenting
+
 " neomake
 autocmd! BufWritePost * Neomake
 let g:neomake_elixir_enabled_makers = ['mix', 'credo', 'dogma']
@@ -197,6 +205,9 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 " misc
 let g:elite_mode=1
 
+""""""""""""""""""""
+
+map <C-e> :NERDTreeToggle<CR>
 
 " ressources:
 " - https://github.com/amacgregor/dot-files/blob/master/vimrc
