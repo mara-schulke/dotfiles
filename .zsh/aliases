@@ -5,6 +5,7 @@ alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias dfs="dotfiles status"
 alias dfa="dotfiles add" 
 alias dfc="dotfiles commit"
+alias dfco="dotfiles checkout"
 alias dff="dotfiles fetch"
 alias dfp="dotfiles push"
 
