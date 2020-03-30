@@ -20,6 +20,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'ervandew/supertab'
 Plugin 'majutsushi/tagbar'
@@ -27,15 +28,13 @@ Plugin 'christoomey/vim-tmux-navigator'
 
 " generic code support
 Plugin 'HerringtonDarkholme/yats.vim'
+Plugin 'lambdatoast/elm.vim'
 
 " markdown / writing
 Plugin 'reedes/vim-pencil'
 Plugin 'tpope/vim-markdown'
 Plugin 'jtratner/vim-flavored-markdown'
 Plugin 'LanguageTool'
-
-" elm
-Plugin 'lambdatoast/elm.vim'
 
 " customization 
 Plugin 'AnsiEsc.vim'
@@ -67,6 +66,7 @@ set nowrap
 set backspace=indent,eol,start
 set number
 set laststatus=2
+let g:elite_mode=1
 
 " tabs
 set tabstop=4
@@ -121,18 +121,26 @@ augroup END
 " supertab
 let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 
-" omni completions 
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+" coc
+let g:coc_global_extensions = [
+  \ 'coc-html',
+  \ 'coc-css',
+  \ 'coc-tsserver',
+  \ 'coc-python',
+  \ 'coc-java',
+  \ 'coc-rls',
+  \ 'coc-vimtex',
+  \ 'coc-vetur',
+  \ 'coc-json', 
+  \ 'coc-pairs',
+  \ 'coc-snippets',
+  \ 'coc-git',
+  \ 'coc-emmet',
+  \ 'coc-highlight',
+  \ 'coc-tslint',
+  \ 'coc-eslint', 
+  \ 'coc-prettier', 
+  \ ]
 
 " fzf
 let g:fzf_action = {
@@ -159,11 +167,6 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
-
-
-
-" misc
-let g:elite_mode=1
 
 """"""""""""""""""""
 
