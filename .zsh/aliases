@@ -39,3 +39,5 @@ alias djangoinstall="pip install -r ./resources/requirements.txt"
 #    export PATH="$OLD_PATH"
 #    unset PRE_NODE_MODULES_BIN_PATH
 #}
+
+alias vim="nvim"
