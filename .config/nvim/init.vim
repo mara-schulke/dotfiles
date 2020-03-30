@@ -10,15 +10,16 @@ filetype off			" required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" core 
+" core
 Plugin 'VundleVim/Vundle.vim'
 
 " ux
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'scrooloose/nerdcommenter'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -62,17 +63,21 @@ filetype plugin indent on	" required
 
 """"""""""""""""" config """"""""""""""""""
 " core
+let g:elite_mode=1
 set nowrap
 set backspace=indent,eol,start
 set number
 set laststatus=2
-let g:elite_mode=1
+set list
+set listchars=tab:➞\ ,extends:›,precedes:‹,nbsp:·,trail:·,space:·
+autocmd ColorScheme * highlight SpecialKey ctermfg=darkgray
+autocmd ColorScheme * highlight NonText ctermfg=darkgray
 
 " tabs
 set tabstop=4
 set shiftwidth=4
 set smarttab
-set expandtab
+set noexpandtab
 
 " theme
 syntax on
@@ -81,7 +86,7 @@ colorscheme abstract
 let g:spacegray_underline_search = 1
 let g:spacegray_italicize_comments = 1
 
-" airline 
+" airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme='hybrid'
@@ -146,14 +151,15 @@ let g:coc_global_extensions = [
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
+  \ 'ctrl-v': 'vsplit'
+  \ }
 
 let g:fzf_layout = { 'down': '~40%' }
 let g:fzf_layout = { 'window': 'enew' }
 let g:fzf_layout = { 'window': '-tabnew' }
 
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
+let g:fzf_colors = {
+  \ 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
   \ 'hl':      ['fg', 'Comment'],
   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
@@ -164,13 +170,16 @@ let g:fzf_colors =
   \ 'pointer': ['fg', 'Exception'],
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+  \ 'header':  ['fg', 'Comment']
+  \ }
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 """"""""""""""""""""
 
 map <C-e> :NERDTreeToggle<CR>
+map <C-f> <Plug>Sneak_s
+map <C-F> <Plug>Sneak_S
 
 " ressources:
 " - https://github.com/amacgregor/dot-files/blob/master/vimrc
