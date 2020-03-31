@@ -37,26 +37,19 @@ Plugin 'tpope/vim-markdown'
 Plugin 'jtratner/vim-flavored-markdown'
 Plugin 'LanguageTool'
 
-" customization 
-Plugin 'AnsiEsc.vim'
-Plugin 'jdsimcoe/abstract.vim'
-Plugin 'wadackel/vim-dogrun'
-Plugin 'nightsense/snow'
+" customization
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'sjl/badwolf'
-Plugin 'tomasr/molokai'
-Plugin 'morhetz/gruvbox'
-Plugin 'chriskempson/base16-vim'
-Plugin 'w0ng/vim-hybrid'
-Plugin 'AlessandroYorba/Sierra'
-Plugin 'daylerees/colour-schemes'
-Plugin 'effkay/argonaut.vim'
-Plugin 'ajh17/Spacegray.vim'
-Plugin 'atelierbram/Base2Tone-vim'
-Plugin 'colepeters/spacemacs-theme.vim'
-Plugin 'dylanaraps/wal.vim'
+
+" themes
+Plugin 'jdsimcoe/abstract.vim'
 Plugin 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plugin 'franbach/miramare'
+Plugin 'nightsense/snow'
+Plugin 'sainnhe/gruvbox-material'
+Plugin 'lifepillar/vim-wwdc17-theme'
+Plugin 'arzg/vim-colors-xcode'
+Plugin 'w0ng/vim-hybrid'
 
 call vundle#end()		" required
 filetype plugin indent on	" required
@@ -82,7 +75,7 @@ set noexpandtab
 " theme
 syntax on
 set t_Co=256
-colorscheme abstract
+colorscheme hybrid
 let g:spacegray_underline_search = 1
 let g:spacegray_italicize_comments = 1
 
