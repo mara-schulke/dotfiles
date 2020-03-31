@@ -21,13 +21,14 @@ Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'vim-syntastic/syntastic'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'ervandew/supertab'
 Plugin 'majutsushi/tagbar'
 Plugin 'christoomey/vim-tmux-navigator'
 
 " generic code support
+Plugin 'vim-syntastic/syntastic'
+Plugin 'gcorne/vim-sass-lint'
 Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'lambdatoast/elm.vim'
 
@@ -47,6 +48,7 @@ Plugin 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plugin 'franbach/miramare'
 Plugin 'nightsense/snow'
 Plugin 'sainnhe/gruvbox-material'
+Plugin 'sainnhe/forest-night'
 Plugin 'lifepillar/vim-wwdc17-theme'
 Plugin 'arzg/vim-colors-xcode'
 Plugin 'w0ng/vim-hybrid'
@@ -92,13 +94,21 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
+let g:syntastic_aggregate_errors = 1
 let g:syntastic_check_on_open = 1
+let g:syntastic_sass_checkers=["sasslint"]
 
-" nerdcommenter
+" nerd
+let g:NERDTreeWinSize=60
 let g:NERDSpaceDelims = 1                   " Add spaces after comment delimiters by default
 let g:NERDCompactSexyComs = 1               " Use compact syntax for prettified multi-line comments
 let g:NERDCommentEmptyLines = 1             " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1        " Enable trimming of trailing whitespace when uncommenting
+
+" tagbar
+let g:tagbar_iconchars = ['+', '-']
+let g:tagbar_show_linenumbers = 1
+let g:tagbar_width = 60
 
 " markdown
 augroup markdown
@@ -115,9 +125,6 @@ augroup pencil
   autocmd FileType markdown,mkd call pencil#init()
   autocmd FileType text         call pencil#init()
 augroup END
-
-" supertab
-let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 
 " coc
 let g:coc_global_extensions = [
@@ -171,8 +178,7 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 """"""""""""""""""""
 
 map <C-e> :NERDTreeToggle<CR>
-map <C-f> <Plug>Sneak_s
-map <C-F> <Plug>Sneak_S
+map <C-t> :TagbarToggle<CR>
 
 " ressources:
 " - https://github.com/amacgregor/dot-files/blob/master/vimrc
