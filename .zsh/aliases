@@ -42,3 +42,8 @@ alias djangoinstall="pip install -r ./resources/requirements.txt"
 #}
 
 alias vim="nvim"
+
+# exa
+alias ls="exa --long --all --icons --group-directories-first --git --header"
+alias lsd="ls -D"
+alias lst="ls -T --git-ignore -I=.git"
