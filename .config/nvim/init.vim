@@ -99,11 +99,16 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_sass_checkers=["sasslint"]
 
 " nerd
-let g:NERDTreeWinSize=60
+let g:NERDTreeShowHidden=1                  " Show hidden files
+let g:NERDTreeWinSize=60                    " Set the window width of NERDTree
 let g:NERDSpaceDelims = 1                   " Add spaces after comment delimiters by default
 let g:NERDCompactSexyComs = 1               " Use compact syntax for prettified multi-line comments
 let g:NERDCommentEmptyLines = 1             " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1        " Enable trimming of trailing whitespace when uncommenting
+let g:NERDTreeDirArrowExpandable = '+'      " Set the expand icon
+let g:NERDTreeDirArrowCollapsible = '-'     " Set the collapse icon
+autocmd VimEnter * NERDTree                 " Open NERDTree on startup
+autocmd VimEnter * wincmd p                 " Focus the primary buffer after NERDTree opens
 
 " tagbar
 let g:tagbar_iconchars = ['+', '-']
