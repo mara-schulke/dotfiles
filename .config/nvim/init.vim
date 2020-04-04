@@ -65,8 +65,10 @@ set number
 set laststatus=2
 set list
 set listchars=tab:➞\ ,extends:›,precedes:‹,nbsp:·,trail:·,space:·
+set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*
 autocmd ColorScheme * highlight SpecialKey ctermfg=darkgray
 autocmd ColorScheme * highlight NonText ctermfg=darkgray
+
 
 " tabs
 set tabstop=4
@@ -99,6 +101,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_sass_checkers=["sasslint"]
 
 " nerd
+let g:NERDTreeRespectWildIgnore=1           " Hide the files that match wildignore
 let g:NERDTreeShowHidden=1                  " Show hidden files
 let g:NERDTreeWinSize=60                    " Set the window width of NERDTree
 let g:NERDSpaceDelims = 1                   " Add spaces after comment delimiters by default
@@ -107,6 +110,10 @@ let g:NERDCommentEmptyLines = 1             " Allow commenting and inverting emp
 let g:NERDTrimTrailingWhitespace = 1        " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTreeDirArrowExpandable = '+'      " Set the expand icon
 let g:NERDTreeDirArrowCollapsible = '-'     " Set the collapse icon
+let g:NERDTreeIgnore=[
+  \ 'node_modules',
+  \ '.git'
+  \ ]
 autocmd VimEnter * NERDTree                 " Open NERDTree on startup
 autocmd VimEnter * wincmd p                 " Focus the primary buffer after NERDTree opens
 
