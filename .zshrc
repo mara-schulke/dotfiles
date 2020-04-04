@@ -9,6 +9,7 @@ export PATH="$PATH:/usr/local/mysql/bin"
 
 export GPG_TTY=$(tty)
 export ZSH="$HOME/.oh-my-zsh"
+export ZSH_DISABLE_COMPFIX=true
 
 # load plugin configuration
 source $HOME/.zsh/plugins
@@ -35,5 +36,3 @@ if which pyenv > /dev/null; then
 	eval "$(pyenv init -)"
 	pyenv virtualenvwrapper
 fi
-
-source /Users/maximilians/Library/Preferences/org.dystroy.broot/launcher/bash/br
