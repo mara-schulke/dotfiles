@@ -192,6 +192,14 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 map <C-e> :NERDTreeToggle<CR>
 map <C-t> :TagbarToggle<CR>
 
+nnoremap <M-Up> :m -2<CR>
+inoremap <M-Up> <Esc>:m -2<CR>==gi
+vnoremap <M-Up> :m '<-2<CR>gv=gv
+nnoremap <M-Down> :m +1<CR>
+inoremap <M-Down> <Esc>:m +1<CR>==gi
+vnoremap <M-Down> :m '>+1<CR>gv=gv
+
+
 " ressources:
 " - https://github.com/amacgregor/dot-files/blob/master/vimrc
 " - https://dev.to/allanmacgregor/vim-is-the-perfect-ide-e80
