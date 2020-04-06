@@ -2,8 +2,8 @@
 """"""""""" github/schulke-214 """"""""""""
 """""""""""""""""""""""""""""""""""""""""""
 
-set nocompatible		" required
-filetype off			" required
+set nocompatible                           " required
+filetype off                               " required
 
 """"""""""""""""" vundle """"""""""""""""""
 
@@ -25,6 +25,8 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'ervandew/supertab'
 Plugin 'majutsushi/tagbar'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
 
 " generic code support
 Plugin 'vim-syntastic/syntastic'
@@ -58,17 +60,18 @@ filetype plugin indent on	" required
 
 """"""""""""""""" config """"""""""""""""""
 " core
-let g:elite_mode=1
 set nowrap
 set backspace=indent,eol,start
 set number
 set laststatus=2
+set encoding=utf-8
 set list
 set listchars=tab:➞\ ,extends:›,precedes:‹,nbsp:·,trail:·,space:·
 set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*
 autocmd ColorScheme * highlight SpecialKey ctermfg=darkgray
 autocmd ColorScheme * highlight NonText ctermfg=darkgray
 
+let g:elite_mode=1
 
 " tabs
 set tabstop=4
@@ -101,21 +104,21 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_sass_checkers=["sasslint"]
 
 " nerd
-let g:NERDTreeRespectWildIgnore=1           " Hide the files that match wildignore
-let g:NERDTreeShowHidden=1                  " Show hidden files
-let g:NERDTreeWinSize=60                    " Set the window width of NERDTree
-let g:NERDSpaceDelims = 1                   " Add spaces after comment delimiters by default
-let g:NERDCompactSexyComs = 1               " Use compact syntax for prettified multi-line comments
-let g:NERDCommentEmptyLines = 1             " Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDTrimTrailingWhitespace = 1        " Enable trimming of trailing whitespace when uncommenting
-let g:NERDTreeDirArrowExpandable = '+'      " Set the expand icon
-let g:NERDTreeDirArrowCollapsible = '-'     " Set the collapse icon
+let g:NERDTreeRespectWildIgnore=1          " Hide the files that match wildignore
+let g:NERDTreeShowHidden=1                 " Show hidden files
+let g:NERDTreeWinSize=60                   " Set the window width of NERDTree
+let g:NERDSpaceDelims = 1                  " Add spaces after comment delimiters by default
+let g:NERDCompactSexyComs = 1              " Use compact syntax for prettified multi-line comments
+let g:NERDCommentEmptyLines = 1            " Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDTrimTrailingWhitespace = 1       " Enable trimming of trailing whitespace when uncommenting
+let g:NERDTreeDirArrowExpandable = '+'     " Set the expand icon
+let g:NERDTreeDirArrowCollapsible = '-'    " Set the collapse icon
 let g:NERDTreeIgnore=[
   \ 'node_modules',
   \ '.git'
   \ ]
-autocmd VimEnter * NERDTree                 " Open NERDTree on startup
-autocmd VimEnter * wincmd p                 " Focus the primary buffer after NERDTree opens
+autocmd VimEnter * NERDTree                " Open NERDTree on startup
+autocmd VimEnter * wincmd p                " Focus the primary buffer after NERDTree opens
 
 " tagbar
 let g:tagbar_iconchars = ['+', '-']
