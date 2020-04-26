@@ -25,6 +25,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'ervandew/supertab'
 Plugin 'majutsushi/tagbar'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'haya14busa/is.vim'
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin 'junegunn/fzf.vim'
 
@@ -117,8 +118,6 @@ let g:NERDTreeIgnore=[
   \ 'node_modules',
   \ '.git'
   \ ]
-autocmd VimEnter * NERDTree                " Open NERDTree on startup
-autocmd VimEnter * wincmd p                " Focus the primary buffer after NERDTree opens
 
 " tagbar
 let g:tagbar_iconchars = ['+', '-']
@@ -170,9 +169,6 @@ let g:fzf_action = {
   \ }
 
 let g:fzf_layout = { 'down': '~40%' }
-let g:fzf_layout = { 'window': 'enew' }
-let g:fzf_layout = { 'window': '-tabnew' }
-
 let g:fzf_colors = {
   \ 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -201,6 +197,8 @@ vnoremap <M-Up> :m '<-2<CR>gv=gv
 nnoremap <M-Down> :m +1<CR>
 inoremap <M-Down> <Esc>:m +1<CR>==gi
 vnoremap <M-Down> :m '>+1<CR>gv=gv
+
+nnoremap <Esc> :nohlsearch<CR>
 
 
 " ressources:
