@@ -1,1 +1,4 @@
 export EDITOR="$(which nvim)"
+
+export JABBA_HOME="$HOME/.jabba"
+[ -s "$JABBA_HOME/jabba.sh" ] && source "$JABBA_HOME/jabba.sh"
