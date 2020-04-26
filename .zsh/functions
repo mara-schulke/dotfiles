@@ -1,3 +1,9 @@
 gh-clone() {
 	git clone "git@github.com:$1"
 }
+
+java-exec() {
+	javac $1
+	java "${1//.java}"
+	rm ./*.class
+}
