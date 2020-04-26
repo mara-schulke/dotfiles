@@ -47,3 +47,6 @@ alias vim="nvim"
 alias ls="exa --long --all --icons --group-directories-first --git --header"
 alias lsd="ls -D"
 alias lst="ls -T --git-ignore -I=.git"
+
+# ag
+alias ag='ag --path-to-ignore ~/.config/ag/.ignore'
