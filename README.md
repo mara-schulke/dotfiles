@@ -1,6 +1,6 @@
 # Dotfiles
 
-![banana](./dotfiles-alternative.png)
+![banana](./dotfiles-alt.png)
 ![tokyo](./dotfiles.png)
 
 ```zsh
