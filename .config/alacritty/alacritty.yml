@@ -26,7 +26,7 @@ window:
 # Font configuration
 font:
   normal:
-    family: FuraCode Nerd Font
+    family: monospace
     style: Regular
 
   # Bold font face
@@ -63,7 +63,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 11.0
+  size: 6.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
