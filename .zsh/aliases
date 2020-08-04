@@ -1,6 +1,13 @@
 alias lock="i3lock"
 alias reload="source ~/.zshrc"
 
+alias firefox="firefox-developer-edition"
+alias chromium="chromium --kiosk --new-window"
+alias search="firefox --search"
+
+alias screenlayout="$HOME/.zsh/utils/screenlayout"
+alias scrot='scrot ~/screenshots/%y%m%d-%H%M%S.png'
+
 # dotfiles
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias df="dotfiles"
@@ -15,32 +22,6 @@ alias dfp="dotfiles push"
 alias django="python ./src/manage.py"
 alias djangorun="django runserver 0.0.0.0:8000"
 alias djangoinstall="pip install -r ./resources/requirements.txt"
-
-# moccu
-# add-node-modules-to-path() {
-#    if [ ! -f "$PWD/package.json" ]; then
-#        echo "This is not a node project!" >&2
-#        exit 1
-#    fi
-
-#    export PRE_NODE_MODULES_BIN_PATH="$PATH"
-#    export PATH="$PWD/node_modules/.bin:$PATH"
-#}
-
-#remove-node-modules-from-path() {
-#    if [ ! -f "$PWD/package.json" ]; then
-#        echo "This is not a node project!" >&2
-#        exit 1
-#    fi
-
-#    if [ ! -v SOME_VARIABLE ]; then
-#        echo "No path backup to revert to!" >&2
-#        exit 1
-#    fi
-
-#    export PATH="$OLD_PATH"
-#    unset PRE_NODE_MODULES_BIN_PATH
-#}
 
 alias vim="nvim"
 
