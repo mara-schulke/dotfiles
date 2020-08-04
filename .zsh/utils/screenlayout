@@ -1,0 +1,31 @@
+#!/bin/python
+
+import click
+import os
+from pathlib import Path
+
+current = 0
+layouts = ['laptop', 'home']
+
+@click.group()
+def cli():
+    pass
+
+@cli.command()
+def toggle():
+    global current
+    current += 1
+
+    if current > len(layouts):
+        current = 0
+
+    load('-l' + layouts[current])
+
+@cli.command()
+@click.option('--layout', '-l', required=True, help='The layout you want to load')
+def load(layout):
+    os.system(str(Path.home()) + '/.screenlayout/' + layout + '.sh')
+
+
+if __name__ == '__main__':
+    cli()
