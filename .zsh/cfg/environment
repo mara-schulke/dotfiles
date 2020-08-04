@@ -1,4 +1,16 @@
+# general
 export EDITOR="$(which nvim)"
 
+# java
 export JABBA_HOME="$HOME/.jabba"
 [ -s "$JABBA_HOME/jabba.sh" ] && source "$JABBA_HOME/jabba.sh"
+
+# python
+export VIRTUALENVWRAPPER_HOOK_DIR=$HOME/workspace/.virtualenvs
+export PROJECT_HOME=$HOME/workspace/.virtualenvs
+export WORKON_HOME=$HOME/workspace/.virtualenvs
+
+if which pyenv > /dev/null; then
+	eval "$(pyenv init -)"
+	pyenv virtualenvwrapper
+fi
