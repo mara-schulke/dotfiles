@@ -7,7 +7,13 @@ import XMonad.Layout.Reflect
 import XMonad.Layout.Spacing
 import XMonad.Layout.BinarySpacePartition
 
-import XMonad.Util.Paste
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+
+import XMonad.Util.NamedScratchpad
+import XMonad.Util.Run
+import XMonad.Util.SpawnOnce
 
 import Data.Monoid
 import System.Exit
@@ -53,7 +59,7 @@ myBorderWidth = 2
 myModMask = mod4Mask
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor  = colorBackground
-myFocusedBorderColor = colorLightMagenta
+myFocusedBorderColor = colorMagenta
 
 
 -- hooks
@@ -62,15 +68,13 @@ myLayoutHook = layoutsWithGaps
   where
     layoutsWithGaps = spacingRaw False (Border 0 0 0 0) True (Border 5 5 5 5) True $ layouts
 
-    layouts = bsp ||| tiled ||| Full
-
+    layouts = bsp ||| Full
     bsp = reflectVert $ reflectHoriz $ emptyBSP
-    tiled   = Tall 1 1/2 3/100
 
-myManageHook = composeAll []
+myManageHook = namedScratchpadManageHook myScratchPads
 myEventHook = mempty
-myLogHook = return ()
 myStartupHook = return ()
+myLogHook = return ()
 
 -- bindings
 
@@ -111,12 +115,20 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
 
             -- programs
             , ((modm, xK_Return), spawn myTerm)
+            , ((modm, xK_space), spawn "rofi -combi-modi run,window -show combi -combi")
+            , ((modm .|. controlMask, xK_s), namedScratchpadAction myScratchPads "spotify")
+            , ((modm .|. controlMask, xK_m), namedScratchpadAction myScratchPads "slack")
+            , ((modm .|. controlMask, xK_d), namedScratchpadAction myScratchPads "discord")
+            , ((modm .|. controlMask, xK_v), namedScratchpadAction myScratchPads "netflix")
+            , ((modm .|. controlMask, xK_p), namedScratchpadAction myScratchPads "enpass")
+            , ((modm .|. controlMask, xK_Return), namedScratchpadAction myScratchPads "terminal")
 
             -- general
             --, ((controlMask, xK_v), pasteSelection)
             , ((0, xK_F1), spawn "pactl set-sink-mute 0 toggle")
             , ((0, xK_F2), spawn "pactl set-sink-volume 0 -5%")
             , ((0, xK_F3), spawn "pactl set-sink-volume 0 +5%")
+            , ((0, xK_F4), spawn "pactl set-source-mute 0 toggle")
             , ((0, xK_F5), spawn "xbacklight -dec 5")
             , ((0, xK_F6), spawn "xbacklight -inc 5")]
             ++
@@ -124,13 +136,13 @@ myKeys conf@(XConfig {modMask = modm}) = M.fromList $
                 | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
                 , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
-            -- ++ 
-            -- [((modm, k), focusNth i) | (i, k) <- zip [0 .. 8] [xK_1 ..]]
 
-
+myScratchPads :: [NamedScratchpad]
+myScratchPads = []
 
 main = do
-    xmonad defaults
+    xmproc <- spawnPipe "xmobar"
+    xmonad $ ewmh defaults
 
 defaults = def {
     terminal           = myTerm,
@@ -147,8 +159,8 @@ defaults = def {
     layoutHook         = myLayoutHook,
     manageHook         = myManageHook,
     handleEventHook    = myEventHook,
-    logHook            = myLogHook,
-    startupHook        = myStartupHook
+    startupHook        = myStartupHook,
+    logHook            = myLogHook
   }
 
 help :: String
