@@ -27,14 +27,6 @@ source $HOME/.zsh/cfg/environment
 source $HOME/.zsh/cfg/postgres
 
 
-# if [ OS = "linux" ] || [ OS = "linux2" ]; then
-#	if systemctl -q is-active graphical.target && [ ! $DISPLAY && $XDG_VTNR -eq 1 ]; then
-#		exec startx
-#	fi
-# fi
-
-if which pyenv > /dev/null; then
-	eval "$(pyenv init -)"
-	pyenv virtualenvwrapper
+if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+	exec startx
 fi
-
