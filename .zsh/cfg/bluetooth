@@ -1,0 +1,6 @@
+# store mac addresses of frequently used devices
+export DEVICE_MX_MASTER3="FE:EF:40:36:85:0A"
+export DEVICE_MX_KEYS="C0:A5:F2:A7:8C:37"
+export DEVICE_BOSE_REVOLVE="4C:87:5D:95:E9:29"
+
+

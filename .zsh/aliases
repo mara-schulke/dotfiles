@@ -5,7 +5,7 @@ alias firefox="firefox-developer-edition"
 alias chromium="chromium --kiosk --new-window"
 alias search="firefox --search"
 
-alias screenlayout="$HOME/.zsh/utils/screenlayout"
+alias screenlayout="runhaskell $HOME/.zsh/utils/screenlayout"
 alias scrot='scrot ~/screenshots/%y%m%d-%H%M%S.png'
 
 # dotfiles

@@ -1,31 +1,29 @@
-#!/bin/python
+import System.Environment
+import System.Exit
 
-import click
-import os
-from pathlib import Path
+data Flag
+    = Help
+    | Version
+    deriving (Eq,Ord,Enum,Show,Bounded)
 
-current = 0
-layouts = ['laptop', 'home']
+toFlag :: String -> IO ()
+toFlag x
+    | "-h" = help >> exit
+    | "-v" = version >> exit
+    | otherwise = die
 
-@click.group()
-def cli():
-    pass
+help :: IO (String)
+help x = putStrLn x
 
-@cli.command()
-def toggle():
-    global current
-    current += 1
+exit :: IO ()
+exit = exitWith ExitSuccess
 
-    if current > len(layouts):
-        current = 0
+die :: IO ()
+die = exitWith (ExitFailure 1)
 
-    load('-l' + layouts[current])
+parse :: [String] -> [Flag]
+parse [] = []
+parse xs = map toFlag xs
 
-@cli.command()
-@click.option('--layout', '-l', required=True, help='The layout you want to load')
-def load(layout):
-    os.system(str(Path.home()) + '/.screenlayout/' + layout + '.sh')
-
-
-if __name__ == '__main__':
-    cli()
+main :: IO ()
+main = getArgs >>= parse >>= putStr . screenlayout
