@@ -17,8 +17,8 @@ set $lightcyan      #6cdbb6
 set $white          #707880
 set $lightwhite     #dbdfdd
 
-set $primary        #f0c674
-set $secondary      #de935f
+set $primary        #b294bb
+set $secondary      #85678f
 
 set $mod Mod4
 
@@ -29,9 +29,9 @@ font pango:monospace, FontAwesomePro 10
 
 #                       BORDER      BACKGROUND   TEXT        INDICATOR   CHILD_BORDER
 client.focused          $primary    $primary     $black      $primary    $primary
-client.unfocused        $black      $black       $white      $black      $secondary
-client.focused_inactive $black      $black       $white      $black      $secondary
-client.urgent           $secondary  $secondary   $black      $secondary  $secondary
+client.unfocused        $black      $black       $white      $black      $black       #$secondary
+client.focused_inactive $black      $black       $white      $black      $black       #$secondary
+client.urgent           $secondary  $secondary   $black      $secondary  $black       #$secondary
 client.background       $black
 
 # Use pactl to adjust volume in PulseAudio.
@@ -49,8 +49,8 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5
 floating_modifier $mod
 
 # gaps
-gaps inner 5
-gaps outer 5
+gaps inner 0
+gaps outer 0
 
 # start a terminal
 bindsym $mod+Return exec alacritty
@@ -157,7 +157,7 @@ assign [class="code"] $ws2
 assign [class="firefox"] $ws3
 assign [class="Slack"] $ws4
 assign [class="Spotify"] $ws8
-assign [class="Enpass"] $ws9
+for_window [class="Enpass" tiling] move container to workspace $ws9
 
 
 # reload the configuration file
@@ -240,10 +240,10 @@ bar {
     }
 
     status_command i3status
-	position top
+    position bottom
     strip_workspace_numbers yes
     separator_symbol "::"
 }
 
-exec_always --no-startup-id feh --bg-scale $HOME/wallpapers/rick-and-morty-clean.png
+exec_always --no-startup-id feh --bg-fill $HOME/wallpapers/dev.png
 exec --no-startup-id i3-msg workspace $ws1
