@@ -290,7 +290,7 @@ state.PCH {
 	control.25 {
 		iface CARD
 		name 'HDMI/DP,pcm=7 Jack'
-		value false
+		value true
 		comment {
 			access read
 			type BOOLEAN
@@ -345,11 +345,11 @@ state.PCH {
 		iface PCM
 		device 7
 		name ELD
-		value ''
+		value '100008006b140001000000000000000010ac34a144454c4c20553332313951091f070000'
 		comment {
 			access 'read volatile'
 			type BYTES
-			count 0
+			count 36
 		}
 	}
 	control.31 {
