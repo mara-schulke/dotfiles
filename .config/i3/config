@@ -54,6 +54,7 @@ gaps outer 0
 
 # start a terminal
 bindsym $mod+Return exec alacritty
+bindsym $mod+k exec 'nautilus'
 
 # screenshots
 bindsym $mod+Print exec scrot
@@ -64,10 +65,10 @@ bindsym $mod+q kill
 bindsym $mod+space exec "rofi -combi-modi run,window -show combi -combi"
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+# bindsym $mod+h focus left
+# bindsym $mod+j focus down
+# bindsym $mod+k focus up
+# bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -157,6 +158,7 @@ assign [class="code"] $ws2
 assign [class="firefox"] $ws3
 assign [class="Slack"] $ws4
 assign [class="Spotify"] $ws8
+assign [class="Org.gnome.Nautilus"] $ws10
 for_window [class="Enpass" tiling] move container to workspace $ws9
 
 

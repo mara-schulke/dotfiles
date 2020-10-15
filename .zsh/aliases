@@ -32,3 +32,6 @@ alias lst="ls -T --git-ignore -I=.git"
 
 # ag
 alias ag='ag --path-to-ignore ~/.config/ag/.ignore'
+
+# filemanager
+alias fm='nautilus'
