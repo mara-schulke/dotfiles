@@ -42,8 +42,10 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
-# bindsym XF86Display exec --no-startup-id toggle-screenlayout
-
+bindsym XF86Display exec --no-startup-id 'autorandr --change'
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -52,12 +54,15 @@ floating_modifier $mod
 gaps inner 0
 gaps outer 0
 
+bindsym $mod+g gaps inner all set 100; gaps outer all set 100; 
+bindsym $mod+Shift+g gaps inner all set 0; gaps outer all set 0;
+
 # start a terminal
 bindsym $mod+Return exec alacritty
-bindsym $mod+k exec 'nautilus'
+bindsym $mod+k exec nautilus
 
 # screenshots
-bindsym $mod+Print exec scrot
+bindsym $mod+Print exec "scrot"
 
 # kill focused window
 bindsym $mod+q kill
