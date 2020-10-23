@@ -17,13 +17,15 @@ set $lightcyan      #6cdbb6
 set $white          #707880
 set $lightwhite     #dbdfdd
 
-set $primary        #b294bb
-set $secondary      #85678f
+set $primary        #f0c674
+set $secondary      #de935f
 
 set $mod Mod4
+set $term alacritty
 
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
+exec --no-startup-id pasystray
 
 font pango:monospace, FontAwesomePro 10
 
@@ -51,14 +53,14 @@ bindsym XF86AudioPrev exec playerctl previous
 floating_modifier $mod
 
 # gaps
-gaps inner 0
-gaps outer 0
+gaps inner 100
+gaps outer 100
 
 bindsym $mod+g gaps inner all set 100; gaps outer all set 100; 
 bindsym $mod+Shift+g gaps inner all set 0; gaps outer all set 0;
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec $term
 bindsym $mod+k exec nautilus
 
 # screenshots
@@ -111,7 +113,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-# bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+tab focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -166,6 +168,17 @@ assign [class="Spotify"] $ws8
 assign [class="Org.gnome.Nautilus"] $ws10
 for_window [class="Enpass" tiling] move container to workspace $ws9
 
+
+# scratchpads
+# for_window [instance="calculator"] floating enable
+# for_window [instance="calculator"] move scratchpad
+# for_window [instance="calculator"] sticky enable
+# for_window [instance="calculator"] scratchpad show
+# for_window [instance="calculator"] resize set 800 400
+# exec --no-startup-id $term --class calculator --command python
+# bindsym XF86Calculator [instance="calculator"] scratchpad show; [instance="calculator"] move position center
+
+bindsym $mod+Shift+s sticky toggle
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
