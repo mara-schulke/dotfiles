@@ -1,5 +1,8 @@
 .zsh/utils/**/* linguist-language=Shell
 
+# ignore style files
+*.css linguist-vendored
+
 # ignore vim files
 .vim/**/+ linguist-vendored
 *.vim linguist-vendored
