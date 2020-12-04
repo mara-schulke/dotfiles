@@ -1,2 +1,2 @@
 .zsh/utils/**/* linguist-language=Python
-.vim/**/* linguist-vendored
+*.vim linguist-vendored
