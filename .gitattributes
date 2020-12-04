@@ -1,2 +1,3 @@
 .zsh/utils/**/* linguist-language=Python
 *.vim linguist-vendored
+*.snippets linguist-vendored
