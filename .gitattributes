@@ -1,3 +1,6 @@
 .zsh/utils/**/* linguist-language=Python
+
+# ignore vim files
+.vim/**/+ linguist-vendored
 *.vim linguist-vendored
 *.snippets linguist-vendored
