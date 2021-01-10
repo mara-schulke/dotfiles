@@ -23,6 +23,7 @@ set $secondary      #de935f
 set $mod Mod4
 set $term alacritty
 
+exec_always --no-startup-id alsactl --file ~/.config/alsa/asound.state restore
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
@@ -265,5 +266,5 @@ bar {
     separator_symbol "::"
 }
 
-exec_always --no-startup-id feh --bg-fill $HOME/wallpapers/dev.png
+exec_always --no-startup-id feh --bg-fill $HOME/Dropbox/personal/desktop-backgrounds/dev.png
 exec --no-startup-id i3-msg workspace $ws1
