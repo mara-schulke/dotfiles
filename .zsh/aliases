@@ -8,7 +8,7 @@ alias search="firefox --search"
 alias scrot='scrot ~/Documents/screenshots/%y%m%d-%H%M%S.png'
 
 # dotfiles
-alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+alias dotfiles="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias df="dotfiles"
 alias dfs="dotfiles status"
 alias dfa="dotfiles add" 
