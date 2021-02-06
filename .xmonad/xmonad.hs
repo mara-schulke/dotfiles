@@ -22,6 +22,7 @@ import Data.Char (isSpace, toUpper)
 import Data.Monoid
 import Data.Maybe (isJust)
 import Data.Tree
+import Data.List (delete)
 import qualified Data.Map as M
 
 -- Hooks
@@ -102,15 +103,12 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 
 myStartupHook :: X ()
 myStartupHook = do
-          spawnOnce "autorandr --change &"
-          spawnOnce "nitrogen --restore &"
+          spawnOnce "xsetroot -cursor_name left_ptr"
+          spawnOnce "autorandr --change && $HOME/.fehbg"
           spawnOnce "picom --experimental-backends &"
           -- spawnOnce "nm-applet &"
-          -- spawnOnce "volumeicon &"
-          -- spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
-          -- spawnOnce "/usr/bin/emacs --daemon &" -- emacs daemon for the emacsclient
-          -- spawnOnce "kak -d -s mysession &"  -- kakoune daemon for better performance
-          -- spawnOnce "urxvtd -q -o -f &"      -- urxvt daemon for better performance
+          spawnOnce "volumeicon &"
+          spawnOnce $ "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor primary --transparent true --alpha 0 --tint 0x" ++ (delete '#' $ myBackground myTheme) ++ " --height 16 &"
 
 --Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
@@ -183,12 +181,11 @@ myKeys home =
     -- Xmonad
         [ ("M-C-r", spawn "xmonad --recompile") -- Recompiles xmonad
         , ("M-S-r", spawn "xmonad --restart")   -- Restarts xmonad
-        , ("M-S-e", io exitSuccess)             -- Quits xmonad
+        , ("M-e e", io exitSuccess)             -- Quits xmonad
 
     -- Run Prompt
-        -- , ("M-S-<Return>", shellPrompt dtXPConfig) -- Xmonad Shell Prompt
-        , ("M-<Space>", spawn "dmenu_run -i -p \"Run: \"") -- Dmenu
-        -- , ("M-S-<Return>", spawn "rofi -show drun -config ~/.config/rofi/themes/dt-dmenu.rasi -display-drun \"Run: \" -drun-display-format \"{name}\"") -- Rofi
+        -- , ("M-<Space>", spawn "dmenu_run -i -p \"Run: \"") -- Dmenu
+        , ("M-<Space>", spawn "rofi -show drun -display-drun \"Run: \" -drun-display-format \"{name}\"")
 
         -- , ("M-p q", scrotPrompt home True)         -- scrotPrompt True
         -- , ("M-p z", scrotPrompt home False)        -- scrotPrompt False
@@ -257,21 +254,29 @@ myKeys home =
     --     , ("<XF86AudioPlay>", spawn (myTerminal ++ "mocp --play"))
     --     , ("<XF86AudioPrev>", spawn (myTerminal ++ "mocp --previous"))
     --     , ("<XF86AudioNext>", spawn (myTerminal ++ "mocp --next"))
-        , ("<XF86AudioMute>",   spawn "amixer set Master toggle")
-        , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
-        , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
+
+        , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
+        , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
+        , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+        , ("<XF86AudioMicMute>", spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+        , ("<XF86MonBrightnessUp>", spawn "light -A 10 -v 3 >> /home/max/.light-log")
+        , ("<XF86MonBrightnessDown>", spawn "light -U 10 >> /home/max/.light-log")
+        , ("<XF86Display>", spawn "autorandr --change")
+        , ("<XF86AudioPlay>", spawn "playerctl play-pause")
+        , ("<XF86AudioNext>", spawn "playerctl next")
+        , ("<XF86AudioPrev>", spawn "playerctl previous")
         , ("<XF86HomePage>", spawn "firefox")
         , ("<XF86Search>", safeSpawn "firefox" ["https://www.duckduckgo.com/"])
         , ("<XF86Mail>", runOrRaise "thunderbird" (resource =? "thunderbird"))
-        , ("<XF86Calculator>", runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk"))
-        , ("<XF86Eject>", spawn "toggleeject")
-        , ("<Print>", spawn "scrotd 0")
+        -- , ("<XF86Calculator>", runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk"))
+        , ("<Print>", spawn "scrot")
         ]
 
 main :: IO ()
 main = do
     home <- getHomeDirectory
-    xmproc <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc"
+    xmprocPrimary <- spawnPipe "xmobar -x 0"
+    xmprocSecondary <- spawnPipe "xmobar -x 1"
     xmonad $ ewmh def
         { manageHook         = myManageHook <+> manageDocks
         , handleEventHook    = serverModeEventHookCmd <+> serverModeEventHook <+> serverModeEventHookF "XMONAD_PRINT" (io . putStrLn) <+> docksEventHook
@@ -284,15 +289,13 @@ main = do
         , normalBorderColor  = mySecondary myTheme
         , focusedBorderColor = myPrimary myTheme
         , logHook = dynamicLogWithPP xmobarPP
-            { ppOutput = \x -> hPutStrLn xmproc x
+            { ppOutput = hPutStrLn xmprocPrimary <+> hPutStrLn xmprocSecondary  -- Output pipe
             , ppCurrent = xmobarColor (myPrimary myTheme) ""                    -- Current workspace in xmobar
             , ppVisible = xmobarColor (myPrimary myTheme) ""                    -- Visible but not current workspace
-            , ppHidden = xmobarColor (mySecondary myTheme) ""                     -- Hidden workspaces in xmobar
-            , ppHiddenNoWindows = xmobarColor "#c792ea" ""            -- Hidden workspaces (no windows)
-            , ppTitle = xmobarColor (myForeground myTheme) "" . shorten 60         -- Title of active window in xmobar
-            , ppSep =  "<fc=" ++ (myBackground myTheme) ++ "> <fn=1>|</fn> </fc>"              -- Separators in xmobar
+            , ppHidden = xmobarColor (myForeground myTheme) ""                  -- Hidden workspaces in xmobar
+            , ppHiddenNoWindows = xmobarColor (myForeground myTheme) ""         -- Hidden workspaces (no windows)
+            , ppTitle = xmobarColor (myForeground myTheme) "" . shorten 60      -- Title of active window in xmobar
+            , ppSep =  " :: "                                                   -- Separators in xmobar
             , ppUrgent = xmobarColor (myPrimary myTheme) ""                     -- Urgent workspace
-            , ppExtras  = [windowCount]                               -- # of windows current workspace
-            , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
             }
         } `additionalKeysP` myKeys home
