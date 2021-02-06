@@ -1,29 +1,34 @@
--- http://projects.haskell.org/xmobar/
--- install xmobar with these flags: --flags="with_alsa" --flags="with_mpd" --flags="with_xft"  OR --flags="all_extensions"
--- you can find weather location codes here: http://weather.noaa.gov/index.html
-
-Config { font    = "xft:Ubuntu:weight=bold:pixelsize=11:antialias=true:hinting=true"
+Config { font = "xft:Monospace:weight=regular:pixelsize=14:antialias=true:hinting=true"
        , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=11:antialias=true:hinting=true"
                            , "xft:FontAwesome:pixelsize=13"
                            ]
        , bgColor = "#0c0b0b"
        , fgColor = "#c5c5c8"
-       , position = Static { xpos = 0 , ypos = 2120, width = 3840, height = 40 }
+       , position = Top
        , lowerOnStart = True
        , hideOnStart = False
        , allDesktops = True
        , persistent = True
-       -- , iconRoot = "/home/max/.xmonad/xpm/"  -- default: "."
-       , commands = [
-              Run Date " %b %d %Y - (%H:%M) " "date" 50
-            , Run Network "enp0s31f6" ["-t", "<fn=1>\xf0aa</fn>  <rx>kb  <fn=1>\xf0ab</fn>  <tx>kb"] 20
-            , Run Cpu ["-t", "<fn=1>\xf108</fn>  cpu: (<total>%)","-H","50","--high","red"] 20
-            , Run Memory ["-t", "<fn=1>\xf233</fn>  mem: <used>M (<usedratio>%)"] 20
-            , Run DiskU [("/", "<fn=1>\xf0c7</fn>  hdd: <free> free")] [] 60
-            , Run Com "uname" ["-r"] "" 3600
-            , Run UnsafeStdinReader
-            ]
+       , commands = [ Run Date " %F @ %H:%M " "date" 50
+                    , Run Cpu ["-t", "cpu <total>%","-H","50","--high","red"] 20
+                    , Run Memory ["-t", "mem <used>MiB <usedratio>%"] 20
+                    , Run DiskU [("/", "disk <used>iB")] [] 60
+                    , Run Com "uname" ["-r"] "" 3600
+                    , Run Battery [ "--template" , "battery <acstatus>"
+                                  , "--Low"      , "10"
+                                  , "--High"     , "80"
+                                  , "--low"      , "darkred"
+                                  , "--normal"   , "darkorange"
+                                  , "--high"     , "darkgreen"
+                                  , "--"
+                                  , "-o"         , "<left>% - <timeleft>"
+                                  , "-O"         , "charging"
+                                  , "-i"         , "charged"
+                                  ] 50
+                    , Run Com "/home/max/.config/xmobar/trayer-padding.sh" [] "trayerpad" 10
+                    , Run UnsafeStdinReader
+                    ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <action=`xdotool key control+alt+g`><icon=haskell_20.xpm/> </action><fc=#666666>  |</fc> %UnsafeStdinReader% }{ <fc=#666666> |</fc> <fc=#b3afc2><fn=1></fn>  %uname% </fc><fc=#666666> |</fc> <fc=#ecbe7b> %cpu% </fc><fc=#666666> |</fc> <fc=#ff6c6b> %memory% </fc><fc=#666666> |</fc> <fc=#51afef> %disku% </fc><fc=#666666> |</fc> <fc=#98be65> %enp6s0% </fc><fc=#666666> |</fc>  <fc=#c678dd><fn=1></fn>  %pacupdate% </fc><fc=#666666> |</fc> <fc=#46d9ff> %date%  </fc>"
+       , template = "  %UnsafeStdinReader% }{ %uname% :: %cpu% :: %memory% :: %disku% :: %battery% :: %date% :: %trayerpad%"
        }
