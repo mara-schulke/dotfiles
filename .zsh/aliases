@@ -24,6 +24,10 @@ alias djangoinstall="pip install -r ./resources/requirements.txt"
 
 alias vim="nvim"
 
+# node
+alias yarn="npx yarn"
+alias webpack="npx webpack"
+
 # exa
 alias ls="exa --long --all --icons --group-directories-first --git --header"
 alias lsd="ls -D"
