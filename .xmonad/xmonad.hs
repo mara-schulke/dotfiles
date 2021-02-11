@@ -140,6 +140,10 @@ myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
      [ title        =? "Mozilla Firefox"                    --> doShift (myWorkspaces !! 2)
      , (className   =? "firefox" <&&> resource =? "Dialog") --> doFloat
+     , className    =? "Code"                               --> doShift (myWorkspaces !! 1)
+     , className    =? "discord"                            --> doShift (myWorkspaces !! 3)
+     , className    =? "Signal"                             --> doShift (myWorkspaces !! 3)
+     , className    =? "Slack"                              --> doShift (myWorkspaces !! 3)
      , className    =? "Enpass"                             --> doShift (myWorkspaces !! 7)
      , isFullscreen                                         --> doFullFloat
      ]
