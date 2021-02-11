@@ -35,27 +35,22 @@ import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
 
 -- Layouts
-import XMonad.Layout.GridVariants (Grid(Grid))
-import XMonad.Layout.Spiral
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
 
 -- Layouts modifiers
 import XMonad.Layout.LayoutModifier
-import XMonad.Layout.LimitWindows (limitWindows, increaseLimit, decreaseLimit)
 import XMonad.Layout.Magnifier
-import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
-import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Renamed
 import XMonad.Layout.ShowWName
 import XMonad.Layout.Simplest
+import XMonad.Layout.Renamed
 import XMonad.Layout.Spacing
 import XMonad.Layout.SubLayouts
 import XMonad.Layout.WindowNavigation
+import XMonad.Layout.ToggleLayouts
 import XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
-import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 
 -- Text
 import Text.Printf
@@ -71,7 +66,8 @@ data XMonadTheme = XMonadTheme { myForeground :: String
                                , myBackground :: String
                                , myPrimary :: String
                                , mySecondary :: String
-                               , myBorderWidth :: Dimension }
+                               , myBorderWidth :: Dimension
+                               , myGaps :: Integer }
 
 myFont :: String
 myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
@@ -93,13 +89,11 @@ myTheme = XMonadTheme { myForeground = "#c5c5c8"
                       , myBackground = "#0c0b0b"
                       , myPrimary = "#f0c674"
                       , mySecondary = "#a03e3e"
-                      , myBorderWidth = 2 }
+                      , myBorderWidth = 2
+                      , myGaps = 20 }
 
 altMask :: KeyMask
 altMask = mod1Mask
-
-windowCount :: X (Maybe String)
-windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 myStartupHook :: X ()
 myStartupHook = do
@@ -111,144 +105,111 @@ myStartupHook = do
           spawnOnce $ "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor primary --transparent true --alpha 0 --tint 0x" ++ (delete '#' $ myBackground myTheme) ++ " --height 16 &"
 
 --Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
-mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
-mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
-
--- Below is a variation of the above except no borders are applied
--- if fewer than two windows. So a single window has no gaps.
-mySpacing' :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
-mySpacing' i = spacingRaw True (Border i i i i) True (Border i i i i) True
-
--- Defining a bunch of layouts, many that I don't use.
--- limitWindows n sets maximum number of windows displayed for layout.
--- mySpacing n sets the gap size around the windows.
-tall       = renamed [Replace "tall"]
-           $ windowNavigation
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ limitWindows 12
-           $ mySpacing 20
-           $ ResizableTall 1 (3/100) (1/2) []
-monocle    = renamed [Replace "monocle"]
-           $ windowNavigation
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ mySpacing 20
-           $ limitWindows 20 Full
-grid       = renamed [Replace "grid"]
-           $ windowNavigation
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ limitWindows 12
-           $ mySpacing 20
-           $ mkToggle (single MIRROR)
-           $ Grid (16/10)
-spirals    = renamed [Replace "spirals"]
-           $ windowNavigation
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ mySpacing' 20
-           $ spiral (6/7)
+mySpacing :: l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
+mySpacing = spacingRaw False (Border i i i i) True (Border i i i i) True
+            where i = myGaps myTheme
 
 myTabTheme = def { fontName            = myFont
-                 , activeColor         = "#46d9ff"
-                 , inactiveColor       = "#313846"
-                 , activeBorderColor   = "#46d9ff"
-                 , inactiveBorderColor = "#282c34"
-                 , activeTextColor     = "#282c34"
-                 , inactiveTextColor   = "#d0d0d0"
+                 , activeColor         = "#f0c674"
+                 , inactiveColor       = "#0c0b0b"
+                 , activeBorderColor   = "#f0c674"
+                 , inactiveBorderColor = "#0c0b0b"
+                 , activeTextColor     = "#0c0b0b"
+                 , inactiveTextColor   = "#f0c674"
+                 , activeBorderWidth   = myBorderWidth myTheme
+                 , inactiveBorderWidth = myBorderWidth myTheme
+                 , urgentBorderWidth   = myBorderWidth myTheme
                  }
 
 -- The layout hook
-myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
-               where myDefaultLayout = tall
-                                   ||| monocle
-                                   ||| grid
-                                   ||| spirals
+myLayoutHook = avoidStruts
+             $ mouseResize
+             $ windowArrange
+             $ windowNavigation
+             $ addTabs shrinkText myTabTheme
+             $ toggleLayouts (noBorders Full)
+             $ lessBorders OnlyScreenFloat 
+             $ layouts
+             where layouts = tall ||| full
+                   tall = renamed [Replace "tall"] $ mySpacing $ ResizableTall 1 (3/100) (1/2) []
+                   full = renamed [Replace "full"] $ noBorders Full
 
 myWorkspaces = ["term", "dev", "firefox", "chat", "tasks", "music", "pw", "sys", "misc"]
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
-     [ title =? "Mozilla Firefox"                         --> doShift (myWorkspaces !! 2)
-     , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat
-     , className =? "Enpass"                              --> doShift (myWorkspaces !! 7)
-     , isFullscreen                                       --> doFullFloat
+     [ title        =? "Mozilla Firefox"                    --> doShift (myWorkspaces !! 2)
+     , (className   =? "firefox" <&&> resource =? "Dialog") --> doFloat
+     , className    =? "Enpass"                             --> doShift (myWorkspaces !! 7)
+     , isFullscreen                                         --> doFullFloat
      ]
 
 myKeys :: String -> [([Char], X ())]
 myKeys home =
     -- Xmonad
-        [ ("M-C-r", spawn "xmonad --recompile") -- Recompiles xmonad
-        , ("M-S-r", spawn "xmonad --restart")   -- Restarts xmonad
-        , ("M-e e", io exitSuccess)             -- Quits xmonad
+        [ ("M-C-r",        spawn "xmonad --recompile") -- Recompiles xmonad
+        , ("M-S-r",        spawn "xmonad --restart")   -- Restarts xmonad
+        , ("M-e e",        io exitSuccess)             -- Quits xmonad
 
     -- Run Prompt
-        -- , ("M-<Space>", spawn "dmenu_run -i -p \"Run: \"") -- Dmenu
-        , ("M-<Space>", spawn "rofi -show drun -display-drun \"Run: \" -drun-display-format \"{name}\"")
-
+        , ("M-<Space>",    spawn "rofi -show drun -display-drun \"Run: \" -drun-display-format \"{name}\"")
         -- , ("M-p q", scrotPrompt home True)         -- scrotPrompt True
         -- , ("M-p z", scrotPrompt home False)        -- scrotPrompt False
 
     -- Useful programs to have a keybinding for launch
-        , ("M-<Return>", spawn myTerminal)
+        , ("M-<Return>",   spawn myTerminal)
 
     -- Kill windows
-        , ("M-q", kill1)     -- Kill the currently focused client
-        , ("M-M1-q", killAll)   -- Kill all windows on current workspace
+        , ("M-q",          kill1)     -- Kill the currently focused client
+        , ("M-M1-q",       killAll)   -- Kill all windows on current workspace
 
     -- Workspaces
-        , ("M-.", nextScreen)  -- Switch focus to next monitor
-        , ("M-,", prevScreen)  -- Switch focus to prev monitor
+        , ("M-.",          nextScreen)  -- Switch focus to next monitor
+        , ("M-,",          prevScreen)  -- Switch focus to prev monitor
 
     -- Increase/decrease spacing (gaps)
-        , ("M-d", decWindowSpacing 10)           -- Decrease window spacing
-        , ("M-i", incWindowSpacing 10)           -- Increase window spacing
-        , ("M-S-d", decScreenSpacing 10)         -- Decrease screen spacing
-        , ("M-S-i", incScreenSpacing 10)         -- Increase screen spacing
+        , ("M-d",          decWindowSpacing 10)           -- Decrease window spacing
+        , ("M-i",          incWindowSpacing 10)           -- Increase window spacing
+        , ("M-S-d",        decScreenSpacing 10)         -- Decrease screen spacing
+        , ("M-S-i",        incScreenSpacing 10)         -- Increase screen spacing
 
     -- Windows navigation
-        , ("M-m", windows W.focusMaster)        -- Move focus to the master window
-        , ("M-S-m", windows W.swapMaster)       -- Swap the focused window and the master window
-        , ("M-<Down>", windows W.focusDown)     -- Move focus to the next window
-        , ("M-<Up>", windows W.focusUp)         -- Move focus to the prev window
+        , ("M-f",          sendMessage ToggleLayout >> sendMessage ToggleStruts)
+        , ("M-m",          windows W.focusMaster)        -- Move focus to the master window
+        , ("M-S-m",        windows W.swapMaster)       -- Swap the focused window and the master window
+        , ("M-<Left>",     windows W.focusUp)
+        , ("M-<Right>",    windows W.focusDown)
+        , ("M-<Up>",       windows W.focusUp)
+        , ("M-<Down>",     windows W.focusDown)
+        , ("M-S-<Left>",   windows W.swapUp)
+        , ("M-S-<Right>",  windows W.swapDown)
+        , ("M-S-<Up>",     windows W.swapUp)
+        , ("M-S-<Down>",   windows W.swapDown)
         , ("M-S-<Return>", promote)            -- Moves focused window to master, others maintain order
-        , ("M-S-<Down>", windows W.swapDown)         -- Swap focused window with next window
-        , ("M-S-<Up>", windows W.swapUp)           -- Swap focused window with prev window
-        -- , ("M-S-<Tab>", rotSlavesDown)          -- Rotate all windows except master and keep focus in place
-        -- , ("M-C-<Tab>", rotAllDown)             -- Rotate all the windows in the current stack
+        , ("M-r r",        rotSlavesDown)          -- Rotate all windows except master and keep focus in place
+        , ("M-M1-r",       rotAllDown)             -- Rotate all the windows in the current stack
 
     -- Layouts
-        , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
-        , ("M-<Tab>", toggleWS)
-        , ("M-S-<Tab>", sendMessage NextLayout)
-        , ("M-C-M1-<Up>", sendMessage Arrange)
-        , ("M-C-M1-<Down>", sendMessage DeArrange)
-        , ("M-S-n", sendMessage $ MT.Toggle NOBORDERS)  -- Toggles noborder
+        -- , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
+        , ("M-<Tab>",      toggleWS)
+        , ("M-S-<Tab>",    sendMessage NextLayout)
+        -- , ("M-S-n",        sendMessage $ MT.Toggle NOBORDERS)  -- Toggles noborder
 
-    -- Increase/decrease windows in the master pane or the stack
-        -- , ("M-S-<Up>", sendMessage (IncMasterN 1))      -- Increase number of clients in master pane
-        --, ("M-S-<Down>", sendMessage (IncMasterN (-1))) -- Decrease number of clients in master pane
-        , ("M-C-<Up>", increaseLimit)                   -- Increase number of windows
-        , ("M-C-<Down>", decreaseLimit)                 -- Decrease number of windows
-
-    -- Window resizing
-        , ("M-<Left>", sendMessage Shrink)                   -- Shrink horiz window width
-        , ("M-<Right>", sendMessage Expand)                   -- Expand horiz window width
-        , ("M-M1-<Left>", sendMessage MirrorShrink)          -- Shrink vert window width
-        , ("M-M1-<Right>", sendMessage MirrorExpand)          -- Exoand vert window width
+    -- -- Window resizing
+    --     , ("M-<Left>", sendMessage Shrink)                   -- Shrink horiz window width
+    --     , ("M-<Right>", sendMessage Expand)                   -- Expand horiz window width
+    --     , ("M-M1-<Left>", sendMessage MirrorShrink)          -- Shrink vert window width
+    --     , ("M-M1-<Right>", sendMessage MirrorExpand)          -- Exoand vert window width
 
     -- Sublayouts
     -- This is used to push windows to tabbed sublayouts, or pull them out of it.
-        , ("M-C-<Left>", sendMessage $ pullGroup L)
-        , ("M-C-<Right>", sendMessage $ pullGroup R)
-        , ("M-C-<Up>", sendMessage $ pullGroup U)
-        , ("M-C-<Down>", sendMessage $ pullGroup D)
-        , ("M-C-m", withFocused (sendMessage . MergeAll))
-        , ("M-C-u", withFocused (sendMessage . UnMerge))
-        , ("M-C-/", withFocused (sendMessage . UnMergeAll))
-        , ("M-C-.", onGroup W.focusUp')    -- Switch focus to next tab
-        , ("M-C-,", onGroup W.focusDown')  -- Switch focus to prev tab
+        -- , ("M-C-<Left>", sendMessage $ pullGroup L)
+        -- , ("M-C-<Right>", sendMessage $ pullGroup R)
+        -- , ("M-C-<Up>", sendMessage $ pullGroup U)
+        -- , ("M-C-<Down>", sendMessage $ pullGroup D)
+        -- , ("M-C-m", withFocused (sendMessage . MergeAll))
+        -- , ("M-C-u", withFocused (sendMessage . UnMerge))
+        -- , ("M-C-/", withFocused (sendMessage . UnMergeAll))
 
     -- -- Multimedia Keys
     --     , ("<XF86AudioPlay>", spawn (myTerminal ++ "mocp --play"))
