@@ -127,11 +127,10 @@ myLayoutHook = avoidStruts
              $ windowArrange
              $ windowNavigation
              $ addTabs shrinkText myTabTheme
-             $ toggleLayouts (noBorders Full)
-             $ lessBorders OnlyScreenFloat 
-             $ layouts
-             where layouts = tall ||| full
-                   tall = renamed [Replace "tall"] $ mySpacing $ ResizableTall 1 (3/100) (1/2) []
+             $ toggleLayouts full
+             $ lessBorders OnlyScreenFloat
+             $ tall ||| full
+             where tall = renamed [Replace "tall"] $ mySpacing $ ResizableTall 1 (3/100) (1/2) []
                    full = renamed [Replace "full"] $ noBorders Full
 
 myWorkspaces = ["term", "dev", "firefox", "chat", "tasks", "music", "pw", "sys", "misc"]
@@ -164,32 +163,34 @@ myKeys home =
         , ("M-<Return>",   spawn myTerminal)
 
     -- Kill windows
-        , ("M-q",          kill1)     -- Kill the currently focused client
-        , ("M-M1-q",       killAll)   -- Kill all windows on current workspace
+        , ("M-q",          kill1)                  -- Kill the currently focused client
+        , ("M-M1-q",       killAll)                -- Kill all windows on current workspace
 
     -- Workspaces
-        , ("M-.",          nextScreen)  -- Switch focus to next monitor
-        , ("M-,",          prevScreen)  -- Switch focus to prev monitor
+        , ("M-.",          nextScreen)             -- Switch focus to next monitor
+        , ("M-,",          prevScreen)             -- Switch focus to prev monitor
 
     -- Increase/decrease spacing (gaps)
-        , ("M-d",          decWindowSpacing 10)           -- Decrease window spacing
-        , ("M-i",          incWindowSpacing 10)           -- Increase window spacing
-        , ("M-S-d",        decScreenSpacing 10)         -- Decrease screen spacing
-        , ("M-S-i",        incScreenSpacing 10)         -- Increase screen spacing
+        , ("M-d",          decWindowSpacing 10)    -- Decrease window spacing
+        , ("M-i",          incWindowSpacing 10)    -- Increase window spacing
+        , ("M-S-d",        decScreenSpacing 10)    -- Decrease screen spacing
+        , ("M-S-i",        incScreenSpacing 10)    -- Increase screen spacing
 
     -- Windows navigation
-        , ("M-f",          sendMessage ToggleLayout >> sendMessage ToggleStruts)
-        , ("M-m",          windows W.focusMaster)        -- Move focus to the master window
-        , ("M-S-m",        windows W.swapMaster)       -- Swap the focused window and the master window
-        , ("M-<Left>",     windows W.focusUp)
-        , ("M-<Right>",    windows W.focusDown)
-        , ("M-<Up>",       windows W.focusUp)
-        , ("M-<Down>",     windows W.focusDown)
-        , ("M-S-<Left>",   windows W.swapUp)
-        , ("M-S-<Right>",  windows W.swapDown)
-        , ("M-S-<Up>",     windows W.swapUp)
-        , ("M-S-<Down>",   windows W.swapDown)
-        , ("M-S-<Return>", promote)            -- Moves focused window to master, others maintain order
+        , ("M-f",          sendMessage ToggleLayout >> sendMessage ToggleStruts)       -- Toggle Fullscreen without bar
+        , ("M-S-f",        sendMessage ToggleLayout)                                   -- Toggle Fullscreen with bar
+        , ("M-g",          toggleWindowSpacingEnabled <+> toggleScreenSpacingEnabled)  -- Toggle spacing between windows
+        , ("M-m",          windows W.focusMaster)  -- Move focus to the master window
+        , ("M-S-m",        windows W.swapMaster)   -- Swap the focused window and the master window
+        , ("M-<Left>",     windows W.focusUp)      -- Focus the next window
+        , ("M-<Right>",    windows W.focusDown)    -- Focus the previous window
+        , ("M-<Up>",       windows W.focusUp)      -- Focus the next window
+        , ("M-<Down>",     windows W.focusDown)    -- Focus the previous window
+        , ("M-S-<Left>",   windows W.swapUp)       -- Swap the current window with the next window
+        , ("M-S-<Right>",  windows W.swapDown)     -- Swap the current window with the previous window
+        , ("M-S-<Up>",     windows W.swapUp)       -- Swap the current window with the next window
+        , ("M-S-<Down>",   windows W.swapDown)     -- Swap the current window with the previous window
+        , ("M-S-<Return>", promote)                -- Moves focused window to master, others maintain order
         , ("M-r r",        rotSlavesDown)          -- Rotate all windows except master and keep focus in place
         , ("M-M1-r",       rotAllDown)             -- Rotate all the windows in the current stack
 
