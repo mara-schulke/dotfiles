@@ -176,6 +176,10 @@ myKeys home =
         , ("M-S-d",        decScreenSpacing 10)    -- Decrease screen spacing
         , ("M-S-i",        incScreenSpacing 10)    -- Increase screen spacing
 
+    -- Floating Windows into Tiles
+        , ("M-t",          withFocused $ windows . W.sink)                             -- Push floating window back to tile
+        , ("M-S-t",        sinkAll)                                                    -- Push ALL floating windows to tile
+
     -- Windows navigation
         , ("M-f",          sendMessage ToggleLayout >> sendMessage ToggleStruts)       -- Toggle Fullscreen without bar
         , ("M-S-f",        sendMessage ToggleLayout)                                   -- Toggle Fullscreen with bar
@@ -195,10 +199,8 @@ myKeys home =
         , ("M-M1-r",       rotAllDown)             -- Rotate all the windows in the current stack
 
     -- Layouts
-        -- , ("M-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts) -- Toggles noborder/full
         , ("M-<Tab>",      toggleWS)
         , ("M-S-<Tab>",    sendMessage NextLayout)
-        -- , ("M-S-n",        sendMessage $ MT.Toggle NOBORDERS)  -- Toggles noborder
 
     -- -- Window resizing
     --     , ("M-<Left>", sendMessage Shrink)                   -- Shrink horiz window width
