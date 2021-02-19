@@ -100,7 +100,7 @@ myStartupHook = do
           spawnOnce "xsetroot -cursor_name left_ptr"
           spawnOnce "autorandr --change && $HOME/.fehbg"
           spawnOnce "picom --experimental-backends &"
-          -- spawnOnce "nm-applet &"
+          spawnOnce "blueman-applet &"
           spawnOnce "volumeicon &"
           spawnOnce $ "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor primary --transparent true --alpha 0 --tint 0x" ++ (delete '#' $ myBackground myTheme) ++ " --height 16 &"
 
@@ -135,6 +135,12 @@ myLayoutHook = avoidStruts
 
 myWorkspaces = ["term", "dev", "firefox", "chat", "tasks", "music", "pw", "sys", "misc"]
 
+centerWindow :: Window -> X ()
+centerWindow win = do
+    (_, W.RationalRect x y w h) <- floatLocation win
+    windows $ W.float win (W.RationalRect ((1 - w) / 2) ((1 - h) / 2) w h)
+    return ()
+
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
      [ title        =? "Mozilla Firefox"                    --> doShift (myWorkspaces !! 2)
@@ -143,7 +149,7 @@ myManageHook = composeAll
      , className    =? "discord"                            --> doShift (myWorkspaces !! 3)
      , className    =? "Signal"                             --> doShift (myWorkspaces !! 3)
      , className    =? "Slack"                              --> doShift (myWorkspaces !! 3)
-     , className    =? "Enpass"                             --> doShift (myWorkspaces !! 7)
+     , className    =? "Enpass"                             --> doShift (myWorkspaces !! 6)
      , isFullscreen                                         --> doFullFloat
      ]
 
@@ -227,8 +233,8 @@ myKeys home =
         , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
         , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
         , ("<XF86AudioMicMute>", spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
-        , ("<XF86MonBrightnessUp>", spawn "light -A 10 -v 3 >> /home/max/.light-log")
-        , ("<XF86MonBrightnessDown>", spawn "light -U 10 >> /home/max/.light-log")
+        , ("<XF86MonBrightnessUp>", spawn "light -A 10")
+        , ("<XF86MonBrightnessDown>", spawn "light -U 10")
         , ("<XF86Display>", spawn "autorandr --change")
         , ("<XF86AudioPlay>", spawn "playerctl play-pause")
         , ("<XF86AudioNext>", spawn "playerctl next")
@@ -236,8 +242,9 @@ myKeys home =
         , ("<XF86HomePage>", spawn "firefox")
         , ("<XF86Search>", safeSpawn "firefox" ["https://www.duckduckgo.com/"])
         , ("<XF86Mail>", runOrRaise "thunderbird" (resource =? "thunderbird"))
+        -- XF86Tools, XF86WLAN, XF86Bluetooth, XF86Favorites
         -- , ("<XF86Calculator>", runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk"))
-        , ("<Print>", spawn "scrot")
+        , ("M-<Print>", spawn "scrot")
         ]
 
 main :: IO ()
