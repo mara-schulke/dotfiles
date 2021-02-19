@@ -1,20 +1,26 @@
+nix-shell-status() {
+    nix-shell-active
+
+    if [ $? -eq 0 ]; then
+        echo "%{$fg[magenta]%}shell%{$reset_color%} ";
+    fi
+}
+
 formatted-current-branch() {
     local BRANCH="$(current_branch)"
     local LEN=${#BRANCH}
 
     if [ $LEN -gt 0 ]; then
-        echo " $BRANCH "
+        echo " %{$fg[yellow]%}$BRANCH%{$reset_color%} "
     else
         echo " "
     fi
 }
 
 zsh-prompt() {
-	local BLUE="\[\033[1;34m\]"
-	local NO_COLOR="\[\033[0m\]"
-
-	echo '$(basename "$PWD")%{$fg[green]%}$(formatted-current-branch)%{$reset_color%}λ '
+	echo '$(nix-shell-status)$(basename "$PWD")$(formatted-current-branch)λ '
 }
 
 setopt PROMPT_SUBST
 PROMPT="$(zsh-prompt)"
+
