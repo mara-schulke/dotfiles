@@ -1,5 +1,5 @@
 # general
-export EDITOR="$(which nvim)"
+export EDITOR="$(which vim)"
 
 # java
 export JABBA_HOME="$HOME/.jabba"
