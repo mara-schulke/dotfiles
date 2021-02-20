@@ -11,7 +11,7 @@ formatted-current-branch() {
     local LEN=${#BRANCH}
 
     if [ $LEN -gt 0 ]; then
-        echo " %{$fg[yellow]%}$BRANCH%{$reset_color%} "
+        echo " %{$fg[blue]%}$BRANCH%{$reset_color%} "
     else
         echo " "
     fi
