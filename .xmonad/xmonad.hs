@@ -85,12 +85,12 @@ myEditor :: String
 myEditor = "code"
 
 myTheme :: XMonadTheme
-myTheme = XMonadTheme { myForeground = "#c5c5c8"
-                      , myBackground = "#0c0b0b"
-                      , myPrimary = "#f0c674"
-                      , mySecondary = "#a03e3e"
+myTheme = XMonadTheme { myForeground  = "#c5c5c8"
+                      , myBackground  = "#0c0b0b"
+                      , myPrimary     = "#5f819d"--"#f0c674"
+                      , mySecondary   = "#202122" --"#a03e3e"
                       , myBorderWidth = 2
-                      , myGaps = 20 }
+                      , myGaps        = 20 }
 
 altMask :: KeyMask
 altMask = mod1Mask
@@ -110,12 +110,12 @@ mySpacing = spacingRaw False (Border i i i i) True (Border i i i i) True
             where i = myGaps myTheme
 
 myTabTheme = def { fontName            = myFont
-                 , activeColor         = "#f0c674"
-                 , inactiveColor       = "#0c0b0b"
-                 , activeBorderColor   = "#f0c674"
-                 , inactiveBorderColor = "#0c0b0b"
-                 , activeTextColor     = "#0c0b0b"
-                 , inactiveTextColor   = "#f0c674"
+                 , activeColor         = myPrimary myTheme
+                 , inactiveColor       = myBackground myTheme
+                 , activeBorderColor   = myPrimary myTheme
+                 , inactiveBorderColor = myBackground myTheme
+                 , activeTextColor     = myBackground myTheme
+                 , inactiveTextColor   = myPrimary myTheme
                  , activeBorderWidth   = myBorderWidth myTheme
                  , inactiveBorderWidth = myBorderWidth myTheme
                  , urgentBorderWidth   = myBorderWidth myTheme
@@ -229,22 +229,22 @@ myKeys home =
     --     , ("<XF86AudioPrev>", spawn (myTerminal ++ "mocp --previous"))
     --     , ("<XF86AudioNext>", spawn (myTerminal ++ "mocp --next"))
 
-        , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
-        , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
-        , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
-        , ("<XF86AudioMicMute>", spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
-        , ("<XF86MonBrightnessUp>", spawn "light -A 10")
+        , ("<XF86AudioRaiseVolume>",  spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
+        , ("<XF86AudioLowerVolume>",  spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
+        , ("<XF86AudioMute>",         spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+        , ("<XF86AudioMicMute>",      spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+        , ("<XF86MonBrightnessUp>",   spawn "light -A 10")
         , ("<XF86MonBrightnessDown>", spawn "light -U 10")
-        , ("<XF86Display>", spawn "autorandr --change")
-        , ("<XF86AudioPlay>", spawn "playerctl play-pause")
-        , ("<XF86AudioNext>", spawn "playerctl next")
-        , ("<XF86AudioPrev>", spawn "playerctl previous")
-        , ("<XF86HomePage>", spawn "firefox")
-        , ("<XF86Search>", safeSpawn "firefox" ["https://www.duckduckgo.com/"])
-        , ("<XF86Mail>", runOrRaise "thunderbird" (resource =? "thunderbird"))
+        , ("<XF86Display>",           spawn "autorandr --change")
+        , ("<XF86AudioPlay>",         spawn "playerctl play-pause")
+        , ("<XF86AudioNext>",         spawn "playerctl next")
+        , ("<XF86AudioPrev>",         spawn "playerctl previous")
+        , ("<XF86HomePage>",          spawn "firefox")
+        , ("<XF86Search>",            safeSpawn "firefox" ["https://www.duckduckgo.com/"])
+        , ("<XF86Mail>",              runOrRaise "thunderbird" (resource =? "thunderbird"))
         -- XF86Tools, XF86WLAN, XF86Bluetooth, XF86Favorites
         -- , ("<XF86Calculator>", runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk"))
-        , ("M-<Print>", spawn "scrot")
+        , ("M-<Print>",               spawn "scrot")
         ]
 
 main :: IO ()
