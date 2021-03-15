@@ -36,7 +36,7 @@ import XMonad.Hooks.SetWMName
 
 -- Layouts
 import XMonad.Layout.ResizableTile
-import XMonad.Layout.Tabbed
+import XMonad.Layout.ThreeColumns
 
 -- Layouts modifiers
 import XMonad.Layout.LayoutModifier
@@ -109,37 +109,37 @@ mySpacing :: l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
 mySpacing = spacingRaw False (Border i i i i) True (Border i i i i) True
             where i = myGaps myTheme
 
-myTabTheme = def { fontName            = myFont
-                 , activeColor         = myPrimary myTheme
-                 , inactiveColor       = myBackground myTheme
-                 , activeBorderColor   = myPrimary myTheme
-                 , inactiveBorderColor = myBackground myTheme
-                 , activeTextColor     = myBackground myTheme
-                 , inactiveTextColor   = myPrimary myTheme
-                 , activeBorderWidth   = myBorderWidth myTheme
-                 , inactiveBorderWidth = myBorderWidth myTheme
-                 , urgentBorderWidth   = myBorderWidth myTheme
-                 }
-
 -- The layout hook
 myLayoutHook = avoidStruts
              $ mouseResize
              $ windowArrange
              $ windowNavigation
-             $ addTabs shrinkText myTabTheme
              $ toggleLayouts full
              $ lessBorders OnlyScreenFloat
-             $ tall ||| full
+             $ tall ||| mcol ||| full
              where tall = renamed [Replace "tall"] $ mySpacing $ ResizableTall 1 (3/100) (1/2) []
+                   mcol = renamed [Replace "col"] $ mySpacing $ ThreeColMid 1 (3/100) (1/2) 
                    full = renamed [Replace "full"] $ noBorders Full
 
 myWorkspaces = ["term", "dev", "firefox", "chat", "tasks", "music", "pw", "sys", "misc"]
 
-centerWindow :: Window -> X ()
-centerWindow win = do
-    (_, W.RationalRect x y w h) <- floatLocation win
-    windows $ W.float win (W.RationalRect ((1 - w) / 2) ((1 - h) / 2) w h)
-    return ()
+myScratchPads :: [NamedScratchpad]
+myScratchPads = [ NS "terminal" spawnTerminal findTerminal manageTerminal
+                , NS "browser" spawnBrowser findBrowser manageBrowser ]
+    where spawnTerminal  = myTerminal ++ " --title scratchpad"
+          findTerminal   = title =? "scratchpad"
+          manageTerminal = customFloating $ W.RationalRect l t w h
+                where w  = 0.8
+                      h  = 0.8
+                      l  = 0.1
+                      t  = 0.1
+          spawnBrowser   = "chromium --class=chromium-scratchpad --user-data-dir='$HOME/.config/chromium-scratchpad'"
+          findBrowser    = className =? "chromium-scratchpad"
+          manageBrowser  = customFloating $ W.RationalRect l t w h
+                where w  = 0.35
+                      h  = 0.35
+                      l  = 1 - w
+                      t  = 1 - h
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
@@ -151,7 +151,7 @@ myManageHook = composeAll
      , className    =? "Slack"                              --> doShift (myWorkspaces !! 3)
      , className    =? "Enpass"                             --> doShift (myWorkspaces !! 6)
      , isFullscreen                                         --> doFullFloat
-     ]
+     ] <+> namedScratchpadManageHook myScratchPads
 
 myKeys :: String -> [([Char], X ())]
 myKeys home =
@@ -183,8 +183,8 @@ myKeys home =
         , ("M-S-i",        incScreenSpacing 10)    -- Increase screen spacing
 
     -- Floating Windows into Tiles
-        , ("M-t",          withFocused $ windows . W.sink)                             -- Push floating window back to tile
-        , ("M-S-t",        sinkAll)                                                    -- Push ALL floating windows to tile
+        , ("M-t",          withFocused $ windows . W.sink)  -- Push floating window back to tile
+        , ("M-M1-t",       sinkAll)                         -- Push ALL floating windows to tile
 
     -- Windows navigation
         , ("M-f",          sendMessage ToggleLayout >> sendMessage ToggleStruts)       -- Toggle Fullscreen without bar
@@ -203,6 +203,10 @@ myKeys home =
         , ("M-S-<Return>", promote)                -- Moves focused window to master, others maintain order
         , ("M-r r",        rotSlavesDown)          -- Rotate all windows except master and keep focus in place
         , ("M-M1-r",       rotAllDown)             -- Rotate all the windows in the current stack
+
+    -- Scratchpads
+        , ("M-S-b",        namedScratchpadAction myScratchPads "browser") -- Activate the browser scratchpad
+        , ("M-S-t",        namedScratchpadAction myScratchPads "terminal") -- Activate the terminal scratchpad
 
     -- Layouts
         , ("M-<Tab>",      toggleWS)
