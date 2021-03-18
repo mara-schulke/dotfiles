@@ -30,7 +30,7 @@ import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, s
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
-import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat)
+import XMonad.Hooks.ManageHelpers (isFullscreen, isDialog, doFullFloat, doCenterFloat)
 import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
 
@@ -87,9 +87,9 @@ myEditor = "code"
 myTheme :: XMonadTheme
 myTheme = XMonadTheme { myForeground  = "#c5c5c8"
                       , myBackground  = "#0c0b0b"
-                      , myPrimary     = "#5f819d"--"#f0c674"
-                      , mySecondary   = "#202122" --"#a03e3e"
-                      , myBorderWidth = 2
+                      , myPrimary     = "#f0c674"
+                      , mySecondary   = "#a03e3e"
+                      , myBorderWidth = 1
                       , myGaps        = 20 }
 
 altMask :: KeyMask
@@ -148,7 +148,6 @@ myScratchPads = [ terminalScratchPad "shell" "zsh"
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
      [ title        =? "Mozilla Firefox"                    --> doShift (myWorkspaces !! 2)
-     , (className   =? "firefox" <&&> resource =? "Dialog") --> doFloat
      , className    =? "Code"                               --> doShift (myWorkspaces !! 1)
      , className    =? "discord"                            --> doShift (myWorkspaces !! 3)
      , className    =? "Signal"                             --> doShift (myWorkspaces !! 3)
@@ -156,6 +155,8 @@ myManageHook = composeAll
      , className    =? "Thunderbird"                        --> doShift (myWorkspaces !! 4)
      , className    =? "Spotify"                            --> doShift (myWorkspaces !! 5)
      , className    =? "Enpass"                             --> doShift (myWorkspaces !! 6)
+     , className    =? "Pinentry"                           --> doCenterFloat
+     , isDialog                                             --> doCenterFloat
      , isFullscreen                                         --> doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
 
