@@ -123,23 +123,27 @@ myLayoutHook = avoidStruts
 
 myWorkspaces = ["term", "dev", "firefox", "chat", "tasks", "music", "pw", "sys", "misc"]
 
+terminalScratchPad :: String -> String -> NamedScratchpad
+terminalScratchPad name cmd = terminalScratchPad' name cmd (0.06, 0.1, 0.88, 0.8)
+
+terminalScratchPad' :: String -> String -> (Rational, Rational, Rational, Rational) -> NamedScratchpad
+terminalScratchPad' name cmd (l, t, w, h) = NS name spawnSP findSP manageSP
+      where id       = "scratchpad:" ++ name
+            spawnSP  = myTerminal ++ " --title " ++ id ++ " -e "  ++ cmd
+            findSP   = title =? id
+            manageSP = customFloating $ W.RationalRect l t w h
+
 myScratchPads :: [NamedScratchpad]
-myScratchPads = [ NS "terminal" spawnTerminal findTerminal manageTerminal
-                , NS "browser" spawnBrowser findBrowser manageBrowser ]
-    where spawnTerminal  = myTerminal ++ " --title scratchpad"
-          findTerminal   = title =? "scratchpad"
-          manageTerminal = customFloating $ W.RationalRect l t w h
-                where w  = 0.8
-                      h  = 0.8
-                      l  = 0.1
-                      t  = 0.1
-          spawnBrowser   = "chromium --class=chromium-scratchpad --user-data-dir='$HOME/.config/chromium-scratchpad'"
-          findBrowser    = className =? "chromium-scratchpad"
-          manageBrowser  = customFloating $ W.RationalRect l t w h
-                where w  = 0.35
-                      h  = 0.35
-                      l  = 1 - w
-                      t  = 1 - h
+myScratchPads = [ terminalScratchPad "shell" "zsh"
+                , terminalScratchPad "python" "python -q"
+                , NS "browser"  spawnBrowser findBrowser manageBrowser ]
+    where spawnBrowser  = "chromium --class=chromium-scratchpad --user-data-dir='/home/max/.config/chromium-scratchpad'"
+          findBrowser   = className =? "chromium-scratchpad"
+          manageBrowser = customFloating $ W.RationalRect l t w h
+                where w = 0.35
+                      h = 0.35
+                      l = 1 - w
+                      t = 0.02
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
@@ -149,6 +153,8 @@ myManageHook = composeAll
      , className    =? "discord"                            --> doShift (myWorkspaces !! 3)
      , className    =? "Signal"                             --> doShift (myWorkspaces !! 3)
      , className    =? "Slack"                              --> doShift (myWorkspaces !! 3)
+     , className    =? "Thunderbird"                        --> doShift (myWorkspaces !! 4)
+     , className    =? "Spotify"                            --> doShift (myWorkspaces !! 5)
      , className    =? "Enpass"                             --> doShift (myWorkspaces !! 6)
      , isFullscreen                                         --> doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
@@ -205,8 +211,9 @@ myKeys home =
         , ("M-M1-r",       rotAllDown)             -- Rotate all the windows in the current stack
 
     -- Scratchpads
-        , ("M-S-b",        namedScratchpadAction myScratchPads "browser") -- Activate the browser scratchpad
-        , ("M-S-t",        namedScratchpadAction myScratchPads "terminal") -- Activate the terminal scratchpad
+        , ("M1-b",         namedScratchpadAction myScratchPads "browser") -- Activate the browser scratchpad
+        , ("M1-t",         namedScratchpadAction myScratchPads "shell")   -- Activate the shell scratchpad
+        , ("M1-p",         namedScratchpadAction myScratchPads "python")  -- Activate the python scratchpad
 
     -- Layouts
         , ("M-<Tab>",      toggleWS)
