@@ -17,4 +17,3 @@ nix-shell-active() {
 		return 1;
 	fi
 }
-

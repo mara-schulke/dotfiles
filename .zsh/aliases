@@ -38,3 +38,6 @@ alias ag='ag --path-to-ignore ~/.config/ag/.ignore'
 
 # filemanager
 alias fm='nautilus'
+
+# vpn
+alias vpn='~/.zsh/utils/vpn'
