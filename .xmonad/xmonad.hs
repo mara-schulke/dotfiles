@@ -27,10 +27,10 @@ import qualified Data.Map as M
 
 -- Hooks
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Hooks.DynamicProperty (dynamicPropertyChange)
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
-import XMonad.Hooks.ManageHelpers (isFullscreen, isDialog, doFullFloat, doCenterFloat)
+import XMonad.Hooks.ManageHelpers (isFullscreen, isDialog, doFullFloat, doCenterFloat, doRectFloat)
 import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
 
@@ -136,14 +136,31 @@ terminalScratchPad' name cmd (l, t, w, h) = NS name spawnSP findSP manageSP
 myScratchPads :: [NamedScratchpad]
 myScratchPads = [ terminalScratchPad "shell" "zsh"
                 , terminalScratchPad "python" "python -q"
-                , NS "browser"  spawnBrowser findBrowser manageBrowser ]
-    where spawnBrowser  = "chromium --class=chromium-scratchpad --user-data-dir='/home/max/.config/chromium-scratchpad'"
-          findBrowser   = className =? "chromium-scratchpad"
-          manageBrowser = customFloating $ W.RationalRect l t w h
+                , NS "spotify" spawnSpotify findSpotify manageSpotify
+                , NS "netflix"  spawnNetflix findNetfix manageNetflix
+                , NS "filemanager"  spawnFM findFM manageFM ]
+    where spawnNetflix  = "chromium --kiosk --new-window --class=netflix --user-data-dir='/home/max/.config/netflix'"
+          findNetfix    = className =? "netflix"
+          manageNetflix = customFloating $ W.RationalRect l t w h
                 where w = 0.35
                       h = 0.35
                       l = 1 - w
-                      t = 0.02
+                      t = (1 - h) / 2
+          spawnSpotify  = "spotify"
+          findSpotify   = className =? "Spotify"
+          manageSpotify = customFloating $ W.RationalRect l t w h
+                where w = 0.5
+                      h = 0.5
+                      l = (1 - w) / 2
+                      t = (1 - h) / 2
+          spawnFM       = "nautilus"
+          findFM        = className =? "Org.gnome.Nautilus"
+          manageFM      = customFloating $ W.RationalRect l t w h
+                where w = 0.75
+                      h = 0.75
+                      l = (1 - w) / 2
+                      t = (1 - h) / 2
+
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
@@ -153,12 +170,20 @@ myManageHook = composeAll
      , className    =? "Signal"                             --> doShift (myWorkspaces !! 3)
      , className    =? "Slack"                              --> doShift (myWorkspaces !! 3)
      , className    =? "Thunderbird"                        --> doShift (myWorkspaces !! 4)
-     , className    =? "Spotify"                            --> doShift (myWorkspaces !! 5)
      , className    =? "Enpass"                             --> doShift (myWorkspaces !! 6)
      , className    =? "Pinentry"                           --> doCenterFloat
      , isDialog                                             --> doCenterFloat
      , isFullscreen                                         --> doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
+
+
+myHandleEventHook :: Event -> X All
+myHandleEventHook = dynamicPropertyChange "WM_CLASS" myManageHook
+                      <+> serverModeEventHookCmd
+                      <+> serverModeEventHook
+                      <+> serverModeEventHookF "XMONAD_PRINT" (io . putStrLn)
+                      <+> docksEventHook
+                      <+> handleEventHook def
 
 myKeys :: String -> [([Char], X ())]
 myKeys home =
@@ -212,9 +237,11 @@ myKeys home =
         , ("M-M1-r",       rotAllDown)             -- Rotate all the windows in the current stack
 
     -- Scratchpads
-        , ("M1-b",         namedScratchpadAction myScratchPads "browser") -- Activate the browser scratchpad
-        , ("M1-t",         namedScratchpadAction myScratchPads "shell")   -- Activate the shell scratchpad
-        , ("M1-p",         namedScratchpadAction myScratchPads "python")  -- Activate the python scratchpad
+        , ("M1-t",         namedScratchpadAction myScratchPads "shell")        -- Activate the shell scratchpad
+        , ("M1-p",         namedScratchpadAction myScratchPads "python")       -- Activate the python scratchpad
+        , ("M1-n",         namedScratchpadAction myScratchPads "netflix")      -- Activate the netflix scratchpad
+        , ("M1-m",         namedScratchpadAction myScratchPads "spotify")      -- Activate the spotify scratchpad
+        , ("M1-f",         namedScratchpadAction myScratchPads "filemanager")  -- Activate the filemanager scratchpad
 
     -- Layouts
         , ("M-<Tab>",      toggleWS)
@@ -266,7 +293,7 @@ main = do
     xmprocSecondary <- spawnPipe "xmobar -x 1"
     xmonad $ ewmh def
         { manageHook         = myManageHook <+> manageDocks
-        , handleEventHook    = serverModeEventHookCmd <+> serverModeEventHook <+> serverModeEventHookF "XMONAD_PRINT" (io . putStrLn) <+> docksEventHook
+        , handleEventHook    = myHandleEventHook
         , modMask            = myModMask
         , terminal           = myTerminal
         , startupHook        = myStartupHook
