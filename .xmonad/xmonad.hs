@@ -7,32 +7,25 @@ import qualified XMonad.StackSet as W
 
 -- Actions
 import XMonad.Actions.CopyWindow (kill1, killAllOtherCopies)
-import XMonad.Actions.CycleWS (moveTo, shiftTo, WSType(..), nextScreen, prevScreen, toggleWS)
-import XMonad.Actions.GridSelect
+import XMonad.Actions.CycleWS (nextScreen, prevScreen, toggleWS)
 import XMonad.Actions.MouseResize
 import XMonad.Actions.Promote
 import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
-import qualified XMonad.Actions.TreeSelect as TS
 import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Actions.WithAll (sinkAll, killAll)
-import qualified XMonad.Actions.Search as S
 
 -- Data
-import Data.Char (isSpace, toUpper)
 import Data.Monoid
-import Data.Maybe (isJust)
 import Data.Tree
 import Data.List (delete)
-import qualified Data.Map as M
 
 -- Hooks
-import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Hooks.DynamicLog (dynamicLogWithPP, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Hooks.DynamicProperty (dynamicPropertyChange)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.ManageHelpers (isFullscreen, isDialog, doFullFloat, doCenterFloat, doRectFloat)
 import XMonad.Hooks.ServerMode
-import XMonad.Hooks.SetWMName
 
 -- Layouts
 import XMonad.Layout.ResizableTile
@@ -90,7 +83,7 @@ myTheme = XMonadTheme { myForeground  = "#c5c5c8"
                       , myPrimary     = "#f0c674"
                       , mySecondary   = "#a03e3e"
                       , myBorderWidth = 1
-                      , myGaps        = 20 }
+                      , myGaps        = 0 }
 
 altMask :: KeyMask
 altMask = mod1Mask
@@ -116,12 +109,12 @@ myLayoutHook = avoidStruts
              $ windowNavigation
              $ toggleLayouts full
              $ lessBorders OnlyScreenFloat
-             $ tall ||| mcol ||| full
-             where tall = renamed [Replace "tall"] $ mySpacing $ ResizableTall 1 (3/100) (1/2) []
-                   mcol = renamed [Replace "col"] $ mySpacing $ ThreeColMid 1 (3/100) (1/2) 
+             $ mcol ||| tall ||| full
+             where mcol = renamed [Replace "col"] $ mySpacing $ ThreeColMid 1 (3/100) (1/2) 
+                   tall = renamed [Replace "tall"] $ mySpacing $ ResizableTall 1 (3/100) (1/2) []
                    full = renamed [Replace "full"] $ noBorders Full
 
-myWorkspaces = ["term", "dev", "firefox", "chat", "tasks", "music", "pw", "sys", "misc"]
+myWorkspaces = ["term", "dev", "firefox", "chat", "tasks", "pw", "sys", "misc"]
 
 terminalScratchPad :: String -> String -> NamedScratchpad
 terminalScratchPad name cmd = terminalScratchPad' name cmd (0.06, 0.1, 0.88, 0.8)
@@ -170,7 +163,7 @@ myManageHook = composeAll
      , className    =? "Signal"                             --> doShift (myWorkspaces !! 3)
      , className    =? "Slack"                              --> doShift (myWorkspaces !! 3)
      , className    =? "Thunderbird"                        --> doShift (myWorkspaces !! 4)
-     , className    =? "Enpass"                             --> doShift (myWorkspaces !! 6)
+     , className    =? "Enpass"                             --> doShift (myWorkspaces !! 5)
      , className    =? "Pinentry"                           --> doCenterFloat
      , isDialog                                             --> doCenterFloat
      , isFullscreen                                         --> doFullFloat
@@ -209,10 +202,8 @@ myKeys home =
         , ("M-,",          prevScreen)             -- Switch focus to prev monitor
 
     -- Increase/decrease spacing (gaps)
-        , ("M-d",          decWindowSpacing 10)    -- Decrease window spacing
-        , ("M-i",          incWindowSpacing 10)    -- Increase window spacing
-        , ("M-S-d",        decScreenSpacing 10)    -- Decrease screen spacing
-        , ("M-S-i",        incScreenSpacing 10)    -- Increase screen spacing
+        , ("M-d",          decWindowSpacing 20 <+> decScreenSpacing 20)    -- Decrease window spacing
+        , ("M-i",          incWindowSpacing 20 <+> incScreenSpacing 20)    -- Increase window spacing
 
     -- Floating Windows into Tiles
         , ("M-t",          withFocused $ windows . W.sink)  -- Push floating window back to tile
@@ -283,7 +274,7 @@ myKeys home =
         , ("<XF86Mail>",              runOrRaise "thunderbird" (resource =? "thunderbird"))
         -- XF86Tools, XF86WLAN, XF86Bluetooth, XF86Favorites
         -- , ("<XF86Calculator>", runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk"))
-        , ("M-<Print>",               spawn "scrot")
+        , ("M-<Print>",               spawn "scrot ~/Documents/screenshots/%y%m%d-%H%M%S.png")
         ]
 
 main :: IO ()
