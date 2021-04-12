@@ -114,12 +114,15 @@ myLayoutHook = avoidStruts
              $ toggleLayouts full
              $ lessBorders OnlyScreenFloat
              $ ifWider 1920 layoutsUHD layoutsHD
-             where layoutsUHD = (mySpacing $ threecol) ||| (mySpacing $ tall) ||| floating ||| full
-                   layoutsHD  = (mySpacing' 0 $ threecol) ||| (mySpacing' 0 $ tall) ||| full
-                   threecol   = renamed [Replace "three collumns"] $ ThreeColMid 1 (3/100) (1/2) 
-                   floating   = renamed [Replace "floating"] $ simplestFloat
-                   tall       = renamed [Replace "tall"] $ ResizableTall 1 (3/100) (1/2) []
-                   full       = renamed [Replace "full"] $ noBorders Full
+             where layoutsUHD   = threecolGaps ||| tallGaps ||| floating ||| full
+                   layoutsHD    = threecol ||| tall ||| full
+                   threecol     = renamed [Replace "three collumns"] $ mySpacing' 0 $ ThreeColMid 1 (3/100) (1/2) 
+                   threecolGaps = renamed [Replace "three collumns"] $ mySpacing $ ThreeColMid 1 (3/100) (1/2) 
+                   tall         = renamed [Replace "tall"] $ mySpacing' 0 $ ResizableTall 1 (3/100) (1/2) []
+                   tallGaps     = renamed [Replace "tall"] $ mySpacing $ ResizableTall 1 (3/100) (1/2) []
+                   floating     = renamed [Replace "floating"] $ simplestFloat
+                   full         = renamed [Replace "full"] $ noBorders Full
+
 
 myWorkspaces = ["term", "dev", "firefox", "chat", "tasks", "pw", "sys", "misc"]
 
