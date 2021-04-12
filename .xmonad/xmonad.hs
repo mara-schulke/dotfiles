@@ -30,11 +30,13 @@ import XMonad.Hooks.ServerMode
 -- Layouts
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.SimplestFloat
 
 -- Layouts modifiers
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.Magnifier
 import XMonad.Layout.NoBorders
+import XMonad.Layout.PerScreen
 import XMonad.Layout.ShowWName
 import XMonad.Layout.Simplest
 import XMonad.Layout.Renamed
@@ -80,10 +82,10 @@ myEditor = "code"
 myTheme :: XMonadTheme
 myTheme = XMonadTheme { myForeground  = "#c5c5c8"
                       , myBackground  = "#0c0b0b"
-                      , myPrimary     = "#f0c674"
-                      , mySecondary   = "#a03e3e"
+                      , myPrimary     = "#85aed0"
+                      , mySecondary   = "#5e8bb0"
                       , myBorderWidth = 1
-                      , myGaps        = 0 }
+                      , myGaps        = 40 }
 
 altMask :: KeyMask
 altMask = mod1Mask
@@ -95,12 +97,14 @@ myStartupHook = do
           spawnOnce "picom --experimental-backends &"
           spawnOnce "blueman-applet &"
           spawnOnce "volumeicon &"
-          spawnOnce $ "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor primary --transparent true --alpha 0 --tint 0x" ++ (delete '#' $ myBackground myTheme) ++ " --height 16 &"
+          spawnOnce $ "trayer --edge bottom --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor primary --transparent true --alpha 0 --tint 0x" ++ (delete '#' $ myBackground myTheme) ++ " --height 16 &"
 
---Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
+-- Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
 mySpacing :: l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
-mySpacing = spacingRaw False (Border i i i i) True (Border i i i i) True
-            where i = myGaps myTheme
+mySpacing = mySpacing' $ myGaps myTheme
+
+mySpacing' :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
+mySpacing' i = spacingRaw False (Border i i i i) True (Border i i i i) True
 
 -- The layout hook
 myLayoutHook = avoidStruts
@@ -109,10 +113,13 @@ myLayoutHook = avoidStruts
              $ windowNavigation
              $ toggleLayouts full
              $ lessBorders OnlyScreenFloat
-             $ mcol ||| tall ||| full
-             where mcol = renamed [Replace "col"] $ mySpacing $ ThreeColMid 1 (3/100) (1/2) 
-                   tall = renamed [Replace "tall"] $ mySpacing $ ResizableTall 1 (3/100) (1/2) []
-                   full = renamed [Replace "full"] $ noBorders Full
+             $ ifWider 1920 layoutsUHD layoutsHD
+             where layoutsUHD = (mySpacing $ threecol) ||| (mySpacing $ tall) ||| floating ||| full
+                   layoutsHD  = (mySpacing' 0 $ threecol) ||| (mySpacing' 0 $ tall) ||| full
+                   threecol   = renamed [Replace "three collumns"] $ ThreeColMid 1 (3/100) (1/2) 
+                   floating   = renamed [Replace "floating"] $ simplestFloat
+                   tall       = renamed [Replace "tall"] $ ResizableTall 1 (3/100) (1/2) []
+                   full       = renamed [Replace "full"] $ noBorders Full
 
 myWorkspaces = ["term", "dev", "firefox", "chat", "tasks", "pw", "sys", "misc"]
 
