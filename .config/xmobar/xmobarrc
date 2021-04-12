@@ -4,7 +4,7 @@ Config { font = "xft:Monospace:weight=regular:pixelsize=14:antialias=true:hintin
                            ]
        , bgColor = "#0c0b0b"
        , fgColor = "#c5c5c8"
-       , position = Top
+       , position = Bottom
        , lowerOnStart = True
        , hideOnStart = False
        , allDesktops = True
