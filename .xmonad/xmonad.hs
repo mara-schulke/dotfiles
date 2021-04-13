@@ -79,6 +79,9 @@ myBrowser = "firefox"
 myEditor :: String
 myEditor = "code"
 
+myLock :: String
+myLock = "slock"
+
 myTheme :: XMonadTheme
 myTheme = XMonadTheme { myForeground  = "#c5c5c8"
                       , myBackground  = "#0c0b0b"
@@ -86,9 +89,6 @@ myTheme = XMonadTheme { myForeground  = "#c5c5c8"
                       , mySecondary   = "#5e8bb0"
                       , myBorderWidth = 1
                       , myGaps        = 40 }
-
-altMask :: KeyMask
-altMask = mod1Mask
 
 myStartupHook :: X ()
 myStartupHook = do
@@ -196,12 +196,13 @@ myKeys home =
         , ("M-e e",        io exitSuccess)             -- Quits xmonad
 
     -- Run Prompt
-        , ("M-<Space>",    spawn "rofi -show drun -display-drun \"Run: \" -drun-display-format \"{name}\"")
+        , ("M-<Space>",    spawn "rofi -show drun -display-drun \"Run\" -drun-display-format \"{name}\"")
         -- , ("M-p q", scrotPrompt home True)         -- scrotPrompt True
         -- , ("M-p z", scrotPrompt home False)        -- scrotPrompt False
 
     -- Useful programs to have a keybinding for launch
         , ("M-<Return>",   spawn myTerminal)
+        , ("M1-l",         spawn myLock)
 
     -- Kill windows
         , ("M-q",          kill1)                  -- Kill the currently focused client
@@ -248,13 +249,13 @@ myKeys home =
         , ("M-<Tab>",      toggleWS)
         , ("M-S-<Tab>",    sendMessage NextLayout)
 
-    -- -- Window resizing
+    -- -- Window resizing TODO
     --     , ("M-<Left>", sendMessage Shrink)                   -- Shrink horiz window width
     --     , ("M-<Right>", sendMessage Expand)                   -- Expand horiz window width
     --     , ("M-M1-<Left>", sendMessage MirrorShrink)          -- Shrink vert window width
     --     , ("M-M1-<Right>", sendMessage MirrorExpand)          -- Exoand vert window width
 
-    -- Sublayouts
+    -- Sublayouts TODO
     -- This is used to push windows to tabbed sublayouts, or pull them out of it.
         -- , ("M-C-<Left>", sendMessage $ pullGroup L)
         -- , ("M-C-<Right>", sendMessage $ pullGroup R)
@@ -264,11 +265,8 @@ myKeys home =
         -- , ("M-C-u", withFocused (sendMessage . UnMerge))
         -- , ("M-C-/", withFocused (sendMessage . UnMergeAll))
 
-    -- -- Multimedia Keys
-    --     , ("<XF86AudioPlay>", spawn (myTerminal ++ "mocp --play"))
-    --     , ("<XF86AudioPrev>", spawn (myTerminal ++ "mocp --previous"))
-    --     , ("<XF86AudioNext>", spawn (myTerminal ++ "mocp --next"))
-
+    -- Multimedia Keys
+    -- Unused@T490: XF86Tools, XF86WLAN, XF86Bluetooth, XF86Favorites
         , ("<XF86AudioRaiseVolume>",  spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
         , ("<XF86AudioLowerVolume>",  spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
         , ("<XF86AudioMute>",         spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
@@ -282,8 +280,7 @@ myKeys home =
         , ("<XF86HomePage>",          spawn "firefox")
         , ("<XF86Search>",            safeSpawn "firefox" ["https://www.duckduckgo.com/"])
         , ("<XF86Mail>",              runOrRaise "thunderbird" (resource =? "thunderbird"))
-        -- XF86Tools, XF86WLAN, XF86Bluetooth, XF86Favorites
-        -- , ("<XF86Calculator>", runOrRaise "qalculate-gtk" (resource =? "qalculate-gtk"))
+        , ("<XF86Calculator>",        namedScratchpadAction myScratchPads "python")
         , ("M-<Print>",               spawn "scrot ~/Documents/screenshots/%y%m%d-%H%M%S.png")
         ]
 
