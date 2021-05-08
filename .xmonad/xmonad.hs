@@ -152,8 +152,8 @@ myScratchPads = [ terminalScratchPad "shell" "zsh"
           spawnSpotify  = "spotify"
           findSpotify   = className =? "Spotify"
           manageSpotify = customFloating $ W.RationalRect l t w h
-                where w = 0.5
-                      h = 0.5
+                where w = 0.65
+                      h = 0.65
                       l = (1 - w) / 2
                       t = (1 - h) / 2
           spawnFM       = "nautilus"
@@ -221,8 +221,7 @@ myKeys home =
         , ("M-M1-t",       sinkAll)                         -- Push ALL floating windows to tile
 
     -- Windows navigation
-        , ("M-f",          sendMessage ToggleLayout >> sendMessage ToggleStruts)       -- Toggle Fullscreen without bar
-        , ("M-S-f",        sendMessage ToggleLayout)                                   -- Toggle Fullscreen with bar
+        , ("M-f",          sendMessage ToggleLayout >> sendMessage ToggleStruts)       -- Toggle Fullscreen
         , ("M-g",          toggleWindowSpacingEnabled <+> toggleScreenSpacingEnabled)  -- Toggle spacing between windows
         , ("M-m",          windows W.focusMaster)  -- Move focus to the master window
         , ("M-S-m",        windows W.swapMaster)   -- Swap the focused window and the master window
