@@ -375,7 +375,9 @@ debug:
 # a no-op if you do not wish to receive input characters for that binding.
 key_bindings:
   - { key: V,        mods: Control,        action: Paste            }
-  - { key: C,        mods: Control,        action: Copy             }
+  #- { key: C,        mods: Control,        action: Copy             }
+  #- { key: C,        mods: Control|Shift,  chars: "\x03"            }
+
   # (Windows/Linux only)
   #- { key: V,        mods: Control|Shift, action: Paste            }
   #- { key: C,        mods: Control|Shift, action: Copy             }
