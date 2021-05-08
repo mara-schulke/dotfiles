@@ -42,8 +42,11 @@ work() {
 	case "$1" in
 		on) work_on $2 ;;
 		clear) work_clear $2 ;;
+		cl) work_restore ;;
 		restore) work_restore ;;
+		rs) work_restore ;;
 		list) work_list ;;
+		ls) work_list ;;
 		*) work_help; return 1 ;;
 	esac
 }
