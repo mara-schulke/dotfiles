@@ -14,7 +14,12 @@ export ZSH_DISABLE_COMPFIX=true
 
 # load plugin configuration
 source $HOME/.zsh/plugins
-source $HOME/.zsh/functions
+
+# load functions
+source $HOME/.zsh/functions/github
+source $HOME/.zsh/functions/java
+source $HOME/.zsh/functions/nix
+source $HOME/.zsh/functions/work
 
 # load dependencies
 source $HOME/.oh-my-zsh/oh-my-zsh.sh
@@ -26,6 +31,8 @@ source $HOME/.zsh/aliases
 source $HOME/.zsh/cfg/environment
 source $HOME/.zsh/cfg/postgres
 
+# go into the current project directory if given
+work restore
 
 if systemctl -q is-active graphical.target && [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 	exec startx

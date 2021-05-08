@@ -1,0 +1,49 @@
+work_help() { cat << EOF
+work 1.0.0
+Maximilian Schulke <hello@maximilianschulke.com>
+A helper to manage the root dir a new shell is spawned in
+
+USAGE:
+    work <SUBCOMMAND> <PROJECT>
+
+SUBCOMMANDS:
+    on        Set the current project
+    clear     Clear the current project status
+    restore   Go into the active project folder if it exists
+    list      List all projects
+EOF
+}
+
+WORKSPACE=$HOME/workspace
+CURRENT_PROJECT_FILE=/tmp/active-project
+
+work_on() {
+	echo $1 > $CURRENT_PROJECT_FILE
+	cd $WORKSPACE/$1
+}
+
+work_clear() {
+	rm $CURRENT_PROJECT_FILE
+	cd $HOME
+}
+
+work_restore() {
+	if [ -s $CURRENT_PROJECT_FILE ]; then
+		project=$(cat $CURRENT_PROJECT_FILE);
+		cd $WORKSPACE/$project
+	fi
+}
+
+work_list() {
+	exa -D1 $WORKSPACE
+}
+
+work() {
+	case "$1" in
+		on) work_on $2 ;;
+		clear) work_clear $2 ;;
+		restore) work_restore ;;
+		list) work_list ;;
+		*) work_help; return 1 ;;
+	esac
+}
