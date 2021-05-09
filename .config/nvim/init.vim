@@ -62,12 +62,18 @@ let g:coc_global_extensions = [
   \ 'coc-json', 
   \ 'coc-pairs',
   \ 'coc-prettier', 
-  \ 'coc-python',
+  \ 'coc-pyright',
   \ 'coc-rls',
   \ 'coc-snippets',
   \ 'coc-tslint',
   \ 'coc-tsserver',
   \ 'coc-vimtex',
   \ ]
+
+" Use <C-l> for trigger snippet expand.
+"imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+"vmap <C-j> <Plug>(coc-snippets-select)
 
 " keybindings
