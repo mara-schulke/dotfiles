@@ -1,3 +1,4 @@
+alias sudo="sudo "
 alias lock="slock"
 alias reload="source ~/.zshrc"
 alias search="firefox --search"
