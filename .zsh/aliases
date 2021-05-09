@@ -21,8 +21,6 @@ alias django="python ./src/manage.py"
 alias djangorun="django runserver 0.0.0.0:8000"
 alias djangoinstall="pip install -r ./resources/requirements.txt"
 
-# alias vim="nvim"
-
 # node
 alias yarn="npx yarn"
 alias webpack="npx webpack"
@@ -33,7 +31,11 @@ alias lsd="ls -D"
 alias lst="ls -T --git-ignore -I=.git"
 
 # ag
-alias ag='ag --path-to-ignore ~/.config/ag/.ignore'
+alias ag="ag --path-to-ignore ~/.config/ag/.ignore"
 
 # filemanager
-alias fm='nautilus'
+alias fm="nautilus"
+
+# neovim
+alias vim="nvim"
+
