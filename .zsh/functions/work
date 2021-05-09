@@ -50,3 +50,5 @@ work() {
 		*) work_help; return 1 ;;
 	esac
 }
+
+# compdef work_list 'work on'
