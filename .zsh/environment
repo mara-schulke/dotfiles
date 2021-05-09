@@ -1,5 +1,5 @@
 # general
-export EDITOR="$(which vim)"
+export EDITOR="$(which nvim)"
 
 # vault
 export VAULT_ADDR=https://vault.moccu.net:8200
