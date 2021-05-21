@@ -88,14 +88,17 @@ myTheme = XMonadTheme { myForeground  = "#c5c5c8"
                       , myPrimary     = "#85aed0"
                       , mySecondary   = "#5e8bb0"
                       , myBorderWidth = 1
-                      , myGaps        = 40 }
+                      , myGaps        = 80 }
 
 myStartupHook :: X ()
 myStartupHook = do
           spawnOnce "xsetroot -cursor_name left_ptr"
           spawnOnce "autorandr --change && $HOME/.fehbg"
           spawnOnce "picom --experimental-backends &"
+          spawnOnce "wpa_gui -t &"
           spawnOnce "blueman-applet &"
+          spawnOnce "blueman-manager &"
+          spawnOnce "pavucontrol &"
           spawnOnce "volumeicon &"
           spawnOnce $ "trayer --edge bottom --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor primary --transparent true --alpha 0 --tint 0x" ++ (delete '#' $ myBackground myTheme) ++ " --height 16 &"
 
@@ -124,7 +127,7 @@ myLayoutHook = avoidStruts
                    full         = renamed [Replace "full"] $ noBorders Full
 
 
-myWorkspaces = ["term", "dev", "firefox", "chat", "tasks", "pw", "sys", "misc"]
+myWorkspaces = ["sh", "dev", "net", "chat", "tasks", "mail", "docs", "misc", "cfg"]
 
 terminalScratchPad :: String -> String -> NamedScratchpad
 terminalScratchPad name cmd = terminalScratchPad' name cmd (0.06, 0.1, 0.88, 0.8)
@@ -138,9 +141,9 @@ terminalScratchPad' name cmd (l, t, w, h) = NS name spawnSP findSP manageSP
 
 myScratchPads :: [NamedScratchpad]
 myScratchPads = [ terminalScratchPad "shell" "zsh"
-                , terminalScratchPad "python" "python -q"
-                , NS "spotify" spawnSpotify findSpotify manageSpotify
                 , NS "netflix"  spawnNetflix findNetfix manageNetflix
+                , NS "spotify" spawnSpotify findSpotify manageSpotify
+                , NS "enpass" spawnEnpass findEnpass manageEnpass
                 , NS "filemanager"  spawnFM findFM manageFM ]
     where spawnNetflix  = "chromium --kiosk --new-window --class=netflix --user-data-dir='/home/max/.config/netflix'"
           findNetfix    = className =? "netflix"
@@ -152,6 +155,13 @@ myScratchPads = [ terminalScratchPad "shell" "zsh"
           spawnSpotify  = "spotify"
           findSpotify   = className =? "Spotify"
           manageSpotify = customFloating $ W.RationalRect l t w h
+                where w = 0.65
+                      h = 0.65
+                      l = (1 - w) / 2
+                      t = (1 - h) / 2
+          spawnEnpass   = "Enpass"
+          findEnpass    = className =? "Enpass"
+          manageEnpass  = customFloating $ W.RationalRect l t w h
                 where w = 0.65
                       h = 0.65
                       l = (1 - w) / 2
@@ -172,8 +182,9 @@ myManageHook = composeAll
      , className    =? "discord"                            --> doShift (myWorkspaces !! 3)
      , className    =? "Signal"                             --> doShift (myWorkspaces !! 3)
      , className    =? "Slack"                              --> doShift (myWorkspaces !! 3)
-     , className    =? "Thunderbird"                        --> doShift (myWorkspaces !! 4)
-     , className    =? "Enpass"                             --> doShift (myWorkspaces !! 5)
+     , className    =? "Thunderbird"                        --> doShift (myWorkspaces !! 5)
+     , className    =? ".blueman-manager-wrapped"           --> doShift (myWorkspaces !! 8)
+     , className    =? "Pavucontrol"                        --> doShift (myWorkspaces !! 8)
      , className    =? "Pinentry"                           --> doCenterFloat
      , isDialog                                             --> doCenterFloat
      , isFullscreen                                         --> doFullFloat
@@ -239,9 +250,9 @@ myKeys home =
 
     -- Scratchpads
         , ("M1-t",         namedScratchpadAction myScratchPads "shell")        -- Activate the shell scratchpad
-        , ("M1-p",         namedScratchpadAction myScratchPads "python")       -- Activate the python scratchpad
         , ("M1-n",         namedScratchpadAction myScratchPads "netflix")      -- Activate the netflix scratchpad
         , ("M1-m",         namedScratchpadAction myScratchPads "spotify")      -- Activate the spotify scratchpad
+        , ("M1-p",         namedScratchpadAction myScratchPads "enpass")       -- Activate the enpass scratchpad
         , ("M1-f",         namedScratchpadAction myScratchPads "filemanager")  -- Activate the filemanager scratchpad
 
     -- Layouts
