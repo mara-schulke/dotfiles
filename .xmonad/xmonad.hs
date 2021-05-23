@@ -85,8 +85,8 @@ myLock = "slock"
 myTheme :: XMonadTheme
 myTheme = XMonadTheme { myForeground  = "#c5c5c8"
                       , myBackground  = "#0c0b0b"
-                      , myPrimary     = "#85aed0"
-                      , mySecondary   = "#5e8bb0"
+                      , myPrimary     = "#85678f"
+                      , mySecondary   = "#b294bb"
                       , myBorderWidth = 1
                       , myGaps        = 80 }
 
@@ -236,14 +236,14 @@ myKeys home =
         , ("M-g",          toggleWindowSpacingEnabled <+> toggleScreenSpacingEnabled)  -- Toggle spacing between windows
         , ("M-m",          windows W.focusMaster)  -- Move focus to the master window
         , ("M-S-m",        windows W.swapMaster)   -- Swap the focused window and the master window
-        , ("M-<Left>",     windows W.focusUp)      -- Focus the next window
-        , ("M-<Right>",    windows W.focusDown)    -- Focus the previous window
-        , ("M-<Up>",       windows W.focusUp)      -- Focus the next window
-        , ("M-<Down>",     windows W.focusDown)    -- Focus the previous window
-        , ("M-S-<Left>",   windows W.swapUp)       -- Swap the current window with the next window
-        , ("M-S-<Right>",  windows W.swapDown)     -- Swap the current window with the previous window
-        , ("M-S-<Up>",     windows W.swapUp)       -- Swap the current window with the next window
-        , ("M-S-<Down>",   windows W.swapDown)     -- Swap the current window with the previous window
+        -- , ("M-<Left>",     windows W.focusUp)      -- Focus the next window
+        -- , ("M-<Right>",    windows W.focusDown)    -- Focus the previous window
+        -- , ("M-<Up>",       windows W.focusUp)      -- Focus the next window
+        -- , ("M-<Down>",     windows W.focusDown)    -- Focus the previous window
+        -- , ("M-S-<Left>",   windows W.swapUp)       -- Swap the current window with the next window
+        -- , ("M-S-<Right>",  windows W.swapDown)     -- Swap the current window with the previous window
+        -- , ("M-S-<Up>",     windows W.swapUp)       -- Swap the current window with the next window
+        -- , ("M-S-<Down>",   windows W.swapDown)     -- Swap the current window with the previous window
         , ("M-S-<Return>", promote)                -- Moves focused window to master, others maintain order
         , ("M-r r",        rotSlavesDown)          -- Rotate all windows except master and keep focus in place
         , ("M-M1-r",       rotAllDown)             -- Rotate all the windows in the current stack
