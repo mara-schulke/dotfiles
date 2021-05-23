@@ -1,0 +1,89 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+# Generic
+
+snippet \beg "Begin a new environment" bA
+\begin{$1}
+	
+\end{$1}
+endsnippet
+
+snippet \typicalpreamble "Import typical packages" b
+\usepackage[a4paper]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tabularx}
+endsnippet
+
+snippet \codepreamble "Import packages for code highlighting" b
+\usepackage{listings}
+\usepackage{color}
+
+\lstset{
+	language=$1,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+endsnippet
+
+# Article Specific
+
+snippet \sec "Start a new section" bA
+\section{$1}
+endsnippet
+
+snippet \ssec "Start a new subsection" bA
+\subsection{$1}
+endsnippet
+
+snippet \sssec "Start a new subsubsection" bA
+\subsubsection{$1}
+endsnippet
+
+# THB Specific
+
+snippet \thbassignment "Begin a new assignment in THB Style" b
+\documentclass{article}
+
+
+
+\begin{documnet}
+
+
+\end{document}
+endsnippet
+
