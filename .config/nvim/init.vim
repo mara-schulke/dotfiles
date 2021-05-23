@@ -26,6 +26,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " LaTeX
+Plug 'lervag/vimtex'
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 call plug#end()
@@ -97,12 +98,37 @@ let g:NERDTreeIgnore=[
   \ '.git'
   \ ]
 
-" Use <C-l> for trigger snippet expand.
-"imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-"vmap <C-j> <Plug>(coc-snippets-select)
-
-" keybindings
+" keybindings -plugins
 map <C-e> :NERDTreeToggle<CR>
+map <C-l> <Plug>(coc-snippets-expand)
+vmap <C-j> <Plug>(coc-snippets-select)
 
+" keybindings - files
+map <C-s> :w<CR>
+imap <C-s> <Esc>:w<CR>i
+
+map <C-w> :bd<CR>
+map <C-o> :b#<CR>
+
+" keybindings - editing
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+nnoremap <A-j> :m -2<CR>
+vnoremap <A-j> :m '<-2<CR>gv=gv
+inoremap <A-j> <Esc>:m -2<CR>==gi
+
+nnoremap <A-k> :m +1<CR>
+vnoremap <A-k> :m '>+1<CR>gv=gv
+inoremap <A-k> <Esc>:m +1<CR>==gi
+
+let c = 1
+while c <= 9
+  execute "map ," . c . " :b" . c . "\<CR>"
+  let c += 1
+endwhile
+
+" custom commands
+command EditConfig e ~/.config/nvim/init.vim
