@@ -124,7 +124,7 @@ myLayoutHook = avoidStruts
                    tall         = renamed [Replace "tall"] $ mySpacing' 0 $ ResizableTall 1 (3/100) (1/2) []
                    tallGaps     = renamed [Replace "tall"] $ mySpacing $ ResizableTall 1 (3/100) (1/2) []
                    floating     = renamed [Replace "floating"] $ simplestFloat
-                   full         = renamed [Replace "full"] $ noBorders Full
+                   full         = renamed [Replace "full"] $ mySpacing' 0 $ Full
 
 
 myWorkspaces = ["sh", "dev", "net", "chat", "tasks", "mail", "docs", "misc", "cfg"]
