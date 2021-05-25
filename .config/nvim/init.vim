@@ -10,13 +10,14 @@ filetype off                               " required
 call plug#begin('~/.local/share/nvim/plug')
 
 " syntax support
+Plug 'rust-lang/rust.vim'
 Plug 'vim-syntastic/syntastic'
 
 " ux
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'mg979/vim-visual-multi'
+Plug 'bronson/vim-visual-star-search'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
@@ -37,6 +38,7 @@ call plug#end()
 set mouse=a
 set nowrap
 set backspace=indent,eol,start
+set clipboard+=unnamedplus
 set number
 set laststatus=2
 set encoding=utf-8
@@ -98,10 +100,31 @@ let g:NERDTreeIgnore=[
   \ '.git'
   \ ]
 
-" keybindings -plugins
+
+let mapleader = ' '
+
+" keybindings - plugins
 map <C-e> :NERDTreeToggle<CR>
 map <C-l> <Plug>(coc-snippets-expand)
 vmap <C-j> <Plug>(coc-snippets-select)
+
+map <C-f> <Plug>(coc-format)
+map <C-p> :Files<CR>
+
+" keybindings - searching / replacing
+map <silent> <Esc> :let @/=''<CR>
+
+nnoremap <Leader>r :s///g<Left><Left>
+nnoremap <Leader>rc :s///gc<Left><Left><Left>
+
+xnoremap <Leader>r :s///g<Left><Left>
+xnoremap <Leader>rc :s///gc<Left><Left><Left>
+
+nnoremap <silent> * :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+xnoremap <silent> * "sy:let @/=@s<CR>cgn
+
+noremap # .
+noremap . #
 
 " keybindings - files
 map <C-s> :w<CR>
@@ -111,24 +134,66 @@ map <C-w> :bd<CR>
 map <C-o> :b#<CR>
 
 " keybindings - editing
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
 
-nnoremap <A-j> :m -2<CR>
-vnoremap <A-j> :m '<-2<CR>gv=gv
-inoremap <A-j> <Esc>:m -2<CR>==gi
+noremap w <S-w>
+noremap <S-w> w
 
-nnoremap <A-k> :m +1<CR>
-vnoremap <A-k> :m '>+1<CR>gv=gv
-inoremap <A-k> <Esc>:m +1<CR>==gi
+noremap <S-b> b
+noremap b <S-b>
 
-let c = 1
-while c <= 9
-  execute "map ," . c . " :b" . c . "\<CR>"
-  let c += 1
-endwhile
+noremap <S-e> e
+noremap e <S-e>
+
+noremap Q gqq
+
+map <Up> <Nop>
+map <Down> <Nop>
+map <Left> <Nop>
+map <Right> <Nop>
+
+nnoremap <A-j> :m +1<CR>
+vnoremap <A-j> :m '>+1<CR>gv=gv
+inoremap <A-j> <Esc>:m +1<CR>==gi
+
+nnoremap <A-k> :m -2<CR>
+vnoremap <A-k> :m '<-2<CR>gv=gv
+inoremap <A-k> <Esc>:m -2<CR>==gi
+
+for i in [1..99]
+	execute "map <Leader>" . i . " :b" . i . "\<CR>"
+endfor
 
 " custom commands
-command EditConfig e ~/.config/nvim/init.vim
+
+if !exists(":EditConfig")
+	command EditConfig e $MYVIMRC
+endif
+
+if !exists(":ReloadConfig")
+	command ReloadConfig so $MYVIMRC
+endif
+
+
+" Todo: Write Shortcut Overview or smth like that
+" gqq - formats paragraph nicely c:
+" gf - open mentioned file
+" gv - reselt last selection
+" J - join lines
+" gJ - join without space
+" g& - run prev substitute on whole file!!!!
+" remap capslock to escape 
+" $ setxkbmap -option caps:super -variant altgr-intl
+" increase xrate for key repeat
+" $ xset r rate 300 50
+"
+" zz zt zb / CTRL U / CTRL D Move Page
+" } / { to move between paragraphs of text
+" :sort !!!
+
+" CTRL R Redo stuff
+" D = d$
+
+" :earler / :later
+" dap / dip / cap / cip delete / change paragraph
+" set clipboard+=unnamedplus
+" ctrl v
