@@ -1,6 +1,8 @@
 # general
 export EDITOR="$(which nvim)"
 
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
 # vault
 export VAULT_ADDR=https://vault.moccu.net:8200
 export VAULT_CLIENT_CERT=$HOME/.config/vault/vault_client.crt
