@@ -1,5 +1,5 @@
 work_help() { command cat << EOF
-work 1.0.0
+work 1.1.0
 Maximilian Schulke <hello@maximilianschulke.com>
 A helper to manage the root dir a new shell is spawned in
 
