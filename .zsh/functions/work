@@ -18,8 +18,14 @@ WORKSPACE=$HOME/workspace
 CURRENT_PROJECT_FILE=/tmp/active-project
 
 work_on() {
-	echo $1 > $CURRENT_PROJECT_FILE
-	cd $WORKSPACE/$1
+	local project=$1
+
+	if [ -z $1 ]; then
+		project=$(work ls | fzf)
+	fi
+
+	echo $project > $CURRENT_PROJECT_FILE
+	cd $WORKSPACE/$project
 }
 
 work_clear() {
