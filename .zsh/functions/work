@@ -51,7 +51,6 @@ work() {
 		on) work_on $2 ;;
 		'') work_on ;;
 		off) work_off $2 ;;
-		rs) work_restore ;;
 		restore) work_restore ;;
 		rs) work_restore ;;
 		list) work_list ;;
