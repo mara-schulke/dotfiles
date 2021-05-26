@@ -108,8 +108,10 @@ map <C-e> :NERDTreeToggle<CR>
 map <C-l> <Plug>(coc-snippets-expand)
 vmap <C-j> <Plug>(coc-snippets-select)
 
-map <C-f> <Plug>(coc-format)
-map <C-p> :Files<CR>
+map <Leader><Leader> <Plug>(coc-format)
+map <C-f> :Files<CR>
+map <C-b> :Buffers<CR>
+map <C-g> :Commits<CR>
 
 " keybindings - searching / replacing
 map <silent> <Esc> :let @/=''<CR>
@@ -130,20 +132,11 @@ noremap . #
 map <C-s> :w<CR>
 imap <C-s> <Esc>:w<CR>i
 
-map <C-w> :bd<CR>
-map <C-o> :b#<CR>
+map <Leader>w :wincmd q<CR>
+map <Leader>d :bd<CR>
+map <Leader># :b#<CR>
 
 " keybindings - editing
-
-noremap w <S-w>
-noremap <S-w> w
-
-noremap <S-b> b
-noremap b <S-b>
-
-noremap <S-e> e
-noremap e <S-e>
-
 noremap Q gqq
 
 map <Up> <Nop>
@@ -159,12 +152,13 @@ nnoremap <A-k> :m -2<CR>
 vnoremap <A-k> :m '<-2<CR>gv=gv
 inoremap <A-k> <Esc>:m -2<CR>==gi
 
-for i in [1..99]
-	execute "map <Leader>" . i . " :b" . i . "\<CR>"
-endfor
+" keybindings - splits / windows
+map <Leader>h :wincmd h<CR>
+map <Leader>j :wincmd j<CR>
+map <Leader>k :wincmd k<CR>
+map <Leader>l :wincmd l<CR>
 
 " custom commands
-
 if !exists(":EditConfig")
 	command EditConfig e $MYVIMRC
 endif
@@ -197,3 +191,8 @@ endif
 " dap / dip / cap / cip delete / change paragraph
 " set clipboard+=unnamedplus
 " ctrl v
+
+" autocommands
+
+autocmd BufWritePost *.plantuml call jobstart('plantuml '.expand('%'), {'detach': 1})
+
