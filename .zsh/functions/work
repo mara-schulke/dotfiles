@@ -1,4 +1,4 @@
-work_help() { cat << EOF
+work_help() { command cat << EOF
 work 1.0.0
 Maximilian Schulke <hello@maximilianschulke.com>
 A helper to manage the root dir a new shell is spawned in
@@ -7,10 +7,10 @@ USAGE:
     work <SUBCOMMAND> <PROJECT>
 
 SUBCOMMANDS:
-    on        Set the current project
-    clear     Clear the current project status
-    restore   Go into the active project folder if it exists
-    list      List all projects
+    on             Set the current project
+    off            Clear the current project status
+    restore, rs    Go into the active project folder if it exists
+    list, ls       List all projects
 EOF
 }
 
@@ -22,14 +22,16 @@ work_on() {
 
 	if [ -z $1 ]; then
 		project=$(work ls | fzf)
+	elif [ ! -d $WORKSPACE/$project ]; then
+		project=$(work ls | fzf --query $1)
 	fi
 
 	echo $project > $CURRENT_PROJECT_FILE
 	cd $WORKSPACE/$project
 }
 
-work_clear() {
-	rm $CURRENT_PROJECT_FILE
+work_off() {
+	rm $CURRENT_PROJECT_FILE > /dev/null 2>&1
 	cd $HOME
 }
 
@@ -47,8 +49,9 @@ work_list() {
 work() {
 	case "$1" in
 		on) work_on $2 ;;
-		clear) work_clear $2 ;;
-		cl) work_restore ;;
+		'') work_on ;;
+		off) work_off $2 ;;
+		rs) work_restore ;;
 		restore) work_restore ;;
 		rs) work_restore ;;
 		list) work_list ;;
@@ -57,4 +60,3 @@ work() {
 	esac
 }
 
-# compdef work_list 'work on'
