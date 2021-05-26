@@ -1,11 +1,14 @@
-"""""""""""""""""""""""""""""""""""""""""""
-""""""""""" github/schulke-214 """"""""""""
-"""""""""""""""""""""""""""""""""""""""""""
+" Maximilian Schulke
+"
+" https://github/schulke-214
+" https://blog.maximilianschulke.com
 
-set nocompatible                           " required
-filetype off                               " required
+set nocompatible    " required
+filetype off        " required
 
-"""""""""""""""" vim plug """""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""
+" General :: Plugins
+"""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.local/share/nvim/plug')
 
@@ -32,7 +35,9 @@ Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 call plug#end()
 
-""""""""""""""""" config """"""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""
+" General :: Config
+"""""""""""""""""""""""""""""""""""""""""""
 
 " core
 set mouse=a
@@ -60,7 +65,10 @@ syntax on
 set t_Co=256
 colorscheme darcula
 
-" airline
+"""""""""""""""""""""""""""""""""""""""""""
+" General :: Plugin Configuration
+"""""""""""""""""""""""""""""""""""""""""""
+
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
@@ -101,20 +109,23 @@ let g:NERDTreeIgnore=[
   \ ]
 
 
+"""""""""""""""""""""""""""""""""""""""""""
+" Keybindings
+"""""""""""""""""""""""""""""""""""""""""""
+
 let mapleader = ' '
 
-" keybindings - plugins
+" plugins
 map <C-e> :NERDTreeToggle<CR>
 map <C-l> <Plug>(coc-snippets-expand)
 vmap <C-j> <Plug>(coc-snippets-select)
 
-map <Leader><Leader> <Plug>(coc-format)
 map <C-f> :Files<CR>
 map <C-b> :Buffers<CR>
 map <C-g> :Commits<CR>
 
-" keybindings - searching / replacing
-map <silent> <Esc> :let @/=''<CR>
+" searching / replacing
+" map <Leader><Leader>
 
 nnoremap <Leader>r :s///g<Left><Left>
 nnoremap <Leader>rc :s///gc<Left><Left><Left>
@@ -125,18 +136,19 @@ xnoremap <Leader>rc :s///gc<Left><Left><Left>
 nnoremap <silent> * :let @/='\<'.expand('<cword>').'\>'<CR>cgn
 xnoremap <silent> * "sy:let @/=@s<CR>cgn
 
-noremap # .
-noremap . #
-
-" keybindings - files
-map <C-s> :w<CR>
-imap <C-s> <Esc>:w<CR>i
-
+" splits / windows
+" closing windows shortcut is awful
 map <Leader>w :wincmd q<CR>
-map <Leader>d :bd<CR>
 map <Leader># :b#<CR>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
-" keybindings - editing
+" files
+map <C-s> :w<CR>
+
+" editing
 noremap Q gqq
 
 map <Up> <Nop>
@@ -152,13 +164,10 @@ nnoremap <A-k> :m -2<CR>
 vnoremap <A-k> :m '<-2<CR>gv=gv
 inoremap <A-k> <Esc>:m -2<CR>==gi
 
-" keybindings - splits / windows
-map <Leader>h :wincmd h<CR>
-map <Leader>j :wincmd j<CR>
-map <Leader>k :wincmd k<CR>
-map <Leader>l :wincmd l<CR>
+"""""""""""""""""""""""""""""""""""""""""""
+" Commands
+"""""""""""""""""""""""""""""""""""""""""""
 
-" custom commands
 if !exists(":EditConfig")
 	command EditConfig e $MYVIMRC
 endif
@@ -167,6 +176,13 @@ if !exists(":ReloadConfig")
 	command ReloadConfig so $MYVIMRC
 endif
 
+if !exists(":Fmt")
+	command Fmt norm <Plug>(coc-format)
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""
+" Todo List
+"""""""""""""""""""""""""""""""""""""""""""
 
 " Todo: Write Shortcut Overview or smth like that
 " gqq - formats paragraph nicely c:
