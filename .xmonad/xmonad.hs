@@ -144,7 +144,7 @@ myScratchPads = [ terminalScratchPad "shell" "zsh"
                 , NS "netflix"  spawnNetflix findNetfix manageNetflix
                 , NS "spotify" spawnSpotify findSpotify manageSpotify
                 , NS "enpass" spawnEnpass findEnpass manageEnpass
-                , NS "filemanager"  spawnFM findFM manageFM ]
+                , terminalScratchPad "filemanager" "ranger" ] -- NS "filemanager"  spawnFM findFM manageFM ]
     where spawnNetflix  = "chromium --kiosk --new-window --class=netflix --user-data-dir='/home/max/.config/netflix'"
           findNetfix    = className =? "netflix"
           manageNetflix = customFloating $ W.RationalRect l t w h
@@ -166,13 +166,13 @@ myScratchPads = [ terminalScratchPad "shell" "zsh"
                       h = 0.65
                       l = (1 - w) / 2
                       t = (1 - h) / 2
-          spawnFM       = "nautilus"
-          findFM        = className =? "Org.gnome.Nautilus"
-          manageFM      = customFloating $ W.RationalRect l t w h
-                where w = 0.75
-                      h = 0.75
-                      l = (1 - w) / 2
-                      t = (1 - h) / 2
+          -- spawnFM       = "nautilus"
+          -- findFM        = className =? "Org.gnome.Nautilus"
+          -- manageFM      = customFloating $ W.RationalRect l t w h
+                -- where w = 0.75
+                      -- h = 0.75
+                      -- l = (1 - w) / 2
+                      -- t = (1 - h) / 2
 
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
