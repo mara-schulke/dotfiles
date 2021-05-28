@@ -8,4 +8,5 @@ plugins=(
 	git
 	git-flow
 	jira
+	vi-mode
 )
