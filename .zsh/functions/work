@@ -39,6 +39,8 @@ work_restore() {
 	if [ -s $CURRENT_PROJECT_FILE ]; then
 		project=$(cat $CURRENT_PROJECT_FILE);
 		cd $WORKSPACE/$project
+	else
+		cd
 	fi
 }
 
