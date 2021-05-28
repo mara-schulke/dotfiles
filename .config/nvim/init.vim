@@ -17,6 +17,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'vim-syntastic/syntastic'
 
 " ux
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -124,22 +125,31 @@ map <C-f> :Files<CR>
 map <C-b> :Buffers<CR>
 map <C-g> :Commits<CR>
 
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>rn <Plug>(coc-rename)
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
 " searching / replacing
 " map <Leader><Leader>
 
-nnoremap <Leader>r :s///g<Left><Left>
-nnoremap <Leader>rc :s///gc<Left><Left><Left>
+nnoremap <leader>r :s///g<Left><Left>
+nnoremap <leader>rc :s///gc<Left><Left><Left>
 
-xnoremap <Leader>r :s///g<Left><Left>
-xnoremap <Leader>rc :s///gc<Left><Left><Left>
+xnoremap <leader>r :s///g<Left><Left>
+xnoremap <leader>rc :s///gc<Left><Left><Left>
 
 nnoremap <silent> * :let @/='\<'.expand('<cword>').'\>'<CR>cgn
 xnoremap <silent> * "sy:let @/=@s<CR>cgn
 
 " splits / windows
 " closing windows shortcut is awful
-map <Leader>w :wincmd q<CR>
-map <Leader># :b#<CR>
+map <leader>w :wincmd q<CR>
+map <leader># :b#<CR>
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -168,17 +178,19 @@ inoremap <A-k> <Esc>:m -2<CR>==gi
 " Commands
 """""""""""""""""""""""""""""""""""""""""""
 
-if !exists(":EditConfig")
-	command EditConfig e $MYVIMRC
-endif
+command! -nargs=0 EditConfig :e $MYVIMRC
 
-if !exists(":ReloadConfig")
-	command ReloadConfig so $MYVIMRC
-endif
+command! -nargs=0 ReloadConfig :so $MYVIMRC
 
-if !exists(":Fmt")
-	command Fmt norm <Plug>(coc-format)
-endif
+command! -nargs=0 Fmt :call CocAction('format') 
+
+command! -nargs=0 OrganizeImports :call CocAction('runCommand', 'editor.action.organizeImport')
+
+"""""""""""""""""""""""""""""""""""""""""""
+" Auto Commands
+"""""""""""""""""""""""""""""""""""""""""""
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 """""""""""""""""""""""""""""""""""""""""""
 " Todo List
