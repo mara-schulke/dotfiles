@@ -114,7 +114,7 @@ myLayoutHook = avoidStruts
              $ mouseResize
              $ windowArrange
              $ windowNavigation
-             $ toggleLayouts full
+             $ toggleLayouts fullNB
              $ lessBorders OnlyScreenFloat
              $ ifWider 1920 layoutsUHD layoutsHD
              where layoutsUHD   = threecolGaps ||| tallGaps ||| floating ||| full
@@ -125,9 +125,9 @@ myLayoutHook = avoidStruts
                    tallGaps     = renamed [Replace "tall"] $ mySpacing $ ResizableTall 1 (3/100) (1/2) []
                    floating     = renamed [Replace "floating"] $ simplestFloat
                    full         = renamed [Replace "full"] $ mySpacing' 0 $ Full
+                   fullNB       = renamed [Replace "full"] $ mySpacing' 0 $ noBorders $ Full
 
-
-myWorkspaces = ["sh", "dev", "net", "chat", "tasks", "mail", "docs", "misc", "cfg"]
+myWorkspaces = ["sh", "dev", "net", "tasks", "mail", "docs", "misc", "chat", "cfg"]
 
 terminalScratchPad :: String -> String -> NamedScratchpad
 terminalScratchPad name cmd = terminalScratchPad' name cmd (0.06, 0.1, 0.88, 0.8)
@@ -179,10 +179,10 @@ myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
      [ title        =? "Mozilla Firefox"                    --> doShift (myWorkspaces !! 2)
      , className    =? "Code"                               --> doShift (myWorkspaces !! 1)
-     , className    =? "discord"                            --> doShift (myWorkspaces !! 3)
-     , className    =? "Signal"                             --> doShift (myWorkspaces !! 3)
-     , className    =? "Slack"                              --> doShift (myWorkspaces !! 3)
-     , className    =? "Thunderbird"                        --> doShift (myWorkspaces !! 5)
+     , className    =? "Thunderbird"                        --> doShift (myWorkspaces !! 4)
+     , className    =? "discord"                            --> doShift (myWorkspaces !! 7)
+     , className    =? "Signal"                             --> doShift (myWorkspaces !! 7)
+     , className    =? "Slack"                              --> doShift (myWorkspaces !! 7)
      , className    =? ".blueman-manager-wrapped"           --> doShift (myWorkspaces !! 8)
      , className    =? "Pavucontrol"                        --> doShift (myWorkspaces !! 8)
      , className    =? "Pinentry"                           --> doCenterFloat
@@ -277,10 +277,10 @@ myKeys home =
 
     -- Multimedia Keys
     -- Unused@T490: XF86Tools, XF86WLAN, XF86Bluetooth, XF86Favorites
-        , ("<XF86AudioRaiseVolume>",  spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
-        , ("<XF86AudioLowerVolume>",  spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
-        , ("<XF86AudioMute>",         spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
-        , ("<XF86AudioMicMute>",      spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+        , ("<XF86AudioRaiseVolume>",  spawn "vol inc 10")
+        , ("<XF86AudioLowerVolume>",  spawn "vol dec 10")
+        , ("<XF86AudioMute>",         spawn "vol mute toggle")
+        , ("<XF86AudioMicMute>",      spawn "vol mute-mic toggle")
         , ("<XF86MonBrightnessUp>",   spawn "light -A 2.5")
         , ("<XF86MonBrightnessDown>", spawn "light -U 2.5")
         , ("<XF86Display>",           spawn "autorandr --change")
