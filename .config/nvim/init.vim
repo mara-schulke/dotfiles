@@ -16,14 +16,15 @@ call plug#begin('~/.local/share/nvim/plug')
 Plug 'rust-lang/rust.vim'
 Plug 'vim-syntastic/syntastic'
 
-" ux
-Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" ui
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'bronson/vim-visual-star-search'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
+" ux
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'bronson/vim-visual-star-search'
 
 " customization
 Plug 'doums/darcula'
@@ -79,13 +80,14 @@ let g:airline_theme='minimalist'
 let g:coc_global_extensions = [
   \ 'coc-css',
   \ 'coc-emmet',
-  \ 'coc-eslint', 
+  \ 'coc-eslint',
   \ 'coc-git',
   \ 'coc-highlight',
   \ 'coc-html',
-  \ 'coc-json', 
+  \ 'coc-json',
+  \ 'coc-markdownlint',
   \ 'coc-pairs',
-  \ 'coc-prettier', 
+  \ 'coc-prettier',
   \ 'coc-pyright',
   \ 'coc-rls',
   \ 'coc-snippets',
@@ -109,6 +111,18 @@ let g:NERDTreeIgnore=[
   \ '.git'
   \ ]
 
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_quiet_messages = { '!level': 'errors', 'type': 'style' }
+
 
 """""""""""""""""""""""""""""""""""""""""""
 " Keybindings
@@ -118,8 +132,8 @@ let mapleader = ' '
 
 " plugins
 map <C-e> :NERDTreeToggle<CR>
-map <C-l> <Plug>(coc-snippets-expand)
-vmap <C-j> <Plug>(coc-snippets-select)
+""<Plug>(coc-snippets-expand)
+" vnoremap <C-y> <Plug>(coc-snippets-select)
 
 map <C-f> :Files<CR>
 map <C-b> :Buffers<CR>
@@ -135,6 +149,7 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 " searching / replacing
+" <C-Q> = vb
 " map <Leader><Leader>
 
 nnoremap <leader>r :s///g<Left><Left>
@@ -160,11 +175,6 @@ map <C-s> :w<CR>
 
 " editing
 noremap Q gqq
-
-map <Up> <Nop>
-map <Down> <Nop>
-map <Left> <Nop>
-map <Right> <Nop>
 
 nnoremap <A-j> :m +1<CR>
 vnoremap <A-j> :m '>+1<CR>gv=gv
