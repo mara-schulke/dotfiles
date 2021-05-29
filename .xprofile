@@ -1,0 +1,7 @@
+export PATH="/home/max/bin:$PATH"
+export PATH="/home/max/.zsh/utils:$PATH"
+export PATH="/home/max/.cargo/bin:$PATH"
+export PATH="/home/max/.local/bin:$PATH"
+
+xmodmap ~/.config/X11/.xmodmap
+xset r rate 300 50
