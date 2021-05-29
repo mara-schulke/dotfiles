@@ -1,0 +1,14 @@
+keysym Up = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
+keysym Down = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
+keysym Left = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
+keysym Right = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
+
+remove Lock = Caps_Lock
+keysym Caps_Lock = Escape
+
+!keycode 108 
+keysym h = h H NoSymbol NoSymbol Left
+keysym j = j J NoSymbol NoSymbol Down
+keysym k = k K NoSymbol NoSymbol Up
+keysym l = l L NoSymbol NoSymbol Right
+keysym space = space space NoSymbol NoSymbol Return
