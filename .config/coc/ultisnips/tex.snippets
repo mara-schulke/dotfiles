@@ -26,13 +26,13 @@
 
 # Generic
 
-snippet \beg "Begin a new environment" b
+snippet beg "Begin a new environment" b
 \begin{$1}
 	
 \end{$1}
 endsnippet
 
-snippet \typicalpreamble "Import typical packages" b
+snippet defaultimports "Import typical packages" b
 \usepackage[a4paper]{geometry}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -42,7 +42,7 @@ snippet \typicalpreamble "Import typical packages" b
 \usepackage{tabularx}
 endsnippet
 
-snippet \codepreamble "Import packages for code highlighting" b
+snippet codeimports "Import packages for code highlighting" b
 \usepackage{listings}
 \usepackage{color}
 
@@ -62,28 +62,54 @@ endsnippet
 
 # Article Specific
 
-snippet \sec "Start a new section" b
+snippet sec "Start a new section" b
 \section{$1}
 endsnippet
 
-snippet \ssec "Start a new subsection" b
+snippet ssec "Start a new subsection" b
 \subsection{$1}
 endsnippet
 
-snippet \sssec "Start a new subsubsection" b
+snippet sssec "Start a new subsubsection" b
 \subsubsection{$1}
 endsnippet
 
-# THB Specific
-
-snippet \thbassignment "Begin a new assignment in THB Style" b
+snippet thbassignment "Begin a new assignment in THB Style" b
 \documentclass{article}
 
+$1
 
+\begin{document}
 
-\begin{documnet}
-
+$2
 
 \end{document}
+endsnippet
+
+snippet thbtitlepage "Insert a typical title page" b
+\begin{titlepage}
+	\begin{flushleft}
+		TH Brandenburg \\\
+		Online Studiengang Medieninformatik \\\
+		Fachbereich Informatik und Medien \\\
+		$1 \\\
+		Prof. Dr. $2
+	\end{flushleft}
+
+	\vfill
+
+	\begin{center}
+		\Large{Einsendeaufgabe $3: $4}\\\[0.5em]
+		\large{$5 2021}\\\[0.25em]
+		\large{Abgabetermin $6}
+	\end{center}
+
+	\vfill
+
+	\begin{flushright}
+		Maximilian Schulke \\\
+		Matrikel-Nr. 20215853
+	\end{flushright}
+\end{titlepage}
 endsnippet
 
