@@ -1,14 +1,19 @@
-keysym Up = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
-keysym Down = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
-keysym Left = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
-keysym Right = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
+! Unbind arrow keys
+keycode 43 = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
+keycode 44 = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
+keycode 45 = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
+keycode 46 = NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol NoSymbol
 
+! Bind circumflex to altgr
+keycode 49 = ISO_Level3_Shift ISO_Level3_Shift dead_circumflex dead_circumflex
+
+! Bind altgr + hjkl to arrow keys
+keysym h = h H NoSymbol NoSymbol Left Left
+keysym j = j J NoSymbol NoSymbol Down Down
+keysym k = k K NoSymbol NoSymbol Up Up
+keysym l = l L NoSymbol NoSymbol Right Right
+keysym space = space space NoSymbol NoSymbol Return Return
+
+! Bind caps to esc
 remove Lock = Caps_Lock
 keysym Caps_Lock = Escape
-
-!keycode 108 
-keysym h = h H NoSymbol NoSymbol Left
-keysym j = j J NoSymbol NoSymbol Down
-keysym k = k K NoSymbol NoSymbol Up
-keysym l = l L NoSymbol NoSymbol Right
-keysym space = space space NoSymbol NoSymbol Return
