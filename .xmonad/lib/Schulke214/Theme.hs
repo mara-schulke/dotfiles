@@ -2,6 +2,8 @@ module Schulke214.Theme where
 
 import XMonad
 
+import Data.Default
+
 import qualified Schulke214.Colors as C
 
 
@@ -14,27 +16,28 @@ data Theme = Theme
     , gaps :: Integer
     }
 
--- Todo use default typeclass for Theme to set default gaps, borders, fg and bg colors!!
+instance Default Theme where
+    def = Theme fg bg fg bg 1 80
+        where fg = C.foreground
+              bg = C.background
+
+natureTheme :: Theme
+natureTheme = def
+    { primary     = C.greenLight
+    , secondary   = C.green
+    }
 
 tokyoTheme :: Theme
-tokyoTheme = Theme
-    { foreground  = C.foreground
-    , background  = C.background
-    , primary     = C.magentaLight
+tokyoTheme = def
+    { primary     = C.magentaLight
     , secondary   = C.magenta
-    , border      = 1
-    , gaps        = 80
     }
 
 vulcanTheme :: Theme
-vulcanTheme = Theme
-    { foreground  = C.foreground
-    , background  = C.background
-    , primary     = C.yellowLight
+vulcanTheme = def
+    { primary     = C.yellowLight
     , secondary   = C.redLight
-    , border      = 1
-    , gaps        = 80
     }
 
 theme :: Theme
-theme = tokyoTheme
+theme = natureTheme

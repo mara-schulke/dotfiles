@@ -3,6 +3,7 @@ module Schulke214.Layouts where
 import XMonad
 import XMonad.Actions.MouseResize
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
+import XMonad.Hooks.RefocusLast (refocusLastLayoutHook)
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.NoBorders
@@ -18,6 +19,7 @@ import qualified Schulke214.Spacing as S
 
 layoutHook =
     avoidStruts
+    $ refocusLastLayoutHook
     $ mouseResize
     $ windowArrange
     $ windowNavigation

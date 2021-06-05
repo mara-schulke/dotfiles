@@ -10,6 +10,7 @@ import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
 import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Actions.WithAll (sinkAll, killAll)
 import XMonad.Hooks.ManageDocks (ToggleStruts(..))
+import XMonad.Hooks.RefocusLast (toggleFocus)
 import XMonad.Layout.Spacing
 import XMonad.Layout.ToggleLayouts
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
@@ -31,6 +32,7 @@ keys home =
 
     -- Run Prompt
     , ("M-<Space>",    spawn "rofi -show drun -display-drun \"Run\" -drun-display-format \"{name}\"")
+    -- , ("M-S-<Space>",  search workspace)
     -- , ("M-p q", scrotPrompt home True)         -- scrotPrompt True
     -- , ("M-p z", scrotPrompt home False)        -- scrotPrompt False
 
@@ -57,6 +59,7 @@ keys home =
     -- Windows navigation
     , ("M-f",          sendMessage ToggleLayout >> sendMessage ToggleStruts)       -- Toggle Fullscreen
     , ("M-g",          toggleWindowSpacingEnabled <+> toggleScreenSpacingEnabled)  -- Toggle spacing between windows
+    , ("M1-<Tab>",     toggleFocus)            -- Toggle the focus between two windows
     , ("M-m",          windows W.focusMaster)  -- Move focus to the master window
     , ("M-S-m",        windows W.swapMaster)   -- Swap the focused window and the master window
     , ("M-S-<Return>", promote)                -- Moves focused window to master, others maintain order
