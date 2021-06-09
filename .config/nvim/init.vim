@@ -10,6 +10,8 @@ filetype off        " required
 " General :: Plugins
 """""""""""""""""""""""""""""""""""""""""""
 
+" https://github.com/jreybert/vimagit
+
 call plug#begin('~/.local/share/nvim/plug')
 
 " syntax support
@@ -19,12 +21,14 @@ Plug 'vim-syntastic/syntastic'
 " ui
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'preservim/nerdcommenter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " ux
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'bronson/vim-visual-star-search'
+Plug 'Shougo/echodoc.vim'
 
 " customization
 Plug 'doums/darcula'
@@ -73,8 +77,10 @@ colorscheme darcula
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='minimalist'
+let g:airline_statusline_ontop=1
 
 " coc
 let g:coc_global_extensions = [
@@ -107,9 +113,30 @@ let g:NERDTrimTrailingWhitespace = 1       " Enable trimming of trailing whitesp
 let g:NERDTreeDirArrowExpandable = '+'     " Set the expand icon
 let g:NERDTreeDirArrowCollapsible = '-'    " Set the collapse icon
 let g:NERDTreeIgnore=[
+  \ 'coverage',
+  \ 'dumps',
   \ 'node_modules',
-  \ '.git'
+  \ 'target',
+  \ '__pycache__',
+  \ '.git',
+  \ '.idea',
+  \ '.pytest_cache',
+  \ '.vim'
   \ ]
+
+let g:NERDTreeGitStatusConcealBrackets = 1
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+  \ 'Modified'  :'*',
+  \ 'Staged'    :'+',
+  \ 'Untracked' :'!',
+  \ 'Renamed'   :'>',
+  \ 'Unmerged'  :'=',
+  \ 'Deleted'   :'-',
+  \ 'Dirty'     :'~',
+  \ 'Ignored'   :'?',
+  \ 'Clean'     :'/',
+  \ 'Unknown'   :'#'
+  \ }
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -123,6 +150,11 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_quiet_messages = { '!level': 'errors', 'type': 'style' }
 
+" EchoDoc
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'floating'
+let g:echodoc#events = ['CompleteDone']
+highlight link EchoDocFloat Pmenu
 
 """""""""""""""""""""""""""""""""""""""""""
 " Keybindings
@@ -134,6 +166,8 @@ let mapleader = ' '
 map <C-e> :NERDTreeToggle<CR>
 ""<Plug>(coc-snippets-expand)
 " vnoremap <C-y> <Plug>(coc-snippets-select)
+nnoremap <C-t> :call NERDComment('n', 'toggle')<CR>
+vnoremap <C-t> :call NERDComment('x', 'toggle')<CR>
 
 map <C-f> :Files<CR>
 map <C-b> :Buffers<CR>
@@ -184,6 +218,12 @@ nnoremap <A-k> :m -2<CR>
 vnoremap <A-k> :m '<-2<CR>gv=gv
 inoremap <A-k> <Esc>:m -2<CR>==gi
 
+" term mode
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+
 """""""""""""""""""""""""""""""""""""""""""
 " Commands
 """""""""""""""""""""""""""""""""""""""""""
@@ -201,6 +241,41 @@ command! -nargs=0 OrganizeImports :call CocAction('runCommand', 'editor.action.o
 """""""""""""""""""""""""""""""""""""""""""
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHoldI * call echodoc#enable()
+" autocmd CursorMoved * call echodoc#disable()
+
+" set sessionoptions-=help
+" let workspace_session_file = '.vim/session.vim'
+
+" autocmd VimLeave * NERDTreeClose
+" autocmd VimLeave */workspace* mksession! .vim/session.vim
+" autocmd VimEnter */workspace* e foo
+
+" function! MakeSession()
+"   let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+"   if (filewritable(b:sessiondir) != 2)
+"     exe 'silent !mkdir -p ' b:sessiondir
+"     redraw!
+"   endif
+"   let b:filename = b:sessiondir . '/session.vim'
+"   exe "mksession! " . b:filename
+" endfunction
+" 
+" function! LoadSession()
+"   let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+"   let b:sessionfile = b:sessiondir . "/session.vim"
+"   if (filereadable(b:sessionfile))
+"     exe 'source ' b:sessionfile
+"   else
+"     echo "No session loaded."
+"   endif
+" endfunction
+" au VimEnter */workspace/* nested :call LoadSession()
+" au VimLeave */workspace/* :call MakeSession()
+
+" autocmd VimEnter *  NERDTreeOpen
+
+" source .vim/session.vim
 
 """""""""""""""""""""""""""""""""""""""""""
 " Todo List
