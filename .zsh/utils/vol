@@ -55,8 +55,8 @@ vset() {
 
 		local new_vol=$(python -c "print(int('$(echo $sink_vols)'.split()[0]) + $1)")
 
-		if [ $new_vol -ge 100 ]; then
-			pactl set-sink-volume $SINK '100%'
+		if [ $new_vol -ge 120 ]; then
+			pactl set-sink-volume $SINK '120%'
 		else
 			pactl set-sink-volume $SINK $1% || exit 1;
 
