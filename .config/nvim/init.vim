@@ -31,7 +31,7 @@ Plug 'bronson/vim-visual-star-search'
 Plug 'Shougo/echodoc.vim'
 
 " customization
-Plug 'doums/darcula'
+Plug 'nanotech/jellybeans.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -50,6 +50,7 @@ set mouse=a
 set nowrap
 set backspace=indent,eol,start
 set clipboard+=unnamedplus
+set relativenumber
 set number
 set laststatus=2
 set encoding=utf-8
@@ -69,7 +70,7 @@ set noexpandtab
 " theme
 syntax on
 set t_Co=256
-colorscheme darcula
+colorscheme jellybeans
 
 """""""""""""""""""""""""""""""""""""""""""
 " General :: Plugin Configuration
