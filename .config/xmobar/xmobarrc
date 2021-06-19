@@ -4,12 +4,12 @@ Config { font = "xft:Monospace:weight=regular:pixelsize=14:antialias=true:hintin
                            ]
        , bgColor = "#0c0b0b"
        , fgColor = "#c5c5c8"
-       , position = Bottom
+       , position = Top
        , lowerOnStart = True
        , hideOnStart = False
        , allDesktops = True
        , persistent = True
-       , commands = [ Run Date " %F @ %H:%M " "date" 50
+       , commands = [ Run Date " %F %H:%M " "date" 50
                     , Run Cpu ["-t", "cpu <total>%","-H","50","--high","red"] 20
                     , Run Memory ["-t", "mem <used>MiB <usedratio>%"] 20
                     , Run DiskU [("/", "disk <used>iB")] [] 60
