@@ -43,7 +43,7 @@ myStartupHook = do
     spawnOnce "blueman-manager &"
     spawnOnce "pavucontrol &"
     spawnOnce "volumeicon &"
-    spawnOnce $ "trayer --edge bottom --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor primary --transparent true --alpha 0 --tint 0x" ++ (delete '#' $ T.background T.theme) ++ " --height 16 &"
+    spawnOnce $ "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor primary --transparent true --alpha 0 --tint 0x" ++ (delete '#' $ T.background T.theme) ++ " --height 16 &"
 
 myManageHook :: XMonad.Query (Endo WindowSet)
 myManageHook = composeAll
