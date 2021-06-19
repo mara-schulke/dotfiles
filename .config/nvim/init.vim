@@ -28,7 +28,6 @@ Plug 'junegunn/fzf.vim'
 " ux
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'bronson/vim-visual-star-search'
-Plug 'Shougo/echodoc.vim'
 
 " customization
 Plug 'nanotech/jellybeans.vim'
