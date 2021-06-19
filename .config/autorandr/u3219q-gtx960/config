@@ -12,14 +12,11 @@ output DP-3
 off
 output DP-5
 off
+output DVI-I-0
+off
 output DP-4
 crtc 0
 mode 3840x2160
 pos 0x0
 primary
 rate 60.00
-output DVI-I-0
-crtc 1
-mode 1600x900
-pos 1048x2160
-rate 59.82
