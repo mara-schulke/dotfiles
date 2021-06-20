@@ -31,8 +31,7 @@ Plug 'bronson/vim-visual-star-search'
 
 " customization
 Plug 'nanotech/jellybeans.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 
 " LaTeX
 Plug 'lervag/vimtex'
@@ -46,7 +45,7 @@ call plug#end()
 
 " core
 set mouse=a
-set nowrap
+set wrap
 set backspace=indent,eol,start
 set clipboard+=unnamedplus
 set relativenumber
@@ -66,6 +65,16 @@ set shiftwidth=4
 set smarttab
 set noexpandtab
 
+" splits
+set splitright
+set splitbelow
+
+" search
+set incsearch
+set ignorecase
+set smartcase
+set gdefault
+
 " theme
 syntax on
 set t_Co=256
@@ -80,7 +89,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='minimalist'
-let g:airline_statusline_ontop=1
+" let g:airline_statusline_ontop=1
 
 " coc
 let g:coc_global_extensions = [
@@ -150,12 +159,6 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_quiet_messages = { '!level': 'errors', 'type': 'style' }
 
-" EchoDoc
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type = 'floating'
-let g:echodoc#events = ['CompleteDone']
-highlight link EchoDocFloat Pmenu
-
 """""""""""""""""""""""""""""""""""""""""""
 " Keybindings
 """""""""""""""""""""""""""""""""""""""""""
@@ -185,6 +188,8 @@ nmap <leader>f  <Plug>(coc-format-selected)
 " searching / replacing
 " <C-Q> = vb
 " map <Leader><Leader>
+nnoremap <leader>h :nohlsearch<cr>
+vnoremap <leader>h :nohlsearch<cr>
 
 nnoremap <leader>r :s///g<Left><Left>
 nnoremap <leader>rc :s///gc<Left><Left><Left>
@@ -203,12 +208,17 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <C-w>, :new<CR>
+nnoremap <C-w>. :vnew<CR>
 
 " files
 map <C-s> :w<CR>
 
 " editing
 noremap Q gqq
+
+nnoremap j gj
+nnoremap k gk
 
 nnoremap <A-j> :m +1<CR>
 vnoremap <A-j> :m '>+1<CR>gv=gv
@@ -241,71 +251,24 @@ command! -nargs=0 OrganizeImports :call CocAction('runCommand', 'editor.action.o
 """""""""""""""""""""""""""""""""""""""""""
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
-" autocmd CursorHoldI * call echodoc#enable()
-" autocmd CursorMoved * call echodoc#disable()
 
-" set sessionoptions-=help
-" let workspace_session_file = '.vim/session.vim'
-
-" autocmd VimLeave * NERDTreeClose
-" autocmd VimLeave */workspace* mksession! .vim/session.vim
-" autocmd VimEnter */workspace* e foo
-
-" function! MakeSession()
-"   let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
-"   if (filewritable(b:sessiondir) != 2)
-"     exe 'silent !mkdir -p ' b:sessiondir
-"     redraw!
-"   endif
-"   let b:filename = b:sessiondir . '/session.vim'
-"   exe "mksession! " . b:filename
-" endfunction
-" 
-" function! LoadSession()
-"   let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
-"   let b:sessionfile = b:sessiondir . "/session.vim"
-"   if (filereadable(b:sessionfile))
-"     exe 'source ' b:sessionfile
-"   else
-"     echo "No session loaded."
-"   endif
-" endfunction
-" au VimEnter */workspace/* nested :call LoadSession()
-" au VimLeave */workspace/* :call MakeSession()
-
-" autocmd VimEnter *  NERDTreeOpen
-
-" source .vim/session.vim
+autocmd BufWritePost *.plantuml call jobstart('plantuml '.expand('%'), {'detach': 1})
 
 """""""""""""""""""""""""""""""""""""""""""
 " Todo List
 """""""""""""""""""""""""""""""""""""""""""
 
 " Todo: Write Shortcut Overview or smth like that
-" gqq - formats paragraph nicely c:
 " gf - open mentioned file
 " gv - reselt last selection
-" J - join lines
 " gJ - join without space
-" g& - run prev substitute on whole file!!!!
-" remap capslock to escape 
-" $ setxkbmap -option caps:super -variant altgr-intl
-" increase xrate for key repeat
-" $ xset r rate 300 50
-"
+" g& - run prev substitute on whole file
 " zz zt zb / CTRL U / CTRL D Move Page
 " } / { to move between paragraphs of text
 " :sort !!!
-
-" CTRL R Redo stuff
 " D = d$
-
 " :earler / :later
 " dap / dip / cap / cip delete / change paragraph
 " set clipboard+=unnamedplus
 " ctrl v
-
-" autocommands
-
-autocmd BufWritePost *.plantuml call jobstart('plantuml '.expand('%'), {'detach': 1})
 
