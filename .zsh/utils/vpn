@@ -30,9 +30,7 @@ down() {
 }
 
 list() {
-	# todo: show only the name:
-	# openvpn-<name>.service
-	systemctl list-unit-files | ter filter 'starts "openvpn-"' -m word
+	systemctl list-unit-files | ter filter 'starts "openvpn-"' -m word | sed -e 's/openvpn-//g;s/.service//g'
 }
 
 case "$1" in
