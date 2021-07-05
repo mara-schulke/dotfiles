@@ -16,21 +16,24 @@ call plug#begin('~/.local/share/nvim/plug')
 
 " syntax support
 Plug 'rust-lang/rust.vim'
+Plug 'LnL7/vim-nix'
 Plug 'vim-syntastic/syntastic'
 
 " ui
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'preservim/nerdcommenter'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " ux
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'bronson/vim-visual-star-search'
+Plug 'junegunn/goyo.vim'
 
 " customization
-Plug 'nanotech/jellybeans.vim'
+Plug 'chriskempson/base16-vim'
 Plug 'itchyny/lightline.vim'
 
 " LaTeX
@@ -44,10 +47,13 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""
 
 " core
+filetype plugin indent on
+set autoindent
 set mouse=a
 set wrap
 set backspace=indent,eol,start
 set clipboard+=unnamedplus
+set signcolumn=yes
 set relativenumber
 set number
 set laststatus=2
@@ -55,15 +61,14 @@ set encoding=utf-8
 set list
 set listchars=tab:➞\ ,extends:›,precedes:‹,nbsp:·,trail:·,space:·
 set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*
-
-autocmd ColorScheme * highlight SpecialKey ctermfg=darkgray
-autocmd ColorScheme * highlight NonText ctermfg=darkgray
+set noshowmode
+set colorcolumn=80
 
 " tabs
 set tabstop=4
 set shiftwidth=4
 set smarttab
-set noexpandtab
+set expandtab
 
 " splits
 set splitright
@@ -78,18 +83,20 @@ set gdefault
 " theme
 syntax on
 set t_Co=256
-colorscheme jellybeans
+set termguicolors
+set background="dark"
+let base16colorspace=256
+hi Normal ctermbg=NONE
+source $HOME/.config/nvim/colors/base16-gruvbox-dark-hard.vim
+call Base16hi("Comment",     g:base16_gui09, "", g:base16_cterm09, "", "", "")
+call Base16hi("CocHintSign", g:base16_gui03, "", g:base16_cterm03, "", "", "")
+
+call Base16hi("NonText",     g:base16_gui01, "", g:base16_cterm01, "", "", "")
+call Base16hi("SpecialKey",  g:base16_gui01, "", g:base16_cterm01, "", "", "")
 
 """""""""""""""""""""""""""""""""""""""""""
 " General :: Plugin Configuration
 """""""""""""""""""""""""""""""""""""""""""
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_powerline_fonts = 1
-let g:airline_theme='minimalist'
-" let g:airline_statusline_ontop=1
 
 " coc
 let g:coc_global_extensions = [
@@ -105,6 +112,7 @@ let g:coc_global_extensions = [
   \ 'coc-prettier',
   \ 'coc-pyright',
   \ 'coc-rls',
+  \ 'coc-rust-analyzer',
   \ 'coc-snippets',
   \ 'coc-tslint',
   \ 'coc-tsserver',
@@ -159,6 +167,31 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_quiet_messages = { '!level': 'errors', 'type': 'style' }
 
+" rust
+let g:rustfmt_autosave = 1
+
+" telescope
+
+lua << EOF
+require('telescope').setup {
+  defaults = {
+    initial_mode = "insert",
+    layout_strategy = "vertical",
+    file_sorter =  require'telescope.sorters'.get_fzy_sorter,
+    mappings = {
+      i = {
+        ["<esc>"] = require('telescope.actions').close
+      },
+    },
+  },
+  pickers = {
+    buffers = {
+      sort_lastused = true
+    },
+  },
+}
+EOF
+
 """""""""""""""""""""""""""""""""""""""""""
 " Keybindings
 """""""""""""""""""""""""""""""""""""""""""
@@ -167,11 +200,13 @@ let mapleader = ' '
 
 " plugins
 map <C-e> :NERDTreeToggle<CR>
+map <leader>i :ToggleRustHints<CR>
 ""<Plug>(coc-snippets-expand)
 " vnoremap <C-y> <Plug>(coc-snippets-select)
 nnoremap <C-t> :call NERDComment('n', 'toggle')<CR>
 vnoremap <C-t> :call NERDComment('x', 'toggle')<CR>
 
+map <C-p> :Commands<CR>
 map <C-f> :Files<CR>
 map <C-b> :Buffers<CR>
 map <C-g> :Commits<CR>
@@ -234,25 +269,46 @@ tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
 
+
+
 """""""""""""""""""""""""""""""""""""""""""
 " Commands
 """""""""""""""""""""""""""""""""""""""""""
 
 command! -nargs=0 EditConfig :e $MYVIMRC
-
 command! -nargs=0 ReloadConfig :so $MYVIMRC
 
 command! -nargs=0 Fmt :call CocAction('format') 
-
 command! -nargs=0 OrganizeImports :call CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 ToggleRustHints :call CocAction('runCommand', 'rust-analyzer.toggleInlayHints')
+
+command! -nargs=0 Files :Telescope find_files theme=get_dropdown
+command! -nargs=0 Buffers :Telescope buffers theme=get_dropdown
+command! -nargs=0 Commits :Telescope git_commits theme=get_dropdown
+command! -nargs=0 Commands :Telescope commands theme=get_dropdown
+command! -nargs=0 Branches :Telescope git_branches theme=get_dropdown
+command! -nargs=0 Grep :Telescope live_grep theme=get_dropdown
 
 """""""""""""""""""""""""""""""""""""""""""
 " Auto Commands
 """""""""""""""""""""""""""""""""""""""""""
 
+function! NERDTreeStartup()
+    if 0 == argc()
+        NERDTree
+        wincmd p
+    end
+endfunction
+
+autocmd VimEnter * silent call NERDTreeStartup()
+
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 autocmd BufWritePost *.plantuml call jobstart('plantuml '.expand('%'), {'detach': 1})
+
+autocmd FileType nerdtree setlocal signcolumn=no
+autocmd FileType nerdtree setlocal cc=
+autocmd FileType tex setlocal noexpandtab
 
 """""""""""""""""""""""""""""""""""""""""""
 " Todo List
@@ -272,3 +328,10 @@ autocmd BufWritePost *.plantuml call jobstart('plantuml '.expand('%'), {'detach'
 " set clipboard+=unnamedplus
 " ctrl v
 
+
+"""""""""""""""""""""""""""""""""""""""""""
+" Quick Fixes
+"""""""""""""""""""""""""""""""""""""""""""
+
+" enable lightline after config reload
+call lightline#enable()
