@@ -14,7 +14,7 @@ SUBCOMMANDS:
 EOF
 }
 
-WORKSPACE=$HOME/workspace
+WORKSPACE=$HOME/Workspace
 CURRENT_PROJECT_FILE=/tmp/active-project
 
 work_on() {
