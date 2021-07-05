@@ -84,10 +84,10 @@ scratchPads =
     where spawnNetflix  = "chromium --kiosk --new-window --class=netflix --user-data-dir='/home/max/.config/netflix'"
           findNetfix    = className =? "netflix"
           manageNetflix = customFloating $ W.RationalRect l t w h
-                where w = 0.35
-                      h = 0.35
-                      l = 1 - w
-                      t = (1 - h) / 2
+                where w = 1
+                      h = 1
+                      l = 0
+                      t = 0
           spawnSpotify  = "spotify"
           findSpotify   = className =? "Spotify"
           manageSpotify = customFloating $ W.RationalRect l t w h
