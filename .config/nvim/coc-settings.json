@@ -2,6 +2,9 @@
 	"python.jediEnabled": true,
 	"rust-client.disableRustup": true,
 	"rust.unstable_features": true,
+	"rust-analyzer.inlayHints.enable": false,
+	"rust-analyzer.inlayHints.typeHintsSeparator": "> ",
+	"rust-analyzer.inlayHints.chainingHintsSeparator": "> ",
 	"snippets.extends": {
 		"cpp": ["c"],
 		"javascriptreact": ["javascript"],
