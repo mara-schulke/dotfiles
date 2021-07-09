@@ -76,6 +76,7 @@ keys home =
     -- Layouts
     , ("M-<Tab>",      toggleWS)
     , ("M-S-<Tab>",    sendMessage NextLayout)
+    , ("M-S-<Esc>",    sendMessage FirstLayout)
 
     -- Multimedia Keys
     -- Unused@T490: XF86Tools, XF86WLAN, XF86Bluetooth, XF86Favorites, XF86Calculator
