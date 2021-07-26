@@ -1,3 +1,2 @@
-.gitconfig
 .xmonad/**/*
 !.xmonad/**/*.hs
