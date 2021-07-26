@@ -1,0 +1,10 @@
+[user]
+	name = Maximilian Schulke
+	email = hello@maximilianschulke.com
+	signingkey = AB0CB7EFCF450759
+[commit]
+	gpgsign = true
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
