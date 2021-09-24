@@ -14,7 +14,7 @@ alias ca="config add"
 alias cc="config commit"
 alias cco="config checkout"
 alias cf="config fetch"
-alias cp="config push"
+alias cps="config push"
 
 # django
 alias django="python ./src/manage.py"
@@ -42,3 +42,5 @@ alias fm="nautilus"
 # neovim
 alias vim="nvim"
 
+# nix-shell
+alias nix-shell-activate="nix-shell shell.nix --command zsh"
