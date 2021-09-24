@@ -87,10 +87,9 @@ set termguicolors
 set background="dark"
 let base16colorspace=256
 hi Normal ctermbg=NONE
-source $HOME/.config/nvim/colors/base16-gruvbox-dark-hard.vim
+colorscheme base16-nixos
 call Base16hi("Comment",     g:base16_gui09, "", g:base16_cterm09, "", "", "")
 call Base16hi("CocHintSign", g:base16_gui03, "", g:base16_cterm03, "", "", "")
-
 call Base16hi("NonText",     g:base16_gui01, "", g:base16_cterm01, "", "", "")
 call Base16hi("SpecialKey",  g:base16_gui01, "", g:base16_cterm01, "", "", "")
 
@@ -111,8 +110,8 @@ let g:coc_global_extensions = [
   \ 'coc-pairs',
   \ 'coc-prettier',
   \ 'coc-pyright',
-  \ 'coc-rls',
   \ 'coc-rust-analyzer',
+  \ 'coc-rls',
   \ 'coc-snippets',
   \ 'coc-tslint',
   \ 'coc-tsserver',
@@ -203,8 +202,10 @@ map <C-e> :NERDTreeToggle<CR>
 map <leader>i :ToggleRustHints<CR>
 ""<Plug>(coc-snippets-expand)
 " vnoremap <C-y> <Plug>(coc-snippets-select)
-nnoremap <C-t> :call NERDComment('n', 'toggle')<CR>
-vnoremap <C-t> :call NERDComment('x', 'toggle')<CR>
+nnoremap <leader><leader>t :call NERDComment('n', 'alignleft')<CR>
+vnoremap <leader><leader>t :call NERDComment('x', 'alignleft')<CR>
+nnoremap <leader>t :call NERDComment('n', 'toggle')<CR>
+vnoremap <leader>t :call NERDComment('x', 'toggle')<CR>
 
 map <C-p> :Commands<CR>
 map <C-f> :Files<CR>
