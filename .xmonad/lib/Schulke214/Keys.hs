@@ -49,8 +49,10 @@ keys home =
     , ("M-,",          prevScreen)             -- Switch focus to prev monitor
 
     -- Increase/decrease spacing (gaps)
-    , ("M-d",          decWindowSpacing 20 <+> decScreenSpacing 20)    -- Decrease window spacing
-    , ("M-i",          incWindowSpacing 20 <+> incScreenSpacing 20)    -- Increase window spacing
+    , ("M-d",          decWindowSpacing 20 <+> decScreenSpacing 20)                -- Decrease window spacing
+    , ("M-i",          incWindowSpacing 20 <+> incScreenSpacing 20)                -- Increase window spacing
+    , ("M-g",          toggleWindowSpacingEnabled <+> toggleScreenSpacingEnabled)  -- Toggle spacing
+    , ("M-S-g",        toggleWindowSpacingEnabled)                                 -- Toggle spacing between windows
 
     -- Floating Windows into Tiles
     , ("M-t",          withFocused $ windows . W.sink)  -- Push floating window back to tile
@@ -58,7 +60,6 @@ keys home =
 
     -- Windows navigation
     , ("M-f",          sendMessage ToggleLayout >> sendMessage ToggleStruts)       -- Toggle Fullscreen
-    , ("M-g",          toggleWindowSpacingEnabled <+> toggleScreenSpacingEnabled)  -- Toggle spacing between windows
     , ("M1-<Tab>",     toggleFocus)            -- Toggle the focus between two windows
     , ("M-m",          windows W.focusMaster)  -- Move focus to the master window
     , ("M-S-m",        windows W.swapMaster)   -- Swap the focused window and the master window
@@ -84,8 +85,8 @@ keys home =
     , ("<XF86AudioLowerVolume>",  spawn "vol dec 10")
     , ("<XF86AudioMute>",         spawn "vol mute toggle")
     , ("<XF86AudioMicMute>",      spawn "vol mute-mic toggle")
-    , ("<XF86MonBrightnessUp>",   spawn "light -A 2.5")
-    , ("<XF86MonBrightnessDown>", spawn "light -U 2.5")
+    , ("<XF86MonBrightnessUp>",   spawn "light -A 5")
+    , ("<XF86MonBrightnessDown>", spawn "light -U 5")
     , ("<XF86Display>",           spawn "autorandr --change")
     , ("<XF86AudioPlay>",         spawn "playerctl play-pause")
     , ("<XF86AudioNext>",         spawn "playerctl next")

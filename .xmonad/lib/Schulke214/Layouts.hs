@@ -41,25 +41,26 @@ layoutHook =
     $ toggleLayouts (noBorders $ full)
     $ lessBorders OnlyScreenFloat
     $ ifWider 2560 layoutsUHD layoutsHD
-    where layoutsUHD           = tallGapsMirrored ||| tallGaps ||| threecolGapsMirrored ||| threecolGaps ||| full
-          layoutsHD            = tallMirrored     ||| tall     ||| threecolMirrored     ||| threecol     ||| full
+    where layoutsUHD           = tallGaps ||| tallGapsMirrored ||| threecolGaps ||| threecolGapsMirrored ||| full
+          layoutsHD            = tall     ||| tallMirrored     ||| threecol     ||| threecolMirrored     ||| full
 
-          threecolMod          = renamed [Replace "three collumns"] . reflectVert . deco . reflectVert
+          threecolMod variant  = renameByVariant "three collumns" variant . reflectVert . deco . reflectVert
           threecolRaw          = ThreeColMid 1 (3/100) (1/2)
-          threecol             = threecolMod $ noGaps   threecolRaw
-          threecolGaps         = threecolMod $ withGaps threecolRaw
-          threecolMirrored     = threecolMod $ noGaps   $ Mirror threecolRaw
-          threecolGapsMirrored = threecolMod $ withGaps $ Mirror threecolRaw
+          threecol             = threecolMod "" $ noGaps   threecolRaw
+          threecolGaps         = threecolMod "" $ withGaps threecolRaw
+          threecolMirrored     = threecolMod "mirror" $ noGaps   $ Mirror threecolRaw
+          threecolGapsMirrored = threecolMod "mirror" $ withGaps $ Mirror threecolRaw
 
-          tallMod              = renamed [Replace "tall"] . reflectVert . deco . reflectVert
+          tallMod variant      = renameByVariant "tall" variant . reflectVert . deco . reflectVert
           tallRaw              = reflectVert $ ResizableTall 1 (3/100) (1/2) []
-          tall                 = tallMod $ noGaps   $ tallRaw
-          tallGaps             = tallMod $ withGaps $ tallRaw
-          tallMirrored         = tallMod $ noGaps   $ Mirror tallRaw
-          tallGapsMirrored     = tallMod $ withGaps $ Mirror tallRaw
+          tall                 = tallMod "" $ noGaps   $ tallRaw
+          tallGaps             = tallMod "" $ withGaps $ tallRaw
+          tallMirrored         = tallMod "mirror" $ noGaps   $ Mirror tallRaw
+          tallGapsMirrored     = tallMod "mirror" $ withGaps $ Mirror tallRaw
 
           full                 = renamed [Replace "full"] $ noGaps $ Full
 
           noGaps               = S.spacing' 0
           withGaps             = S.spacing
+          renameByVariant b v  = renamed [Replace $ b ++ (if v /= "" then " << " ++ v else "")]
 

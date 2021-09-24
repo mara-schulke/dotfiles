@@ -16,56 +16,55 @@ darken' f c = round $ (fromIntegral c) * f
 -- toHex :: Color -> String
 
 foreground :: String
-foreground = "#c5c5c8"
+foreground = "#ffebe7"
 
 background :: String
-background = "#0c0b0b"
+background = "#2d262c"
 
 black :: String
-black = "#1a1b1d"
+black = "#191518"
 
 blackLight :: String
-blackLight = "#202122"
+blackLight = "#231d21"
 
 red :: String
-red = "#a03e3e"
+red = "#a57e7d"
 
 redLight :: String
-redLight = "#cc6666"
+redLight = "#f6b0ad"
 
 green :: String
-green = "#8c9440"
+green = "#a59b80"
 
 greenLight :: String
-greenLight = "#b5bd68"
+greenLight = "#d3d1a0"
 
 yellow :: String
-yellow = "#de935f"
+yellow = "#ab877c"
 
 yellowLight :: String
-yellowLight = "#f0c674"
+yellowLight = "#ffc8ae"
 
 blue :: String
-blue = "#5e8bb0"
+blue = "#847aa4"
 
 blueLight :: String
-blueLight = "#85aed0"
+blueLight = "#cbb6e9"
 
 magenta :: String
-magenta = "#85678f"
+magenta = "#a882a0"
 
 magentaLight :: String
-magentaLight = "#b294bb"
+magentaLight = "#edc3e0"
 
 cyan :: String
-cyan = "#569fb3"
+cyan = "#7c849f"
 
 cyanLight :: String
-cyanLight = "#79b8df"
+cyanLight = "#cfd3fe"
 
 white :: String
-white = "#707880"
+white = "#9e8784"
 
 whiteLight :: String
-whiteLight = "#dbdfdd"
-
+whiteLight = "#ffd6cf"
