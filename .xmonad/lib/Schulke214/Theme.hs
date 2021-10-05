@@ -17,7 +17,7 @@ data Theme = Theme
     }
 
 instance Default Theme where
-    def = Theme fg bg fg bg 1 80
+    def = Theme fg bg fg bg 1 160
         where fg = C.foreground
               bg = C.background
 
@@ -33,6 +33,12 @@ tokyoTheme = def
     , secondary   = C.magenta
     }
 
+oceanTheme :: Theme
+oceanTheme = def
+    { primary     = C.blueLight
+    , secondary   = C.blue
+    }
+
 vulcanTheme :: Theme
 vulcanTheme = def
     { primary     = C.yellowLight
@@ -40,4 +46,4 @@ vulcanTheme = def
     }
 
 theme :: Theme
-theme = tokyoTheme
+theme = oceanTheme

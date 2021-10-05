@@ -49,10 +49,9 @@ keys home =
     , ("M-,",          prevScreen)             -- Switch focus to prev monitor
 
     -- Increase/decrease spacing (gaps)
-    , ("M-d",          decWindowSpacing 20 <+> decScreenSpacing 20)                -- Decrease window spacing
-    , ("M-i",          incWindowSpacing 20 <+> incScreenSpacing 20)                -- Increase window spacing
-    , ("M-g",          toggleWindowSpacingEnabled <+> toggleScreenSpacingEnabled)  -- Toggle spacing
-    , ("M-S-g",        toggleWindowSpacingEnabled)                                 -- Toggle spacing between windows
+    , ("M-d",          decScreenSpacing 20)         -- Decrease screen spacing
+    , ("M-i",          incScreenSpacing 20)         -- Increase screen spacing
+    , ("M-g",          toggleScreenSpacingEnabled)  -- Toggle screen spacing
 
     -- Floating Windows into Tiles
     , ("M-t",          withFocused $ windows . W.sink)  -- Push floating window back to tile

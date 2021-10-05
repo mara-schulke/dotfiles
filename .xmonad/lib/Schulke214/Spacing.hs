@@ -12,5 +12,4 @@ spacing :: l a -> ModifiedLayout Spacing l a
 spacing = spacing' $ T.gaps T.theme
 
 spacing' :: Integer -> l a -> ModifiedLayout Spacing l a
-spacing' i = spacingRaw False (Border i i i i) True (Border i i i i) True
-
+spacing' i = spacingRaw False (Border i i i i) True (Border 0 0 0 0) False

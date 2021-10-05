@@ -7,6 +7,7 @@ import XMonad.Hooks.RefocusLast (refocusLastLayoutHook)
 import XMonad.Layout
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Grid
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerScreen
@@ -41,26 +42,28 @@ layoutHook =
     $ toggleLayouts (noBorders $ full)
     $ lessBorders OnlyScreenFloat
     $ ifWider 2560 layoutsUHD layoutsHD
-    where layoutsUHD           = tallGaps ||| tallGapsMirrored ||| threecolGaps ||| threecolGapsMirrored ||| full
-          layoutsHD            = tall     ||| tallMirrored     ||| threecol     ||| threecolMirrored     ||| full
+    where layoutsUHD         = tallGaps ||| tallMirrorGaps ||| gridGaps ||| tcGaps ||| tcMirrorGaps ||| full
+          layoutsHD          = tall     ||| tallMirror     ||| grid     ||| tc     ||| tcMirror     ||| full
 
-          threecolMod variant  = renameByVariant "three collumns" variant . reflectVert . deco . reflectVert
-          threecolRaw          = ThreeColMid 1 (3/100) (1/2)
-          threecol             = threecolMod "" $ noGaps   threecolRaw
-          threecolGaps         = threecolMod "" $ withGaps threecolRaw
-          threecolMirrored     = threecolMod "mirror" $ noGaps   $ Mirror threecolRaw
-          threecolGapsMirrored = threecolMod "mirror" $ withGaps $ Mirror threecolRaw
+          tallRaw            = reflectVert $ ResizableTall 1 (3/100) (1/2) []
+          tall               = variant "tall" "" $ noGaps tallRaw
+          tallGaps           = variant "tall" "" $ withGaps tallRaw
+          tallMirror         = variant "tall" "mirror" $ noGaps $ Mirror tallRaw
+          tallMirrorGaps     = variant "tall" "mirror" $ withGaps $ Mirror tallRaw
 
-          tallMod variant      = renameByVariant "tall" variant . reflectVert . deco . reflectVert
-          tallRaw              = reflectVert $ ResizableTall 1 (3/100) (1/2) []
-          tall                 = tallMod "" $ noGaps   $ tallRaw
-          tallGaps             = tallMod "" $ withGaps $ tallRaw
-          tallMirrored         = tallMod "mirror" $ noGaps   $ Mirror tallRaw
-          tallGapsMirrored     = tallMod "mirror" $ withGaps $ Mirror tallRaw
+          gridRaw            = GridRatio (4/3)
+          grid               = variant "grid" "" $ noGaps gridRaw
+          gridGaps           = variant "grid" "" $ withGaps gridRaw
 
-          full                 = renamed [Replace "full"] $ noGaps $ Full
+          tcRaw              = ThreeColMid 1 (3/100) (1/2)
+          tc                 = variant "threecol" "" $ noGaps tcRaw
+          tcGaps             = variant "threecol" "" $ withGaps tcRaw
+          tcMirror           = variant "threecol" "mirror" $ noGaps $ Mirror tcRaw
+          tcMirrorGaps       = variant "threecol" "mirror" $ withGaps $ Mirror tcRaw
 
-          noGaps               = S.spacing' 0
-          withGaps             = S.spacing
-          renameByVariant b v  = renamed [Replace $ b ++ (if v /= "" then " << " ++ v else "")]
+          full               = renamed [Replace "full"] $ noGaps $ Full
+
+          noGaps             = S.spacing' 0
+          withGaps           = S.spacing
+          variant b v        = renamed [Replace $ b ++ (if v /= "" then " << " ++ v else "")] . reflectVert . deco . reflectVert
 

@@ -21,7 +21,7 @@ import XMonad.Hooks.ServerMode
 import Text.Printf
 
 -- Utilities
-import XMonad.Util.EZConfig (additionalKeysP)
+import XMonad.Util.EZConfig (additionalKeysP, removeKeysP)
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
 import XMonad.Util.SpawnOnce
@@ -86,6 +86,7 @@ main = do
     home <- getHomeDirectory
     xmprocPrimary <- spawnPipe "xmobar -x 0"
     xmprocSecondary <- spawnPipe "xmobar -x 1"
+    xmprocTertiary <- spawnPipe "xmobar -x 2"
     xmonad $ ewmh def
         { manageHook         = myManageHook <+> manageDocks
         , handleEventHook    = myHandleEventHook
@@ -97,5 +98,5 @@ main = do
         , borderWidth        = T.border T.theme
         , normalBorderColor  = T.secondary T.theme
         , focusedBorderColor = T.primary T.theme
-        , logHook            = myLogHook $ (hPutStrLn xmprocPrimary <+> hPutStrLn xmprocSecondary)
-        } `additionalKeysP` K.keys home
+        , logHook            = myLogHook $ (hPutStrLn xmprocPrimary <+> hPutStrLn xmprocSecondary <+> hPutStrLn xmprocTertiary)
+        } `additionalKeysP` K.keys home `removeKeysP` ["M-S-q"]
