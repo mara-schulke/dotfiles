@@ -10,7 +10,7 @@ terminal :: String
 terminal = "alacritty"
 
 browser :: String
-browser = "firefox"
+browser = "surf"
 
 editor :: String
 editor = "vim"
@@ -19,5 +19,5 @@ lock :: String
 lock = "slock"
 
 workspaces :: [String]
-workspaces = ["sh", "dev", "net", "tasks", "mail", "docs", "misc", "chat", "cfg"]
+workspaces = ["log", "dev", "net", "tasks", "mail", "docs", "misc", "chat", "cfg"]
 

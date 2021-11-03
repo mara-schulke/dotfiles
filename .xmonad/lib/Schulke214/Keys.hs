@@ -38,6 +38,7 @@ keys home =
 
     -- Useful programs to have a keybinding for launch
     , ("M-<Return>",   spawn S.terminal)
+    , ("M-b",          spawn $ S.browser ++ " https://google.com")
     , ("M1-l",         spawn S.lock)
 
     -- Kill windows
@@ -69,6 +70,7 @@ keys home =
     -- Scratchpads
     , ("M1-t",         namedScratchpadAction SP.scratchPads "shell")        -- Activate the shell scratchpad
     , ("M1-n",         namedScratchpadAction SP.scratchPads "netflix")      -- Activate the netflix scratchpad
+    , ("M1-c",         namedScratchpadAction SP.scratchPads "chat")         -- Activate the chat scratchpad
     , ("M1-m",         namedScratchpadAction SP.scratchPads "spotify")      -- Activate the spotify scratchpad
     , ("M1-p",         namedScratchpadAction SP.scratchPads "enpass")       -- Activate the enpass scratchpad
     , ("M1-f",         namedScratchpadAction SP.scratchPads "filemanager")  -- Activate the filemanager scratchpad

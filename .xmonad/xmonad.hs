@@ -47,17 +47,18 @@ myStartupHook = do
 
 myManageHook :: XMonad.Query (Endo WindowSet)
 myManageHook = composeAll
-    [ title        =? "Mozilla Firefox"                    --> doShift (S.workspaces !! 2)
-    , className    =? "Code"                               --> doShift (S.workspaces !! 1)
-    , className    =? "Thunderbird"                        --> doShift (S.workspaces !! 4)
-    , className    =? "discord"                            --> doShift (S.workspaces !! 7)
-    , className    =? "Signal"                             --> doShift (S.workspaces !! 7)
-    , className    =? "Slack"                              --> doShift (S.workspaces !! 7)
-    , className    =? ".blueman-manager-wrapped"           --> doShift (S.workspaces !! 8)
-    , className    =? "Pavucontrol"                        --> doShift (S.workspaces !! 8)
-    , className    =? "Pinentry"                           --> doCenterFloat
-    , isDialog                                             --> doCenterFloat
-    , isFullscreen                                         --> doFullFloat
+    [ title        =? "Mozilla Firefox"                      --> doShift (S.workspaces !! 2)
+    , className    =? "Code"                                 --> doShift (S.workspaces !! 1)
+    , className    =? "Thunderbird"                          --> doShift (S.workspaces !! 4)
+    , className    =? "discord"                              --> doShift (S.workspaces !! 7)
+    , className    =? "Signal"                               --> doShift (S.workspaces !! 7)
+    , className    =? "Slack"                                --> doShift (S.workspaces !! 7)
+    , className    =? ".blueman-manager-wrapped"             --> doShift (S.workspaces !! 8)
+    , className    =? "Pavucontrol"                          --> doShift (S.workspaces !! 8)
+    , className    =? "Pinentry"                             --> doCenterFloat
+    , className    =? "jetbrains-clion" <&&> title =? "win0" --> doCenterFloat
+    , isDialog                                               --> doCenterFloat
+    , isFullscreen                                           --> doFullFloat
     ] <+> namedScratchpadManageHook SP.scratchPads
 
 myHandleEventHook :: Event -> X All

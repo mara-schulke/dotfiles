@@ -42,8 +42,8 @@ layoutHook =
     $ toggleLayouts (noBorders $ full)
     $ lessBorders OnlyScreenFloat
     $ ifWider 2560 layoutsUHD layoutsHD
-    where layoutsUHD         = tallGaps ||| tallMirrorGaps ||| gridGaps ||| tcGaps ||| tcMirrorGaps ||| full
-          layoutsHD          = tall     ||| tallMirror     ||| grid     ||| tc     ||| tcMirror     ||| full
+    where layoutsUHD         = gridGaps ||| tallGaps ||| tallMirrorGaps ||| tcGaps ||| tcMirrorGaps ||| full
+          layoutsHD          = grid     ||| tall     ||| tallMirror     ||| tc     ||| tcMirror     ||| full
 
           tallRaw            = reflectVert $ ResizableTall 1 (3/100) (1/2) []
           tall               = variant "tall" "" $ noGaps tallRaw

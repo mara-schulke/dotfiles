@@ -61,52 +61,40 @@ import XMonad.Util.SpawnOnce
 import qualified Schulke214.Settings as S
 
 
-terminalScratchPad :: String -> String -> NamedScratchpad
-terminalScratchPad name cmd = terminalScratchPad' name cmd (0.06, 0.1, 0.88, 0.8)
-
-
-terminalScratchPad' :: String -> String -> (Rational, Rational, Rational, Rational) -> NamedScratchpad
-terminalScratchPad' name cmd (l, t, w, h) = NS name spawnSP findSP manageSP
+termPad :: String -> String -> Query (Endo WindowSet) -> NamedScratchpad
+termPad name cmd manageSP = NS name spawnSP findSP manageSP
     where id       = "scratchpad:" ++ name
           spawnSP  = S.terminal ++ " --title " ++ id ++ " -e "  ++ cmd
           findSP   = title =? id
-          manageSP = customFloating $ W.RationalRect l t w h
 
 
 scratchPads :: [NamedScratchpad]
 scratchPads =
-    [ terminalScratchPad "shell" "zsh"
-    , NS "netflix"  spawnNetflix findNetfix manageNetflix
-    , NS "spotify" spawnSpotify findSpotify manageSpotify
-    , NS "enpass" spawnEnpass findEnpass manageEnpass
-    , NS "filemanager"  spawnFM findFM manageFM
+    [ termPad           "shell"      "zsh"       (doRectFloat 0.9)
+    , NS "netflix"      spawnNetflix findNetfix  manageNetflix
+    , NS "chat"         spawnChat    findChat    manageChat
+    , NS "spotify"      spawnSpotify findSpotify manageSpotify
+    , NS "enpass"       spawnEnpass  findEnpass  manageEnpass
+    , NS "filemanager"  spawnFM      findFM      manageFM
     ]
     where spawnNetflix  = "chromium --kiosk --new-window --class=netflix --user-data-dir='/home/max/.config/netflix'"
           findNetfix    = className =? "netflix"
-          manageNetflix = customFloating $ W.RationalRect l t w h
-                where w = 1
-                      h = 1
-                      l = 0
-                      t = 0
+          manageNetflix = doRectFloat 1
+
+          spawnChat     = "chromium --kiosk --new-window --class=chat --user-data-dir='/home/max/.config/chat'"
+          findChat      = className =? "chat"
+          manageChat    = customFloating $ W.RationalRect 0.5 0.125 0.425 0.75
+
           spawnSpotify  = "spotify"
           findSpotify   = className =? "Spotify"
-          manageSpotify = customFloating $ W.RationalRect l t w h
-                where w = 0.65
-                      h = 0.65
-                      l = (1 - w) / 2
-                      t = (1 - h) / 2
+          manageSpotify = doRectFloat 0.8
+
           spawnEnpass   = "Enpass"
           findEnpass    = className =? "Enpass"
-          manageEnpass  = customFloating $ W.RationalRect l t w h
-                where w = 0.65
-                      h = 0.65
-                      l = (1 - w) / 2
-                      t = (1 - h) / 2
+          manageEnpass  = doRectFloat 0.8
+
           spawnFM       = "nautilus"
           findFM        = className =? "Org.gnome.Nautilus"
-          manageFM      = customFloating $ W.RationalRect l t w h
-                where w = 0.75
-                      h = 0.75
-                      l = (1 - w) / 2
-                      t = (1 - h) / 2
+          manageFM      = doRectFloat 0.8
 
+          doRectFloat r = customFloating $ W.RationalRect ((1 - r) / 2) ((1 - r) / 2 * (16 / 9)) r (r / (16 / 9) * (r * 1.85))
