@@ -32,12 +32,14 @@ last-mod() {
     stat --format "%Y" $1
 }
 
-render $1
-evince $OUTDIR/output.pdf &
+render $1 > /dev/null 2>&1
+evince $OUTDIR/output.pdf & > /dev/null 2>&1
+
+cecho g "Started preview. Listening for changes..."
 
 LTIME=`last-mod $1`
 
-while [[ $(jobs -r | wc --bytes) -ge 1 ]]; do
+while [[ $(ps -aux | grep -o "evince $OUTDIR/output.pdf" | wc -l) -ge 2 ]]; do
   ATIME=`last-mod $1`
 
   if [[ "$ATIME" != "$LTIME" ]]; then
