@@ -2,7 +2,7 @@
 
 help() { cat << EOF
 egpu 1.0.0
-Maximilian Schulke <hello@maximilianschulke.com>
+Mara Schulke <mara@schulke.xyz>
 A helper to manage my egpu setup
 
 USAGE:

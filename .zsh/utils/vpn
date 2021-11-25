@@ -2,7 +2,7 @@
 
 help() { cat << EOF
 vpn 1.0.0
-Maximilian Schulke <hello@maximilianschulke.com>
+Mara Schulke <mara@schulke.xyz>
 A helper to manage openvpn services using systemd
 
 USAGE:
