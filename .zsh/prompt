@@ -1,8 +1,6 @@
 nix-shell-status() {
-    nix-shell-active
-
-    if [ $? -eq 0 ]; then
-        echo "%{$fg[magenta]%}shell%{$reset_color%} ";
+    if nix-shell-active; then
+        echo "%{$fg[magenta]%}<$name-shell>%{$reset_color%} ";
     fi
 }
 
