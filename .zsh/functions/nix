@@ -1,7 +1,5 @@
 nix-shell-active() {
-	local LEN=${#shellHook}
-
-	if [ $LEN -gt 0 ]; then
+	if [[ ${#shellHook} -gt 0 || -n $IN_NIX_SHELL ]]; then
 		return 0;
 	else
 		return 1;
