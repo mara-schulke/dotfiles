@@ -22,3 +22,6 @@ if which pyenv > /dev/null; then
 	eval "$(pyenv init -)"
 	pyenv virtualenvwrapper
 fi
+
+# latex
+export CHKTEXRC="$HOME/.config/chktex"
