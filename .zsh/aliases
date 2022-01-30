@@ -4,11 +4,16 @@ alias reload="source ~/.zshrc"
 alias search="firefox --search"
 alias scrot='scrot ~/Documents/screenshots/%y%m%d-%H%M%S.png'
 
+# utils
+alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"';
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote(sys.argv[1]))"';
+
 # chrome
 alias chromium-headless-="chromium --kiosk --new-window"
 
 # dotfiles
 alias config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+alias cfg="config"
 alias cst="config status"
 alias ca="config add" 
 alias cc="config commit"
@@ -43,4 +48,4 @@ alias fm="nautilus"
 alias vim="nvim"
 
 # nix-shell
-alias nix-shell-activate="nix-shell shell.nix --command zsh"
+alias nix-shell="nix-shell --command zsh"
