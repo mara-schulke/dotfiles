@@ -1,7 +1,7 @@
-" Maximilian Schulke
+" Mara Schulke
 "
 " https://github/schulke-214
-" https://blog.maximilianschulke.com
+" https://blog.schulke.xyz
 
 set nocompatible    " required
 filetype off        " required
@@ -17,11 +17,15 @@ call plug#begin('~/.local/share/nvim/plug')
 " syntax support
 Plug 'rust-lang/rust.vim'
 Plug 'LnL7/vim-nix'
+Plug 'ron-rs/ron.vim'
 Plug 'vim-syntastic/syntastic'
 
 " ui
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/fern-git-status.vim'
+Plug 'lambdalisue/fern-mapping-git.vim'
+
 Plug 'preservim/nerdcommenter'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -38,7 +42,7 @@ Plug 'itchyny/lightline.vim'
 
 " LaTeX
 Plug 'lervag/vimtex'
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+"Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 call plug#end()
 
@@ -62,6 +66,7 @@ set list
 set listchars=tab:➞\ ,extends:›,precedes:‹,nbsp:·,trail:·,space:·
 set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*
 set noshowmode
+set nowrap
 set colorcolumn=80
 
 " tabs
@@ -110,49 +115,18 @@ let g:coc_global_extensions = [
   \ 'coc-pairs',
   \ 'coc-prettier',
   \ 'coc-pyright',
-  \ 'coc-rust-analyzer',
   \ 'coc-rls',
+  \ 'coc-java',
   \ 'coc-snippets',
   \ 'coc-tslint',
   \ 'coc-tsserver',
   \ 'coc-vimtex',
   \ ]
 
-" nerdtree
-let g:NERDTreeRespectWildIgnore=1          " Hide the files that match wildignore
-let g:NERDTreeShowHidden=1                 " Show hidden files
-let g:NERDTreeWinSize=40                   " Set the window width of NERDTree
-let g:NERDSpaceDelims = 1                  " Add spaces after comment delimiters by default
-let g:NERDCompactSexyComs = 1              " Use compact syntax for prettified multi-line comments
-let g:NERDCommentEmptyLines = 1            " Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDTrimTrailingWhitespace = 1       " Enable trimming of trailing whitespace when uncommenting
-let g:NERDTreeDirArrowExpandable = '+'     " Set the expand icon
-let g:NERDTreeDirArrowCollapsible = '-'    " Set the collapse icon
-let g:NERDTreeIgnore=[
-  \ 'coverage',
-  \ 'dumps',
-  \ 'node_modules',
-  \ 'target',
-  \ '__pycache__',
-  \ '.git',
-  \ '.idea',
-  \ '.pytest_cache',
-  \ '.vim'
-  \ ]
-
-let g:NERDTreeGitStatusConcealBrackets = 1
-let g:NERDTreeGitStatusIndicatorMapCustom = {
-  \ 'Modified'  :'*',
-  \ 'Staged'    :'+',
-  \ 'Untracked' :'!',
-  \ 'Renamed'   :'>',
-  \ 'Unmerged'  :'=',
-  \ 'Deleted'   :'-',
-  \ 'Dirty'     :'~',
-  \ 'Ignored'   :'?',
-  \ 'Clean'     :'/',
-  \ 'Unknown'   :'#'
-  \ }
+" fern
+let g:fern#opener = 'edit'
+let g:fern#drawer_width = 40
+let g:fern#disable_default_mappings = 1
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -161,16 +135,17 @@ set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-
-let g:syntastic_quiet_messages = { '!level': 'errors', 'type': 'style' }
+let g:syntastic_check_on_w = 0
+let g:syntastic_tex_checkers = ['chktex']
+"let g:syntastic_quiet_messages = { '!level': 'errors', 'type': 'style' }
 
 " rust
+let g:rust_cargo_check_all_features = 1
 let g:rustfmt_autosave = 1
 
 " telescope
-
 lua << EOF
 require('telescope').setup {
   defaults = {
@@ -193,19 +168,21 @@ EOF
 
 """""""""""""""""""""""""""""""""""""""""""
 " Keybindings
+"
 """""""""""""""""""""""""""""""""""""""""""
 
 let mapleader = ' '
 
 " plugins
-map <C-e> :NERDTreeToggle<CR>
 map <leader>i :ToggleRustHints<CR>
+map <C-e> :FernToggle<CR>
+
 ""<Plug>(coc-snippets-expand)
 " vnoremap <C-y> <Plug>(coc-snippets-select)
-nnoremap <leader><leader>t :call NERDComment('n', 'alignleft')<CR>
-vnoremap <leader><leader>t :call NERDComment('x', 'alignleft')<CR>
-nnoremap <leader>t :call NERDComment('n', 'toggle')<CR>
-vnoremap <leader>t :call NERDComment('x', 'toggle')<CR>
+nnoremap <leader><leader>t :call nerdcommenter#Comment('n', 'alignleft')<CR>
+vnoremap <leader><leader>t :call nerdcommenter#Comment('x', 'alignleft')<CR>
+nnoremap <leader>t :call nerdcommenter#Comment('n', 'toggle')<CR>
+vnoremap <leader>t :call nerdcommenter#Comment('x', 'toggle')<CR>
 
 map <C-p> :Commands<CR>
 map <C-f> :Files<CR>
@@ -238,8 +215,7 @@ xnoremap <silent> * "sy:let @/=@s<CR>cgn
 
 " splits / windows
 " closing windows shortcut is awful
-map <leader>w :wincmd q<CR>
-map <leader># :b#<CR>
+map <C-c> :wincmd q<CR>
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -270,11 +246,11 @@ tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
 
-
-
 """""""""""""""""""""""""""""""""""""""""""
 " Commands
 """""""""""""""""""""""""""""""""""""""""""
+
+command! -nargs=0 FernToggle :Fern . -drawer -toggle -keep
 
 command! -nargs=0 EditConfig :e $MYVIMRC
 command! -nargs=0 ReloadConfig :so $MYVIMRC
@@ -294,21 +270,41 @@ command! -nargs=0 Grep :Telescope live_grep theme=get_dropdown
 " Auto Commands
 """""""""""""""""""""""""""""""""""""""""""
 
-function! NERDTreeStartup()
-    if 0 == argc()
-        NERDTree
-        wincmd p
-    end
+function! SyntasticCheckHook(errors)
+    if !empty(a:errors)
+        let g:syntastic_loc_list_height = min([len(a:errors), 5])
+    endif
 endfunction
 
-autocmd VimEnter * silent call NERDTreeStartup()
+function! s:init_fern() abort
+    " movement
+    map <buffer> <C-LeftMouse> <LeftMouse><Plug>(fern-action-open-or-expand)
+    map <buffer> <C-RightMouse> <LeftMouse><Plug>(fern-action-collapse)
+    map <buffer> <CR> <Plug>(fern-action-open-or-expand)
+    map <buffer> l <Plug>(fern-action-open-or-expand)
+    map <buffer> h <Plug>(fern-action-collapse)
+    " filesystem ops
+    map <buffer> N <Plug>(fern-action-new-path)
+    map <buffer> R <Plug>(fern-action-rename)
+    map <buffer> M <Plug>(fern-action-move)
+    map <buffer> D <Plug>(fern-action-remove)
+    " misc
+    map <buffer> <leader> <Plug>(fern-action-mark:toggle)
+    map <buffer> r <Plug>(fern-action-reload)
+endfunction
+
+augroup fern
+    autocmd! *
+    autocmd FileType fern setlocal signcolumn=no
+    autocmd FileType fern setlocal cc=
+    autocmd FileType fern setlocal nowrap
+    autocmd FileType fern call s:init_fern()
+augroup END
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 autocmd BufWritePost *.plantuml call jobstart('plantuml '.expand('%'), {'detach': 1})
 
-autocmd FileType nerdtree setlocal signcolumn=no
-autocmd FileType nerdtree setlocal cc=
 autocmd FileType tex setlocal noexpandtab
 
 """""""""""""""""""""""""""""""""""""""""""
