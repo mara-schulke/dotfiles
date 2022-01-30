@@ -17,6 +17,7 @@ source $HOME/.oh-my-zsh/oh-my-zsh.sh
 source $HOME/.zsh/functions/github
 source $HOME/.zsh/functions/java
 source $HOME/.zsh/functions/nix
+source $HOME/.zsh/functions/net
 source $HOME/.zsh/functions/work
 
 # load configuration
@@ -26,4 +27,3 @@ source $HOME/.zsh/environment
 
 # go into the current project directory if given
 work restore
-
