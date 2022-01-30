@@ -83,7 +83,7 @@ scratchPads =
 
           spawnChat     = "chromium --kiosk --new-window --class=chat --user-data-dir='/home/max/.config/chat'"
           findChat      = className =? "chat"
-          manageChat    = customFloating $ W.RationalRect 0.5 0.125 0.425 0.75
+          manageChat    = doRectFloat 0.8
 
           spawnSpotify  = "spotify"
           findSpotify   = className =? "Spotify"

@@ -54,10 +54,12 @@ myManageHook = composeAll
     , className    =? "Signal"                               --> doShift (S.workspaces !! 7)
     , className    =? "Slack"                                --> doShift (S.workspaces !! 7)
     , className    =? ".blueman-manager-wrapped"             --> doShift (S.workspaces !! 8)
+    , className    =? ".blueman-applet-wrapped"              --> doShift (S.workspaces !! 8)
     , className    =? "Pavucontrol"                          --> doShift (S.workspaces !! 8)
     , className    =? "Pinentry"                             --> doCenterFloat
     , className    =? "jetbrains-clion" <&&> title =? "win0" --> doCenterFloat
-    , isDialog                                               --> doCenterFloat
+    , className    =? "jetbrains-idea" <&&> title =? "win0"  --> doCenterFloat
+    -- , isDialog                                               --> doCenterFloat
     , isFullscreen                                           --> doFullFloat
     ] <+> namedScratchpadManageHook SP.scratchPads
 
