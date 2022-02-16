@@ -17,7 +17,7 @@ SUBCOMMANDS:
 EOF
 }
 
-DROPBOX_CLI=${DROPBOX_CLI:-$(which dropbox-sh)}
+RCLONE=${RCLONE:-$(which rclone)}
 
 BACKUP_DIRS=${BACKUP_DIRS:-"
     $HOME/Desktop/
@@ -26,7 +26,7 @@ BACKUP_DIRS=${BACKUP_DIRS:-"
     $HOME/Workspace/
     $HOME/.ssh/
     $HOME/.gnupg/
-    $HOME/.minecraft/saves/
+    $HOME/.minecraft/
 "}
 CLEANABLE_DIRS=${CLEANABLE_DIRS:-"
     $HOME/Desktop/
@@ -52,11 +52,11 @@ CLEANABLE_FILES=${CLEANABLE_FILES:-"
 "}
 
 now() {
-    echo "stuff"
-	echo "> Including$BACKUP_DIRS" | sed -e 's/    \/home\/max\///g' | tr '\n' ' '
-	zip -r /tmp/backup.zip $BACKUP_DIRS -x '*node_modules*' -x '*target*' /dev/null 2>&1
+	echo "> Compressing files.."
+	echo $BACKUP_DIRS | sed -e 's/    \/home\/mara\///g'
+	zip -r /tmp/backup.zip $BACKUP_DIRS -x '*node_modules*' -x '*target*' > /dev/null 2>&1
 	echo "> Uploading .."
-	$DROPBOX_CLI -q upload /tmp/backup.zip backup-$(date +'%y%m%d').zip
+	$RCLONE copy -P /tmp/backup.zip drive:/Backups/Systems/$(hostname)/$(date +'%y%m%d').zip
 	rm /tmp/backup.zip
 	echo "> Success"
 }
@@ -69,11 +69,11 @@ clean() {
 }
 
 list() {
-	$DROPBOX_CLI list | ter filter -m word 'contains ".zip"'
+	$RCLONE lsf drive:/Backups/Systems/$(hostname) | ter filter -m word 'contains ".zip"'
 }
 
 download() {
-	$DROPBOX_CLI download backup-$1.zip ./backup-$1.zip
+	$RCLONE copy drive:/Backups/Systems/$(hostname)/backup-$1.zip ./backup-$1.zip
 }
 
 case "$1" in
