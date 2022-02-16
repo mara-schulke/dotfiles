@@ -1,6 +1,5 @@
 # general
 export EDITOR="$(which nvim)"
-
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
 # vault
@@ -12,16 +11,6 @@ export VAULT_CLIENT_KEY=$HOME/.config/vault/vault_client.key
 # java
 export JABBA_HOME="$HOME/.jabba"
 [ -s "$JABBA_HOME/jabba.sh" ] && source "$JABBA_HOME/jabba.sh"
-
-# python
-export VIRTUALENVWRAPPER_HOOK_DIR=$HOME/workspace/.virtualenvs
-export PROJECT_HOME=$HOME/workspace/.virtualenvs
-export WORKON_HOME=$HOME/workspace/.virtualenvs
-
-if which pyenv > /dev/null; then
-	eval "$(pyenv init -)"
-	pyenv virtualenvwrapper
-fi
 
 # latex
 export CHKTEXRC="$HOME/.config/chktex"
