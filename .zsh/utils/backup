@@ -47,14 +47,16 @@ CLEANABLE_FILES=${CLEANABLE_FILES:-"
     $HOME/.lesshst
     $HOME/.wpa_cli_history
     $HOME/.zcompdump
-    $HOME/.zcompdump-nix-5.8
+    $HOME/.zcompdump*
     $HOME/*_scrot.png
 "}
 
 now() {
+	local dirs=$(echo $BACKUP_DIRS | tr -d '\n')
+
 	echo "> Compressing files.."
-	echo $BACKUP_DIRS | sed -e 's/    \/home\/mara\///g'
-	zip -r /tmp/backup.zip $BACKUP_DIRS -x '*node_modules*' -x '*target*' > /dev/null 2>&1
+	echo $dirs | sed -e 's/    \/home\/mara\///g'
+	zip -r /tmp/backup.zip $dirs -x '*node_modules*' -x '*target*' > /dev/null 2>&1
 	echo "> Uploading .."
 	$RCLONE copy -P /tmp/backup.zip drive:/Backups/Systems/$(hostname)/$(date +'%y%m%d').zip
 	rm /tmp/backup.zip
