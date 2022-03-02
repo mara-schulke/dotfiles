@@ -50,6 +50,7 @@
     background-color:            @background;
     separator-color:             @lightblack;
     spacing:                     2;
+    text-color:                  @foreground;
 }
 
 #window {
