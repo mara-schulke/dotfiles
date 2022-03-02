@@ -46,4 +46,4 @@ vulcanTheme = def
     }
 
 theme :: Theme
-theme = natureTheme
+theme = tokyoTheme
