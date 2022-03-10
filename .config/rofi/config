@@ -1,1 +1,1 @@
-@theme ./themes/Tokyo.rasi
+rofi.theme: ./themes/Vulcan.rasi

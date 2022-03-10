@@ -27,9 +27,9 @@
     normal-foreground:           @foreground;
     urgent-foreground:           @foreground;
     selected-active-foreground:  @foreground;
-    selected-normal-foreground:  @yellow; 
+    selected-normal-foreground:  @lightred; 
     selected-urgent-foreground:  @foreground;
-    alternate-active-foreground: @yellow;
+    alternate-active-foreground: @lightred;
     alternate-normal-foreground: @foreground;
     alternate-urgent-foreground: @foreground;
 
@@ -44,7 +44,7 @@
     alternate-normal-background: @black;
     alternate-urgent-background: @background;
 
-    border-color:                @yellow;
+    border-color:                @lightred;
     background-color:            @background;
     separator-color:             @lightblack;
     spacing:                     2;
