@@ -4,6 +4,8 @@ DISABLE_AUTO_TITLE="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 DISABLE_MAGIC_FUNCTIONS=true
 
+zstyle :omz:plugins:ssh-agent identities id_ed25519 id_ed25519.hum google_compute_engine
+
 plugins=(
 	git
 	git-flow
