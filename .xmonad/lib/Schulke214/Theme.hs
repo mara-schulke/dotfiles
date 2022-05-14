@@ -17,7 +17,7 @@ data Theme = Theme
     }
 
 instance Default Theme where
-    def = Theme fg bg fg bg 1 160
+    def = Theme fg bg fg bg 1 20
         where fg = C.foreground
               bg = C.background
 
@@ -46,4 +46,4 @@ vulcanTheme = def
     }
 
 theme :: Theme
-theme = vulcanTheme
+theme = tokyoTheme

@@ -19,5 +19,5 @@ lock :: String
 lock = "slock"
 
 workspaces :: [String]
-workspaces = ["log", "dev", "net", "tasks", "mail", "docs", "misc", "chat", "cfg"]
+workspaces = ["cmp", "edt", "net", "dat", "ssh", "msc", "cfg"]
 
