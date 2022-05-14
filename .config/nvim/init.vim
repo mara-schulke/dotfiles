@@ -125,6 +125,8 @@ let g:coc_global_extensions = [
 
 " fern
 let g:fern#opener = 'edit'
+let g:fern#default_hidden = 1
+let g:fern#default_exclude = '.git/'
 let g:fern#drawer_width = 40
 let g:fern#disable_default_mappings = 1
 
