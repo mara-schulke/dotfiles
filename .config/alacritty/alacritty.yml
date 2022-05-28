@@ -15,7 +15,7 @@ font:
 colors:
   primary:
     background: '0x040404'
-    foreground: '0xfce6ed'
+    foreground: '0xf5f0f1'
   normal:
     black:   '0x2d262c'
     red:     '0xaa6766'
