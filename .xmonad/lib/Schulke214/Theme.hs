@@ -45,5 +45,11 @@ vulcanTheme = def
     , secondary   = C.redLight
     }
 
+neutralTheme :: Theme
+neutralTheme = def
+    { primary     = C.whiteLight
+    , secondary   = C.white
+    }
+
 theme :: Theme
-theme = tokyoTheme
+theme = neutralTheme

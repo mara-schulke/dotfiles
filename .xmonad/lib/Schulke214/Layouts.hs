@@ -41,7 +41,8 @@ layoutHook =
     $ windowNavigation
     $ toggleLayouts (noBorders $ full)
     $ lessBorders OnlyScreenFloat
-    $ ifWider 2560 layoutsUHD layoutsHD
+    $ layoutsUHD
+    -- $ ifWider 2560 layoutsUHD layoutsHD
     where layoutsUHD         = gridGaps ||| tallGaps ||| tallMirrorGaps ||| tcGaps ||| tcMirrorGaps ||| full
           layoutsHD          = grid     ||| tall     ||| tallMirror     ||| tc     ||| tcMirror     ||| full
 

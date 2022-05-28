@@ -16,16 +16,16 @@ darken' f c = round $ (fromIntegral c) * f
 -- toHex :: Color -> String
 
 foreground :: String
-foreground = "#ffebe7"
+foreground = "#c7c3c6"
 
 background :: String
-background = "#2d262c"
+background = "#2d2c2c"
 
 black :: String
-black = "#191518"
+black = "#191818"
 
 blackLight :: String
-blackLight = "#231d21"
+blackLight = "#231f21"
 
 red :: String
 red = "#a57e7d"
@@ -64,7 +64,7 @@ cyanLight :: String
 cyanLight = "#cfd3fe"
 
 white :: String
-white = "#9e8784"
+white = "#cccccc"
 
 whiteLight :: String
-whiteLight = "#ffd6cf"
+whiteLight = "#eeeeee"
