@@ -1,2 +1,5 @@
+.config/zsh/ephemeral
+.config/zsh/.zcomp*
+.config/zsh/oh-my-zsh
 .xmonad/**/*
 !.xmonad/**/*.hs
