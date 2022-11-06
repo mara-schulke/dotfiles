@@ -1,4 +1,4 @@
-.config/zsh/ephemeral
+.config/zsh/ephemeral/history
 .config/zsh/.zcomp*
 .config/zsh/oh-my-zsh
 .xmonad/**/*
