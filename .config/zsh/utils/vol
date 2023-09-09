@@ -1,0 +1,98 @@
+#!/bin/sh
+
+help() { cat << EOF
+vol 1.0.0
+Mara Schulke <mara@schulke.xyz>
+A helper to manage pulse audio sound settings
+
+USAGE:
+    vol <SUBCOMMAND> <NAME>
+
+SUBCOMMANDS:
+    inc       Increase volume by a given percentage
+    dec       Decrease volume by a given percentage
+    set       Set volume to a given percentage
+    mute      Mute / unmute speakers
+    mute-mic  Mute / unmute mic
+    help      Show this help page
+EOF
+}
+
+DEFAULT_STEP='5'
+
+sinks() {
+    pactl list sinks | egrep -wo 'Ziel #[0-9]' | cut -b7-
+}
+
+sources() {
+    pactl list sources | egrep -wo 'Quelle #[0-9]' | cut -b9-
+}
+
+vset() {
+	local sink_vols=$(
+        pactl list sinks |
+        grep "Lautstärke: front-left" |
+        egrep -wo '[0-9]*%' |
+        awk 'NR == 1 || NR % 3 == 0' |
+        sed 's/.$//'
+	)
+	local i=1
+
+	for SINK in $(sinks)
+	do
+		local signed_vol=$(python -c "print(int('+' in '$(echo $1)' or '-' in '$(echo $1)'))")
+
+		if [ $signed_vol == 0 ]; then
+			if [ ${#1} -ge 3 ]; then
+				pactl set-sink-volume $SINK '100%'
+			else
+				pactl set-sink-volume $SINK $1% || exit 1;
+			fi
+
+			continue
+		fi
+
+		local new_vol=$(python -c "print(int('$(echo $sink_vols)'.split()[0]) + $1)")
+
+		if [ $new_vol -ge 120 ]; then
+			pactl set-sink-volume $SINK '120%'
+		else
+			pactl set-sink-volume $SINK $1% || exit 1;
+
+		fi
+
+		((i+=1))
+	done
+}
+
+vmute() {
+	for SINK in $(sinks)
+	do
+		pactl set-sink-mute $SINK ${1:-'toggle'}
+	done
+}
+
+vmic() {
+	for SOURCE in $(sources)
+	do
+		pactl set-source-mute $SOURCE ${1:-'toggle'}
+	done
+}
+
+vinc() {
+	vset "+${1:-$DEFAULT_STEP}"
+}
+
+vdec() {
+	vset "-${1:-$DEFAULT_STEP}"
+}
+
+case "$1" in
+	set) vset $2 ;;
+	inc) vinc $2 ;;
+	dec) vdec $2 ;;
+	mute) vmute $2 ;;
+	mute-mic) vmic $2 ;;
+	*) help; exit 1 ;;
+esac
+

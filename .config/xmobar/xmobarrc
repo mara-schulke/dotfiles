@@ -1,0 +1,34 @@
+Config { font = "xft:Monospace:weight=regular:pixelsize=24:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=24:antialias=true:hinting=true"
+                           , "xft:FontAwesome:pixelsize=24"
+                           ]
+       , bgColor = "#0c0b0b"
+       , fgColor = "#c5c5c8"
+       , position = Top
+       , lowerOnStart = True
+       , hideOnStart = False
+       , allDesktops = True
+       , persistent = True
+       , commands = [ Run Date " %F %H:%M " "date" 50
+                    , Run Cpu ["-t", "cpu <total>%","-H","50","--high","red"] 20
+                    , Run Memory ["-t", "mem <used>MiB <usedratio>%"] 20
+                    , Run DiskU [("/", "disk <used>iB")] [] 60
+                    , Run Com "uname" ["-r"] "" 3600
+                    , Run Battery [ "--template" , "battery <acstatus>"
+                                  , "--Low"      , "10"
+                                  , "--High"     , "80"
+                                  , "--low"      , "darkred"
+                                  , "--normal"   , "darkorange"
+                                  , "--high"     , "darkgreen"
+                                  , "--"
+                                  , "-o"         , "<left>% - <timeleft>"
+                                  , "-O"         , "charging"
+                                  , "-i"         , "charged"
+                                  ] 50
+                    , Run Com "/home/mara/.config/xmobar/trayer-padding.sh" [] "trayerpad" 20
+                    , Run UnsafeStdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "  %UnsafeStdinReader% }{ %uname% :: %cpu% :: %memory% :: %disku% :: %battery% :: %date% :: %trayerpad%"
+       }

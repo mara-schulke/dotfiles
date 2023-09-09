@@ -1,0 +1,29 @@
+import System.Environment
+import System.Exit
+
+data Flag
+    = Help
+    | Version
+    deriving (Eq,Ord,Enum,Show,Bounded)
+
+toFlag :: String -> IO ()
+toFlag x
+    | "-h" = help >> exit
+    | "-v" = version >> exit
+    | otherwise = die
+
+help :: IO (String)
+help x = putStrLn x
+
+exit :: IO ()
+exit = exitWith ExitSuccess
+
+die :: IO ()
+die = exitWith (ExitFailure 1)
+
+parse :: [String] -> [Flag]
+parse [] = []
+parse xs = map toFlag xs
+
+main :: IO ()
+main = getArgs >>= parse >>= putStr . screenlayout

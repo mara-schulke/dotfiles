@@ -1,0 +1,9 @@
+google() {
+    local params="$@"
+
+    if [ "$params" = "" ]; then
+        surf google.com &>/dev/null
+    else
+        surf "google.com/search?q=$(urlencode $params)" &>/dev/null
+    fi
+}

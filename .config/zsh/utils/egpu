@@ -1,0 +1,52 @@
+#!/bin/sh
+
+help() { cat << EOF
+egpu 1.0.0
+Mara Schulke <mara@schulke.xyz>
+A helper to manage my egpu setup
+
+USAGE:
+    egpu <SUBCOMMAND> <NAME>
+
+SUBCOMMANDS:
+    on        Enable the egpu
+    off       Disable the egpu
+    status    Show the currently mounted gpu
+    help      Show this help page
+EOF
+}
+
+confirmreboot() {
+    read -r -p "Do you want to reboot now? [y/N]" response
+    case "$response" in
+        [yY][eE][sS]|[yY]) reboot ;;
+        *) ;;
+    esac
+}
+
+on() {
+    sudo sed -i 's/gfx\/intel.nix/gfx\/nvidia.nix/g' /etc/nixos/configuration.nix
+    sudo nixos-rebuild switch
+    confirmreboot
+}
+
+off() {
+    sudo sed -i 's/gfx\/nvidia.nix/gfx\/intel.nix/g' /etc/nixos/configuration.nix
+    sudo nixos-rebuild switch
+    confirmreboot
+}
+
+status() {
+    local GREEN="\033[1;32m"
+    local NOCOLOR="\033[0m"
+    echo -e "${GREEN}Mounted Cards:${NOCOLOR}"
+    neofetch --off | grep GPU | cut -c 31-
+}
+
+case "$1" in
+    on) on $2 ;;
+    off) off $2 ;;
+    status) status $2 ;;
+    list) list ;;
+    *) help; exit 1 ;;
+esac

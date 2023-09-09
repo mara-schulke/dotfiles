@@ -1,0 +1,21 @@
+! Unbind arrow keys
+keycode 111 =
+keycode 113 =
+keycode 114 =
+keycode 116 =
+
+! Bind circumflex to altgr
+keycode 49 = ISO_Level3_Shift ISO_Level3_Shift dead_circumflex dead_circumflex
+
+! Bind altgr + hjkl to arrow keys
+keycode 43 = h H NoSymbol NoSymbol Left Left
+keycode 44 = j J NoSymbol NoSymbol Down Down
+keycode 45 = k K NoSymbol NoSymbol Up Up
+keycode 46 = l L NoSymbol NoSymbol Right Right
+
+! Rebind space
+keycode 65 = space space space space Return Return
+
+! Bind caps to esc
+remove Lock = Caps_Lock
+keysym Caps_Lock = Escape

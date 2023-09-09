@@ -1,0 +1,65 @@
+set-option -g default-shell /bin/zsh
+bind R source-file $ZSH_TMUX_CONFIG \; display-message "Config reloaded..."
+set -sg escape-time 0
+set -g base-index 1
+setw -g pane-base-index 1
+set -g default-terminal "screen-256color"
+set-option -g focus-events on
+set -as terminal-features ",xterm-256color:RGB"
+
+# Change keybinding for key stuff
+set-option -g prefix C-x
+unbind-key C-b
+bind-key C-x send-prefix
+
+# Sane scrolling
+set -g mouse on
+setw -g mode-keys vi
+
+# new windows
+bind v split-window -c "#{pane_current_path}"
+bind s split-window -h -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+
+#------------
+# tabs
+#------------
+
+setw -g monitor-activity on
+setw -g window-status-format "#[fg=white]#[bg=colour238] #I #[bg=colour238]#[fg=white] :: #W "
+setw -g window-status-current-format "#[bg=colour161]#[fg=white] #I #[fg=white,bold]#[bg=colour125] :: #W "
+
+# set -g pane-border-fg colour161
+# set -g pane-active-border-fg colour161
+# set -g pane-active-border-bg white
+
+set -g pane-border-style fg=white
+set -g pane-active-border-style "bg=default fg=colour125"
+
+#------------
+# status bar
+#------------
+
+# set -Fg 'status-format[0]'
+set -g 'status-format[1]' '#[bg=colour232]#(for i in $(seq 0 256); do printf " "; done)'
+set -g status 2
+
+set-option -g status-position top
+set -g status-fg white
+set -g status-bg colour234
+set -g status-left ''
+set -g status-right '#(whoami) :: #(sw_vers -productName) #(sw_vers -productVersion) :: #[bg=colour161]#[fg=white,bold] %H:%M '
+set -g status-right-length 60
+
+#------
+# vim
+# ----
+
+unbind-key j
+bind-key j select-pane -D
+unbind-key k
+bind-key k select-pane -U
+unbind-key h
+bind-key h select-pane -L
+unbind-key l
+bind-key l select-pane -R

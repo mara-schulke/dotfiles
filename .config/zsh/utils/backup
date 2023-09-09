@@ -1,0 +1,87 @@
+#!/bin/sh
+
+help() { cat << EOF
+backup 1.1.0
+Mara Schulke <mara@schulke.xyz>
+A helper to backup my home directory
+
+USAGE:
+    backup <SUBCOMMAND>
+
+SUBCOMMANDS:
+    now       Backup data to dropbox
+    clean     Clean up the home directory
+    download  Download an earlier backup
+    list      Show earlier backups
+    help      Show this help page
+EOF
+}
+
+RCLONE=${RCLONE:-$(which rclone)}
+
+BACKUP_DIRS=${BACKUP_DIRS:-"
+    $HOME/Desktop/
+    $HOME/Documents/
+    $HOME/Downloads/
+    $HOME/Workspace/
+    $HOME/.ssh/
+    $HOME/.gnupg/
+    $HOME/.minecraft/
+"}
+CLEANABLE_DIRS=${CLEANABLE_DIRS:-"
+    $HOME/Desktop/
+    $HOME/Downloads/
+    $HOME/Documents/screenshots/
+    $HOME/.ghc/
+    $HOME/.vscode/
+    $HOME/.texlive2019/
+    $HOME/.cache/pip/
+    $HOME/.cache/npm/
+    $HOME/.cache/yarn/
+"}
+CLEANABLE_FILES=${CLEANABLE_FILES:-"
+    $HOME/.viminfo
+    $HOME/.tig_history
+    $HOME/.npmrc
+    $HOME/.NERDTreeBookmarks
+    $HOME/.lesshst
+    $HOME/.wpa_cli_history
+    $HOME/.zcompdump
+    $HOME/.zcompdump*
+    $HOME/*_scrot.png
+"}
+
+now() {
+	local dirs=$(echo $BACKUP_DIRS | tr -d '\n')
+
+	echo "> Compressing files.."
+	echo $dirs | sed -e 's/    \/home\/mara\///g'
+	zip -r /tmp/backup.zip $dirs -x '*node_modules*' -x '*target*' > /dev/null 2>&1
+	echo "> Uploading .."
+	$RCLONE copy -P /tmp/backup.zip drive:/Backups/Systems/$(hostname)/$(date +'%y%m%d').zip
+	rm /tmp/backup.zip
+	echo "> Success"
+}
+
+clean() {
+	echo "> Cleaning $HOME"
+	rm -rf $CLEANABLE_DIRS > /dev/null 2>&1
+	rm $CLEANABLE_FILES > /dev/null 2>&1
+	mkdir -p $HOME/Desktop $HOME/Documents/screenshots $HOME/Downloads
+}
+
+list() {
+	$RCLONE lsf drive:/Backups/Systems/$(hostname) | ter filter -m word 'contains ".zip"'
+}
+
+download() {
+	$RCLONE copy drive:/Backups/Systems/$(hostname)/backup-$1.zip ./backup-$1.zip
+}
+
+case "$1" in
+	now) now ;;
+	download) download $2 ;;
+	clean) clean ;;
+	list) list ;;
+	*) help; exit 1 ;;
+esac

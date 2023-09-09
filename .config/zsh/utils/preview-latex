@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+cecho() {
+  local code="\033["
+  case "$1" in
+    black  | bk) color="${code}0;30m";;
+    red    |  r) color="${code}1;31m";;
+    green  |  g) color="${code}1;32m";;
+    yellow |  y) color="${code}1;33m";;
+    blue   |  b) color="${code}1;34m";;
+    purple |  p) color="${code}1;35m";;
+    cyan   |  c) color="${code}1;36m";;
+    gray   | gr) color="${code}0;37m";;
+    *) local text="$1"
+  esac
+  [ -z "$text" ] && local text="$color$2${code}0m"
+  echo -e "$text"
+}
+
+
+OUTDIR=/tmp/latex-live-preview
+
+rm -rf $OUTDIR
+mkdir -p $OUTDIR
+
+render() {
+    rm $OUTDIR/*.*
+    pdflatex -halt-on-error -output-directory=$OUTDIR $1 && mv $OUTDIR/*.pdf $OUTDIR/output.pdf
+}
+
+last-mod() {
+    stat --format "%Y" $1
+}
+
+render $1 > /dev/null 2>&1
+evince $OUTDIR/output.pdf & > /dev/null 2>&1
+
+cecho g "Started preview. Listening for changes..."
+
+LTIME=`last-mod $1`
+
+while [[ $(ps -aux | grep -o "evince $OUTDIR/output.pdf" | wc -l) -ge 2 ]]; do
+  ATIME=`last-mod $1`
+
+  if [[ "$ATIME" != "$LTIME" ]]; then
+    cecho b "File Change Detected. Recompiling..."
+
+    OUTPUT=`render $1`
+    ERROR=`echo $?`
+    SUMMARY=`echo "$OUTPUT" | tail -n 10`
+
+    if [[ "$ERROR" = "0" ]]; then
+      cecho g "PDF compiled successfully"
+    else
+      cecho r "An error occurred, PDF was not compiled:"
+      echo "$SUMMARY"
+    fi
+
+    LTIME=$ATIME
+  fi
+
+  sleep 1
+done

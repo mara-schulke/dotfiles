@@ -1,0 +1,18 @@
+ZSH_THEME="robbyrussell"
+CASE_SENSITIVE="true"
+DISABLE_AUTO_TITLE="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_MAGIC_FUNCTIONS=true
+ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_CONFIG=$HOME/.config/tmux/conf
+
+zstyle :omz:plugins:ssh-agent identities id_ed25519 helsing_ed25519 google_compute_engine
+
+plugins=(
+	git
+	git-flow
+    ssh-agent
+    tmux
+	vi-mode
+    zsh-nvm
+)

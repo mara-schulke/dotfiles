@@ -1,0 +1,54 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+    colors = false
+    interval = 5
+}
+
+order += "volume master"
+order += "battery 0"
+order += "ethernet enp0s31f6"
+order += "wireless wlp0s20f3"
+order += "disk /home"
+order += "tztime local"
+
+volume master {
+	format = "vol %volume" 
+	format_muted = "vol 0%"
+	device = "default"
+	mixer = "Master"
+	mixer_idx = 0
+}
+
+battery 0 {
+	format = "%status %remaining"
+	status_chr = "charging"
+	status_bat = "battery left"
+	status_unk = "unkown"
+	status_full = "full"
+	low_threshold = 30
+}
+
+wireless wlp0s20f3 {
+	format_up = "%essid - %bitrate - %ip"
+	format_down = "no wifi"
+}
+
+ethernet enp0s31f6 {
+    format_up = "enp0s31f6/%ip"
+    format_down = ""
+}
+
+tztime local {
+    format = "%d/%m/%Y %H:%M"
+}
+
+disk "/home" {
+    format = "%avail"
+}

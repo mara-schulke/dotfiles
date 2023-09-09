@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/home/mara/.config/feh/fehbg
+xmonad --restart

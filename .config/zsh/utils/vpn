@@ -1,0 +1,42 @@
+#!/bin/sh
+
+help() { cat << EOF
+vpn 1.0.0
+Mara Schulke <mara@schulke.xyz>
+A helper to manage openvpn services using systemd
+
+USAGE:
+    vpn <SUBCOMMAND> <NAME>
+
+SUBCOMMANDS:
+    up        Start a connection
+    down      Stop a running connection
+    status    Show the status of a connection
+    list      Show all available vpn's
+    help      Show this help page
+EOF
+}
+
+status() {
+	systemctl status "openvpn-$1.service"
+}
+
+up() {
+	sudo systemctl start "openvpn-$1.service"
+}
+
+down() {
+	sudo systemctl stop "openvpn-$1.service"
+}
+
+list() {
+	systemctl list-unit-files | ter filter 'starts "openvpn-"' -m word | sed -e 's/openvpn-//g;s/.service//g'
+}
+
+case "$1" in
+	status) status $2 ;;
+	up) up $2 ;;
+	down) down $2 ;;
+	list) list ;;
+	*) help; exit 1 ;;
+esac

@@ -1,0 +1,44 @@
+alias sudo="sudo "
+alias lock="slock"
+alias reload="source ~/.config/zsh/.zshrc"
+alias scrot='scrot ~/pictures/screenshots/%y%m%d-%H%M%S.png'
+
+# utils
+alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"';
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote(sys.argv[1]))"';
+
+# encrypted filesystems
+alias mount.archive='gocryptfs -i 1h -passfile /etc/nixos/secrets/keys/archive /home/mara/workspace/writing/archive/.cryptfs $XDG_DOCUMENTS_DIR'
+
+# chrome
+alias chromium-headless-="chromium --kiosk --new-window"
+
+# dotfiles
+alias config="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+alias cfg="config"
+alias cst="config status"
+alias ca="config add" 
+alias cc="config commit"
+alias cco="config checkout"
+alias cf="config fetch"
+alias cps="config push"
+
+# exa
+alias ls="exa --long --all --icons --group-directories-first --git --header"
+alias lsd="ls -D"
+alias lst="ls -T --git-ignore -I=.git"
+
+# bat
+alias cat="bat"
+
+# ag
+alias ag="ag --path-to-ignore ~/.config/ag/.ignore"
+
+# filemanager
+alias fm="nautilus"
+
+# neovim
+alias vim="nvim"
+
+# nix-shell
+alias nix-shell="nix-shell --command zsh"

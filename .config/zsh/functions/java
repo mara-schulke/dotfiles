@@ -1,0 +1,5 @@
+java-exec() {
+	javac $1
+	java "${1//.java}" $2
+	rm ./*.class
+}

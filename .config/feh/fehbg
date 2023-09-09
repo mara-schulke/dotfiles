@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/run/current-system/sw/bin/feh --no-fehbg --bg-fill '/home/mara/pictures/backgrounds/solid/lavender.png'

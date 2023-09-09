@@ -1,0 +1,19 @@
+{
+    "python.jediEnabled": true,
+    "rust-analyzer.inlayHints.enable": false,
+    "rust-analyzer.inlayHints.typeHintsSeparator": "> ",
+    "rust-analyzer.inlayHints.chainingHintsSeparator": "> ",
+    "rust-analyzer.checkOnSave": true,
+    "rust-analyzer.check.features": "all",
+    "diagnostic.displayByAle": true,
+    "snippets.extends": {
+        "cpp": ["c"],
+        "javascriptreact": ["javascript"],
+        "typescript": ["javascript"]
+    },
+    "coc.preferences.formatOnSave": true,
+    "prettier.tabWidth": 4,
+    "prettier.singleQuote": true,
+    "prettier.semi": true,
+    "snippets.ultisnips.pythonPrompt": false
+}
