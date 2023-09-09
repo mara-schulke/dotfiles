@@ -1,0 +1,14 @@
+[user]
+	name = Mara Schulke
+	email = mara.schulke@helsing.ai
+	signingkey = AB0CB7EFCF450759
+[commit]
+	gpgsign = true
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
+[safe]
+	directory = /etc/nixos
+[push]
+	autoSetupRemote = true
