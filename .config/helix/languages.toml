@@ -1,0 +1,31 @@
+[[language]]
+name = "rust"
+rulers = [101]
+
+[language.config.check]
+command = "clippy"
+features = "all"
+
+[language.config.rustfmt]
+extraArgs = [ "+nightly" ]
+
+[language.config.inlayHints]
+bindingModeHints.enable = false
+closingBraceHints.minLines = 10
+closureReturnTypeHints.enable = "with_block"
+discriminantHints.enable = "never"
+lifetimeElisionHints.enable = "never"
+typeHints.hideClosureInitialization = false
+typeHints.enable = false
+parameterHints.enable = false
+
+[[language]]
+name = "python"
+rulers = [121]
+
+[[language]]
+name = "typescript"
+rulers = [121]
+
+[language.config.inlayHints]
+includeInlayParameterNameHints = "none"
